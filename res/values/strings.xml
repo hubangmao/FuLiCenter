@@ -296,46 +296,4 @@
     <string name="toast_updatephoto_success">update photo success!</string>
     <string name="toast_updatephoto_fail">update photo fail!</string>
 
-    <!--错误码对照表-->
-
-
-    <string name="mes_0">默认成功</string>
-    <string name="mes_101">账号已经存在</string>
-    <string name="mes_102">注册失败</string>
-    <string name="mes_103">解除注册失败</string>
-    <string name="mes_104"> 查找用户失败</string>
-    <string name="mes_105">账户不存在</string>
-    <string name="mes_106">账户密码错误</string>
-    <string name="mes_107">登陆成功</string>
-    <string name="mes_108">昵称未修改</string>
-    <string name="mes_109">昵称修改失败</string>
-    <string name="mes_110">昵称未修改</string>
-    <string name="mes_111">昵称修改失败</string>
-    <string name="mes_112">用户上传地理位置失败</string>
-    <string name="mes_113">用户更新地理位置失败</string>
-    <string name="mes_201">上传头像失败</string>
-    <string name="mes_202">更新头像失败</string>
-    <string name="mes_301">已经是好友关系</string>
-    <string name="mes_302">好友关系添加失败</string>
-    <string name="mes_303">好友关系删除失败</string>
-    <string name="mes_304">获取全部好友列表失败</string>
-    <string name="mes_305">分页获取好友列表失败</string>
-    <string name="mes_401">群组环信ID已经存在</string>
-    <string name="mes_402">创建群组失败</string>
-    <string name="mes_403">添加群组成员失败</string>
-    <string name="mes_404">获取群成员失败</string>
-    <string name="mes_405">群组不存在</string>
-    <string name="mes_406">有相同群组名称</string>
-    <string name="mes_407">群组名称修改失败</string>
-    <string name="mes_408">删除群组成员失败</string>
-    <string name="mes_409">删除多群组成员失败</string>
-    <string name="mes_410">删除群组失败</string>
-    <string name="mes_411">根据群组id查找群组失败</string>
-    <string name="mes_412">根据环信id查找群组失败</string>
-    <string name="mes_413">查找用户名称查找查找群组失败</string>
-    <string name="mes_414">查找群组名称查找查找群组失败</string>
-    <string name="mes_415">查找公开群失败</string>
-    <string name="mes_501">获取附近的人失败</string>
-    <string name="mes_999">未知错误</string>
-    <string name="mes_F1">非法请求</string>
 </resources>
