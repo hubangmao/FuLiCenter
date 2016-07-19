@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.ucai.superwechat.applib.utils.HXPreferenceUtils;
-import cn.ucai.superwechat.chatuidemo.db.UserDao;
+import cn.ucai.superwechat.db.UserDao;
 
 import android.content.Context;
 import android.content.SharedPreferences;
