@@ -48,7 +48,6 @@ public class RegisterActivity extends BaseActivity {
 
     /**
      * 注册
-     *
      * @param view
      */
     public void register(View view) {
