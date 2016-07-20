@@ -296,7 +296,7 @@ public class OkHttpUtils2<T> {
 
     public OkHttpUtils2<T> setRequestUrl(String request) {
         mUrl = new StringBuilder(I.SERVER_URL);
-        mUrl.append(I.QUESTION).append(request);
+        mUrl.append(I.QUESTION).append(I.KEY_REQUEST + "=").append(request);
 //        Log.e("okhttp","1 murl="+ mUrl.toString());
         return this;
     }
@@ -305,11 +305,11 @@ public class OkHttpUtils2<T> {
         if (mUrl == null) {
             return this;
         }
-        RequestBody fileBody = RequestBody.create(MediaType.parse(guessMimeType(file.getName())), file);
+        RequestBody fileBody = RequestBody.create(MediaType.parse(guessMimeType(file.getAbsolutePath())), file);
 
         mFileBody = new MultipartBuilder()
                 .type(MultipartBuilder.FORM)
-                .addPart(Headers.of("Content-Disposition", "form-data; name=\"file\";filename=\"" + file.getName() + "\""), fileBody)
+                .addPart(Headers.of("Content-Disposition", "form-data; name=\"file\";filename=\"" + file.getAbsolutePath() + "\""), fileBody)
                 .build();
         return this;
     }

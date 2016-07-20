@@ -36,8 +36,16 @@ public class UserDao {
 	public static final String ROBOT_COLUMN_NAME_ID = "username";
 	public static final String ROBOT_COLUMN_NAME_NICK = "nick";
 	public static final String ROBOT_COLUMN_NAME_AVATAR = "avatar";
-	
-	
+	//SuperWeChat SQL变量
+	public static final String SUPER_TABLE_NAME = "t_superwechat_user";
+	public static final String SUPER_USER_ID = "muserName";
+	public static final String SUPER_NAME_NICK = "muserNick";
+	public static final String SUPER_NAME_AVATAR = "mavatarId";
+	public static final String SUPER_NAME_AVATAR_PATH = "mavatarPath";
+	public static final String SUPER_NAME_AVATAR_TYPE = "mavatarType";
+	public static final String SUPER_NAME_AVATAR_TIME = "mavatarLastUpdateTime";
+
+
 	public UserDao(Context context) {
 	    DemoDBManager.getInstance().onInit(context);
 	}

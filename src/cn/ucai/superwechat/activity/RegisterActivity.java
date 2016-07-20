@@ -76,7 +76,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);//得到新Activity 关闭后返回的数据
+        super.onActivityResult(requestCode, resultCode, data);//得到新Activity 关闭后返回前一个Activity数据
         Log.i("main", "requestCode=" + requestCode + "]resultCode=" + resultCode);
         if (resultCode != RESULT_OK) {
             return;
@@ -137,6 +137,7 @@ public class RegisterActivity extends BaseActivity {
         OkHttpUtils2<Result> utils = new OkHttpUtils2<Result>();
         String strUrl = "http://10.0.2.2:8080/SuperWeChatServer/Server?request=register&m_user_name=" + username + "&m_user_nick=" + username + "&m_user_password=" + pwd;
         Log.i("main", "RegisterActivity" + strUrl);
+        Log.i("main", "本地图片路径" + file.getAbsolutePath());
         utils.url(strUrl)
                 .targetClass(Result.class)
                 .addFile(file)

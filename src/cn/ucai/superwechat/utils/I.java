@@ -4,7 +4,7 @@ import cn.ucai.superwechat.R;
 
 public interface I {
     String SERVER_URL = "http://10.0.2.2:8080/SuperWeChatServer/Server";
-    String QUESTION = "=";
+    String QUESTION = "?";
 
     interface User {
         String TABLE_NAME = "t_superwechat_user";
