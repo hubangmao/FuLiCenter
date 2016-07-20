@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,6 +17,11 @@ import android.app.Application;
 import android.content.Context;
 
 import com.easemob.EMCallBack;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.ucai.superwechat.bean.UserAvatar;
 
 public class SuperWeChatApplication extends Application {
 
@@ -106,5 +111,25 @@ public class SuperWeChatApplication extends Application {
     public void logout(final boolean isGCM, final EMCallBack emCallBack) {
         // 先调用sdk logout，在清理app中自己的数据
         hxSDKHelper.logout(isGCM, emCallBack);
+    }
+
+    private UserAvatar user = new UserAvatar();
+
+    public UserAvatar getUser() {
+        return user;
+    }
+
+    public void setUser(UserAvatar user) {
+        this.user = user;
+    }
+
+    List<UserAvatar> userList = new ArrayList<UserAvatar>();
+
+    public List<UserAvatar> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<UserAvatar> userList) {
+        this.userList = userList;
     }
 }
