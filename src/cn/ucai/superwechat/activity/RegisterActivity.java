@@ -76,11 +76,12 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode != RESULT_OK) {
-//            return;
-//        }
-        mSetAvatar.setAvatar(requestCode, data, mIv_Head);
+        super.onActivityResult(requestCode, resultCode, data);//得到新Activity 关闭后返回的数据
+        Log.i("main", "requestCode=" + requestCode + "]resultCode=" + resultCode);
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        mSetAvatar.setAvatar(requestCode, data, mIv_Head);//得到数据后传入setAvatar()方法
     }
 
     private void initView() {
@@ -134,10 +135,9 @@ public class RegisterActivity extends BaseActivity {
         File file = new File(OnSetAvatarListener.getAvatarPath(RegisterActivity.this, I.AVATAR_TYPE_USER_PATH)
                 , username + I.AVATAR_SUFFIX_JPG);
         OkHttpUtils2<Result> utils = new OkHttpUtils2<Result>();
-        utils.setRequestUrl(I.SERVER_URL)
-                .addParam(I.User.USER_NAME, username)
-                .addParam(I.User.PASSWORD, pwd)
-                .addParam(I.User.NICK, userNick)
+        String strUrl = "http://10.0.2.2:8080/SuperWeChatServer/Server?request=register&m_user_name=" + username + "&m_user_nick=" + username + "&m_user_password=" + pwd;
+        Log.i("main", "RegisterActivity" + strUrl);
+        utils.url(strUrl)
                 .targetClass(Result.class)
                 .addFile(file)
                 .execute(new OkHttpUtils2.OnCompleteListener<Result>() {
@@ -148,7 +148,6 @@ public class RegisterActivity extends BaseActivity {
                             registerEMService(pd);
                         } else {
                             pd.dismiss();
-                            Log.i("main", "RegisterActivity" + result.getRetCode());
                             Toast.makeText(RegisterActivity.this, getResources().getString(R.string.mes_102), Toast.LENGTH_SHORT).show();
                         }
                     }
