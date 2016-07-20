@@ -28,6 +28,7 @@ import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.data.OkHttpUtils2;
 import cn.ucai.superwechat.listener.OnSetAvatarListener;
 import cn.ucai.superwechat.utils.I;
+import cn.ucai.superwechat.utils.Utils;
 
 /**
  * 注册页
@@ -135,7 +136,7 @@ public class RegisterActivity extends BaseActivity {
         File file = new File(OnSetAvatarListener.getAvatarPath(RegisterActivity.this, I.AVATAR_TYPE_USER_PATH)
                 , username + I.AVATAR_SUFFIX_JPG);
         OkHttpUtils2<Result> utils = new OkHttpUtils2<Result>();
-        String strUrl = "http://10.0.2.2:8080/SuperWeChatServer/Server?request=register&m_user_name=" + username + "&m_user_nick=" + username + "&m_user_password=" + pwd;
+        String strUrl = "http://10.0.2.2:8080/SuperWeChatServer/Server?request=register&m_user_name=" + username + "&m_user_nick=" + userNick + "&m_user_password=" + pwd;
         Log.i("main", "RegisterActivity" + strUrl);
         Log.i("main", "本地图片路径" + file.getAbsolutePath());
         utils.url(strUrl)
@@ -157,7 +158,6 @@ public class RegisterActivity extends BaseActivity {
                     public void onError(String error) {
                         pd.dismiss();
                         Toast.makeText(RegisterActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
-
                     }
                 });
     }
@@ -179,6 +179,8 @@ public class RegisterActivity extends BaseActivity {
                         }
                     });
                 } catch (final EaseMobException e) {
+                    //用户环信服务器注册失败 删除 本地服务器注册信息
+                    deleteSuperServiceData();
                     runOnUiThread(new Runnable() {
                         public void run() {
                             if (!RegisterActivity.this.isFinishing())
@@ -198,6 +200,26 @@ public class RegisterActivity extends BaseActivity {
                         }
                     });
                 }
+            }
+
+            private void deleteSuperServiceData() {
+                String strDelUrl = I.SERVER_URL + "?request=unregister&m_user_name=" + username;
+                OkHttpUtils2<Result> utils2 = new OkHttpUtils2<Result>();
+                utils2.url(strDelUrl)
+                        .targetClass(Result.class)
+                        .execute(new OkHttpUtils2.OnCompleteListener<Result>() {
+                            @Override
+                            public void onSuccess(Result result) {
+                                if (result.isRetMsg() && result != null) {
+                                    Toast.makeText(RegisterActivity.this, Utils.getResourceString(RegisterActivity.this,result.getRetCode()), Toast.LENGTH_SHORT).show();
+                                    Log.i("main", "取消注册成功");
+                                }
+                            }
+                            @Override
+                            public void onError(String error) {
+
+                            }
+                        });
             }
         }).start();
     }
