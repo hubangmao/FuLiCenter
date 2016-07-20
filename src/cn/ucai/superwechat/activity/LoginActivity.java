@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -43,11 +43,14 @@ import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.data.OkHttpUtils2;
 import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.domain.User;
+import cn.ucai.superwechat.task.DowAllFirendLsit;
 import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.I;
+import cn.ucai.superwechat.utils.Utils;
 
 /**
  * 登陆页面
@@ -65,7 +68,6 @@ public class LoginActivity extends BaseActivity {
     private String currentPassword;
 
     ProgressDialog pd;
-    boolean b;//Super服务器验证
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,6 @@ public class LoginActivity extends BaseActivity {
         if (DemoHXSDKHelper.getInstance().isLogined()) {
             autoLogin = true;
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
             return;
         }
         setContentView(R.layout.activity_login);
@@ -144,13 +145,62 @@ public class LoginActivity extends BaseActivity {
 
         //验证我们的 服务器
         MySuperVerify();
-        if (b) {
-            return;
-        }
-        //环信服务器验证
-        HXServiceVerify();
+
 
     }
+
+
+    //http://localhost:8080/SuperWeChatServer/Server?request=login&m_user_name=&m_user_password=
+    private void MySuperVerify() {
+        String strUrl = I.SERVER_URL + "?request=login&m_user_name=" + currentUsername + "&m_user_password=" + currentPassword;
+        Log.i("main", "登陆url" + strUrl);
+        OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
+        utils2.url(strUrl)
+                .targetClass(String.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Result user = Utils.getResultFromJson(result, UserAvatar.class);
+                        if (user.isRetMsg() && result != null) {
+                            Toast.makeText(LoginActivity.this, "SuperWeChat登陆验证成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "正在验证环信服务器", Toast.LENGTH_SHORT).show();
+                            //环信服务器验证
+                            HXServiceVerify();
+                            //保存用户信息至数据库
+                            addSuperDBData((UserAvatar) user.getRetData());
+                            //保存用户信息到内存
+                            userInfoAddRAM((UserAvatar) user.getRetData());
+                            //下载所有好友信存到集合 ->内存
+                            new DowAllFirendLsit(LoginActivity.this).dowAllFirendLsit();
+                        } else {
+                            Toast.makeText(LoginActivity.this, Utils.getResourceString(LoginActivity.this, user.getRetCode()), Toast.LENGTH_SHORT).show();
+                            pd.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        pd.dismiss();
+                        Toast.makeText(LoginActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                        Log.i("main", "error" + error.toString());
+                    }
+                });
+    }
+
+    //保存用户信息至内存中
+    private void userInfoAddRAM(UserAvatar userInfo) {
+        Log.i("main", "查看" + userInfo.getMAvatarId());
+        SuperWeChatApplication.getInstance().getUser().setMUserName(userInfo.getMUserName());
+        SuperWeChatApplication.getInstance().getUser().setMUserNick(userInfo.getMUserNick());
+    }
+
+    private void addSuperDBData(UserAvatar userInfo) {
+        if (userInfo == null) {
+            return;
+        }
+        new UserDao(LoginActivity.this).saveSuperData(userInfo);
+    }
+
     private void HXServiceVerify() {
         // 调用sdk登陆方法登陆聊天服务器
         EMChatManager.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
@@ -162,7 +212,6 @@ public class LoginActivity extends BaseActivity {
                 // 登陆成功，保存用户名密码
                 SuperWeChatApplication.getInstance().setUserName(currentUsername);
                 SuperWeChatApplication.getInstance().setPassword(currentPassword);
-
                 try {
                     // ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
                     // ** manually load all local groups and
@@ -216,37 +265,6 @@ public class LoginActivity extends BaseActivity {
                 });
             }
         });
-    }
-
-    //http://localhost:8080/SuperWeChatServer/Server?request=login&m_user_name=&m_user_password=
-    private void MySuperVerify() {
-        String strUrl = I.SERVER_URL + "?request=login&m_user_name=" + currentUsername + "&m_user_password=" + currentPassword;
-        Log.i("main", "登陆url" +strUrl);
-        OkHttpUtils2<Result> utils2 = new OkHttpUtils2<Result>();
-        utils2.url(strUrl)
-                .targetClass(Result.class)
-                .execute(new OkHttpUtils2.OnCompleteListener<Result>() {
-                    @Override
-                    public void onSuccess(Result result) {
-                        if (result.isRetMsg() && result != null) {
-                            b = false;
-                            Toast.makeText(LoginActivity.this, "SuperWeChat登陆验证成功", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(LoginActivity.this, "真正验证环信服务器", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(LoginActivity.this, "SuperWeChat登陆失败", Toast.LENGTH_SHORT).show();
-                            pd.dismiss();
-                            b = true;
-                        }
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        pd.dismiss();
-                        b = true;
-                        Toast.makeText(LoginActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
-                        Log.i("main", "error" + error.toString());
-                    }
-                });
     }
 
     private void initializeContacts() {
