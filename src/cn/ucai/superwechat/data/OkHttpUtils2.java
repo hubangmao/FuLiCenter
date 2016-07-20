@@ -300,8 +300,14 @@ public class OkHttpUtils2<T> {
 //        Log.e("okhttp","1 murl="+ mUrl.toString());
         return this;
     }
-
     public OkHttpUtils2<T> addFile(File file) {
+        if (mUrl == null) {
+            return this;
+        }
+        mFileBody = RequestBody.create(null, file);
+        return this;
+    }
+    public OkHttpUtils2<T> addFile1(File file) {
         if (mUrl == null) {
             return this;
         }
