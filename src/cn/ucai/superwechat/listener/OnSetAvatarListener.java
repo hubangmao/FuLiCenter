@@ -142,6 +142,7 @@ public class OnSetAvatarListener implements View.OnClickListener {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         mActivity.startActivityForResult(intent, REQUEST_CHOOSE_PHOTO);
+        //private Activity mActivity;
     }
 
     /**拍照:启动系统拍照的Activity，要求返回拍照结果*/
@@ -163,26 +164,27 @@ public class OnSetAvatarListener implements View.OnClickListener {
     }
 
     /**
-     * 设置拍照或从相册选择返回的结果，本方法在Activity.onActivityResult()调用
-     * @param requestCode
+     * 得到拍照或从相册选择返回的结果，本方法在的ctivity.onActivityResult()调用
+     * @param requestCode 和启动Activity时方法startActivityForResult(intent, REQUEST_CHOOSE_PHOTO)第二个值相等
      * @param data
      * @param ivAvatar
      */
     public void setAvatar(int requestCode, Intent data, ImageView ivAvatar) {
         switch (requestCode) {
-            case REQUEST_CHOOSE_PHOTO:
+            case REQUEST_CHOOSE_PHOTO://返回相册数据
+                if (data != null) {
+                    //启动剪切方法
+                    startCropPhotoActivity(data.getData(), 200, 200,REQUEST_CROP_PHOTO);
+                }
+                break;
+            case REQUEST_TAKE_PICTURE://返回拍照数据
                 if (data != null) {
                     startCropPhotoActivity(data.getData(), 200, 200,REQUEST_CROP_PHOTO);
                 }
                 break;
-            case REQUEST_TAKE_PICTURE:
-                if (data != null) {
-                    startCropPhotoActivity(data.getData(), 200, 200,REQUEST_CROP_PHOTO);
-                }
-                break;
-            case REQUEST_CROP_PHOTO:
-                saveCropAndShowAvatar(ivAvatar, data);
-                closePopuAvatar();
+            case REQUEST_CROP_PHOTO://启动裁剪Activity后 返回数据接收
+                saveCropAndShowAvatar(ivAvatar, data);//ivAvatar=ImageView 实例id
+                closePopuAvatar();//剪切完成关闭悬浮窗PopupWindow
                 break;
         }
     }
@@ -244,7 +246,7 @@ public class OnSetAvatarListener implements View.OnClickListener {
     }
 
     /**
-     * 启动裁剪的Activity
+     * 启动系统的Activity裁剪
      * @param uri
      * @param outputX
      * @param outputY
