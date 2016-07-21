@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.bean.Result;
@@ -26,22 +27,25 @@ public class DowAllFirendLsit {
         this.mContext = mContext;
     }
 
-    //DowAllFirendLsit
-    //http://localhost:8080/SuperWeChatServer/Server?request=download_contact_all_list&m_contact_user_name=
     public void dowAllFirendLsit() {
         OkHttpUtils2<String> utils = new OkHttpUtils2<String>();
-        String strAllUrl = I.SERVER_URL + "?request=download_contact_all_list&m_contact_user_name=" + userName;
+        String strAllUrl = I.SERVER_URL + "?request=download_contact_all_list&m_contact_user_name=" + "hbm3";
         utils.url(strAllUrl)
                 .targetClass(String.class)
                 .execute(new OkHttpUtils2.OnCompleteListener<String>() {
                     @Override
                     public void onSuccess(String s) {
-                        Log.i("main", TAG + "所有好友下载 = " + s);
                         Result result = Utils.getListResultFromJson(s, UserAvatar.class);
                         List<UserAvatar> list = (List<UserAvatar>) result.getRetData();
                         if (list.size() > 0 && list != null) {
                             SuperWeChatApplication.getInstance().setUserList(list);
+                            Map<String, UserAvatar> map = SuperWeChatApplication.getInstance().getMap();
                             mContext.sendStickyBroadcast(new Intent("dowAllFriend"));
+                            for (UserAvatar l : list) {
+                                Log.i("main", "用户昵称=" + l.getMUserNick());
+                                map.put(l.getMUserName(), l);
+                            }
+                            SuperWeChatApplication.getInstance().setMap(map);
                         }
                     }
 
@@ -51,6 +55,8 @@ public class DowAllFirendLsit {
                     }
                 });
     }
+
+
 }
 
 
