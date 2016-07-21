@@ -37,6 +37,7 @@ public class UserDao {
     public static final String ROBOT_COLUMN_NAME_ID = "username";
     public static final String ROBOT_COLUMN_NAME_NICK = "nick";
     public static final String ROBOT_COLUMN_NAME_AVATAR = "avatar";
+
     //SuperWeChat SQL变量
     public static final String SUPER_TABLE_NAME = "t_superwechat_user";
     public static final String SUPER_USER_ID = "muserName";
@@ -116,5 +117,10 @@ public class UserDao {
      */
     public  void saveSuperData(UserAvatar user) {
         DemoDBManager.getInstance().saveSuperData(user);
+    }
+
+    public UserAvatar getDBUserInfo(String userName) {
+        return DemoDBManager.getInstance().getDBUserInfo(userName);
+
     }
 }

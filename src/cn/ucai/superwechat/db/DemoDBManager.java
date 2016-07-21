@@ -10,6 +10,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
+import android.util.Log;
 
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.bean.UserAvatar;
@@ -355,7 +356,7 @@ public class DemoDBManager {
     }
 
     //储存用户信息至数据表t_superwechat===================================================
-    public void saveSuperData(UserAvatar user){
+    public void saveSuperData(UserAvatar user) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(UserDao.SUPER_USER_ID, user.getMUserName());
@@ -365,6 +366,27 @@ public class DemoDBManager {
         values.put(UserDao.SUPER_NAME_AVATAR_TYPE, user.getMAvatarType());
         values.put(UserDao.SUPER_NAME_AVATAR_TIME, user.getMAvatarLastUpdateTime());
         db.replace(UserDao.SUPER_TABLE_NAME, null, values);
-        }
+    }
 
+    //查询Super数据库信息
+    synchronized public UserAvatar getDBUserInfo(String userName) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select *from " + UserDao.SUPER_TABLE_NAME + " where " + UserDao.SUPER_USER_ID
+                + " =?", new String[]{userName});
+        UserAvatar user = null;
+        if (cursor.moveToNext()) {
+            user = new UserAvatar();
+
+            user.setMUserName(cursor.getString(cursor.getColumnIndex(UserDao.SUPER_USER_ID)));
+            user.setMUserNick(cursor.getString(cursor.getColumnIndex(UserDao.SUPER_NAME_NICK)));
+            user.setMAvatarId(cursor.getInt(cursor.getColumnIndex(UserDao.SUPER_NAME_AVATAR)));
+            user.setMAvatarPath(cursor.getString(cursor.getColumnIndex(UserDao.SUPER_NAME_AVATAR_PATH)));
+            user.setMAvatarType(cursor.getInt(cursor.getColumnIndex(UserDao.SUPER_NAME_AVATAR_TYPE)));
+            user.setMAvatarLastUpdateTime(cursor.getString(cursor.getColumnIndex(UserDao.SUPER_NAME_AVATAR_TIME)));
+
+        }
+        Log.i("main", "userName=" + userName + user.toString());
+        return user;
+
+    }
 }
