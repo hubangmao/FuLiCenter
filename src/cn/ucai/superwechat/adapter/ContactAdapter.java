@@ -123,10 +123,10 @@ public class ContactAdapter extends ArrayAdapter<User> implements SectionIndexer
         } else {
 //		    holder.nameTextview.setText(user.getNick());
             //设置于本地服务器昵称
-            Log.i("main", "值=" + username);
             UserUtils.setMyUserNick(username, holder.nameTextview);
             //设置用户头像
-            UserUtils.setUserAvatar(getContext(), username, holder.avatar);
+
+            UserUtils.setMyAvatar(getContext(), username, holder.avatar);
             if (holder.unreadMsgView != null)
                 holder.unreadMsgView.setVisibility(View.INVISIBLE);
         }
