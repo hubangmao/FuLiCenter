@@ -15,11 +15,14 @@ package cn.ucai.superwechat;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.easemob.EMCallBack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.ucai.superwechat.bean.UserAvatar;
 
@@ -113,6 +116,9 @@ public class SuperWeChatApplication extends Application {
         hxSDKHelper.logout(isGCM, emCallBack);
     }
 
+    /**
+     * user储存用户信息
+     */
     private UserAvatar user = new UserAvatar();
 
     public UserAvatar getUser() {
@@ -123,7 +129,8 @@ public class SuperWeChatApplication extends Application {
         this.user = user;
     }
 
-    List<UserAvatar> userList = new ArrayList<UserAvatar>();
+    //储存好友集合
+    List<UserAvatar> userList;
 
     public List<UserAvatar> getUserList() {
         return userList;
@@ -131,5 +138,20 @@ public class SuperWeChatApplication extends Application {
 
     public void setUserList(List<UserAvatar> userList) {
         this.userList = userList;
+        if (userList != null) {
+            Log.i("main", "储存好友集合信息" + userList.toString());
+        }
     }
+
+    //储存好友Map集合
+   static  Map<String, UserAvatar> map = new HashMap<String, UserAvatar>();
+    public Map<String, UserAvatar> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<String, UserAvatar> map) {
+        this.map = map;
+    }
+
+
 }
