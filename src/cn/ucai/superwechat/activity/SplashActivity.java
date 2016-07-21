@@ -61,7 +61,7 @@ public class SplashActivity extends BaseActivity {
                     //先查看全局变量有没有 用户信息
                     String userName = SuperWeChatApplication.getInstance().getUserName();
                     UserDao userDao = new UserDao(SplashActivity.this);
-                    UserAvatar userAvatar = userDao.getDBUserInfo("hbm3");
+                    UserAvatar userAvatar = userDao.getDBUserInfo(userName);
 
                     //全局变量 UserAvatar 保存信息
                     SuperWeChatApplication.getInstance().setUser(userAvatar);
