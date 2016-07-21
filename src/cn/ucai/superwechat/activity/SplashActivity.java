@@ -57,17 +57,17 @@ public class SplashActivity extends BaseActivity {
                     EMGroupManager.getInstance().loadAllGroups();
                     EMChatManager.getInstance().loadAllConversations();
                     //此处有bug待中午修复***
-/*
+
                     //先查看全局变量有没有 用户信息
                     String userName = SuperWeChatApplication.getInstance().getUserName();
                     UserDao userDao = new UserDao(SplashActivity.this);
                     UserAvatar userAvatar = userDao.getDBUserInfo("hbm3");
 
-                     //全局变量 UserAvatar 保存信息
+                    //全局变量 UserAvatar 保存信息
                     SuperWeChatApplication.getInstance().setUser(userAvatar);
 
                     //得到用户信息后下载 好友列表保存到全局变量
-                    new DowAllFirendLsit(SplashActivity.this).dowAllFirendLsit();*/
+                    new DowAllFirendLsit(SplashActivity.this).dowAllFirendLsit();
 
                     long costTime = System.currentTimeMillis() - start;
                     //等待sleeptime时长
