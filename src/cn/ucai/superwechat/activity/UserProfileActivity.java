@@ -83,7 +83,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
         }
 
         if (username == null || username.equals(EMChatManager.getInstance().getCurrentUser())) {
-            Log.i("main", "UserProfileActivity.initListener()设置个人资料");
+            Log.i("main", "UserProfileActivity.initListener()设置个人资料" + username);
             headAvatar = (ImageView) findViewById(R.id.user_head_avatar);
             tvUsername.setText(EMChatManager.getInstance().getCurrentUser());
             UserUtils.setMyAvatar(UserProfileActivity.this, username, headAvatar);

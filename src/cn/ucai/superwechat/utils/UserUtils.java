@@ -120,6 +120,16 @@ public class UserUtils {
         }
     }
 
+    //设置添加好友的昵称
+    public static void setMyNewUserNick(UserAvatar username, TextView nameTextView) {
+        if (username != null) {
+            nameTextView.setText(username.getMUserNick());
+        } else {
+            nameTextView.setText(username.getMUserName());
+
+        }
+    }
+
 
     //设置自己资料显示自己信息
     public static void setMyUserNick1(String username, TextView nameTextView) {
@@ -137,9 +147,9 @@ public class UserUtils {
      * ?request=download_avatar&name_or_hxid=&avatarType=
      */
     public static void setMyAvatar(Context context, String userName, ImageView imageView) {
-//        if (userName == null) {
-//            userName = "hbm3";
-//        }
+        if (userName == null) {
+            userName = "hbm3";
+        }
         String path = I.SERVER_URL + "?request=download_avatar&name_or_hxid=" + userName + "&avatarType=user_avatar";
         Log.i("main", "UserUtills.setMyAvatar()" + path);
         if (path != null && userName != null) {
