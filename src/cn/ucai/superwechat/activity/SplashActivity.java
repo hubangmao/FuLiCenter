@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle arg0) {
+        Log.i("main","SplashActivity.onCreate()");
         setContentView(R.layout.activity_splash);
         super.onCreate(arg0);
 
@@ -56,7 +58,6 @@ public class SplashActivity extends BaseActivity {
                     long start = System.currentTimeMillis();
                     EMGroupManager.getInstance().loadAllGroups();
                     EMChatManager.getInstance().loadAllConversations();
-                    //此处有bug待中午修复***
 
                     //先查看全局变量有没有 用户信息
                     String userName = SuperWeChatApplication.getInstance().getUserName();
@@ -68,7 +69,7 @@ public class SplashActivity extends BaseActivity {
 
                     //得到用户信息后下载 好友列表保存到全局变量
                     new DowAllFirendLsit(SplashActivity.this).dowAllFirendLsit();
-
+                    Log.i("main","得到用户信息后下载 好友列表保存到全局变量");
                     long costTime = System.currentTimeMillis() - start;
                     //等待sleeptime时长
                     if (sleepTime - costTime > 0) {

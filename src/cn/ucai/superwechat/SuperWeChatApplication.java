@@ -42,6 +42,7 @@ public class SuperWeChatApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.i("main","SuperWeChatApplication.onCreate()");
         applicationContext = this;
         instance = this;
 

@@ -76,6 +76,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 			iconRightArrow.setVisibility(View.INVISIBLE);
 		}
 		if (username == null) {
+
 			tvUsername.setText(EMChatManager.getInstance().getCurrentUser());
 			UserUtils.setCurrentUserNick(tvNickName);
 			UserUtils.setCurrentUserAvatar(this, headAvatar);

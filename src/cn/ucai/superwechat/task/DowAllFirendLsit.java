@@ -29,7 +29,7 @@ public class DowAllFirendLsit {
 
     public void dowAllFirendLsit() {
         OkHttpUtils2<String> utils = new OkHttpUtils2<String>();
-        String strAllUrl = I.SERVER_URL + "?request=download_contact_all_list&m_contact_user_name=" + "hbm3";
+        String strAllUrl = I.SERVER_URL + "?request=download_contact_all_list&m_contact_user_name=" + userName;
         utils.url(strAllUrl)
                 .targetClass(String.class)
                 .execute(new OkHttpUtils2.OnCompleteListener<String>() {

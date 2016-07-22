@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f2f2f2"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
 
     <RelativeLayout
@@ -22,7 +22,7 @@
             android:layout_centerInParent="true"
             android:textColor="#fff"
             android:textSize="18sp" />
-        
+
         <Button
             android:id="@+id/search"
             android:layout_width="54dp"
@@ -36,30 +36,41 @@
             android:textSize="16sp" />
     </RelativeLayout>
 
+
     <EditText
         android:id="@+id/edit_note"
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_margin="10dp"
-        android:paddingLeft="5dp"
         android:background="@drawable/button_normal_shape"
         android:hint="用户名"
+        android:paddingLeft="5dp"
         android:singleLine="true"
         android:textColorHint="#b3b3b3"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="无结果"
+        android:textColor="#950a0a"
+        android:textSize="30sp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/mm_listitem"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/mm_listitem"
-            android:duplicateParentState="true" >
+            android:duplicateParentState="true">
 
             <ImageView
                 android:id="@+id/avatar"
