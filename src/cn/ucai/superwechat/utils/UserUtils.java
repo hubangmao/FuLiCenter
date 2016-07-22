@@ -47,12 +47,7 @@ public class UserUtils {
      * @param username
      */
     public static void setUserAvatar(Context context, String username, ImageView imageView) {
-        User user = getUserInfo(username);
-        if (user != null && user.getAvatar() != null) {
-            Picasso.with(context).load(user.getAvatar()).placeholder(R.drawable.default_avatar).into(imageView);
-        } else {
-            Picasso.with(context).load(R.drawable.default_avatar).into(imageView);
-        }
+        setMyAvatar(context, username, imageView);
     }
 
     /**
@@ -65,6 +60,13 @@ public class UserUtils {
         } else {
             Picasso.with(context).load(R.drawable.default_avatar).into(imageView);
         }
+    }
+    /**
+     * 设置Super当前用户头像
+     */
+    public static void setMyUserAvatar(Context context, ImageView imageView) {
+        String userName = SuperWeChatApplication.getInstance().getUserName();
+        setMyAvatar(context, userName, imageView);
     }
 
     /**
@@ -110,13 +112,25 @@ public class UserUtils {
             nameTextView.setText(username);
         }
     }
-    //显示本地服务器头像
 
+    //设置自己资料显示自己信息
+    public static void setMyUserNick1(String username, TextView nameTextView) {
+        UserAvatar userAvatar = SuperWeChatApplication.getInstance().getUser();
+        if (userAvatar != null) {
+            nameTextView.setText(userAvatar.getMUserNick());
+        } else {
+            nameTextView.setText(username);
+        }
+    }
+    //显示本地服务器头像
     /**
      * 设置当前用户头像
      * ?request=download_avatar&name_or_hxid=&avatarType=
      */
     public static void setMyAvatar(Context context, String userName, ImageView imageView) {
+        if (userName == null) {
+            userName = "hbm3";
+        }
         String path = I.SERVER_URL + "?request=download_avatar&name_or_hxid=" + userName + "&avatarType=user_avatar";
         Log.i("main", "UserUtills.setMyAvatar()" + path);
         if (path != null && userName != null) {
