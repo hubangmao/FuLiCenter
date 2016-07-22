@@ -13,12 +13,6 @@
  */
 package cn.ucai.superwechat.activity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -44,10 +38,6 @@ import com.easemob.EMEventListener;
 import com.easemob.EMGroupChangeListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.EMValueCallBack;
-
-import cn.ucai.superwechat.SuperWeChatApplication;
-import cn.ucai.superwechat.applib.controller.HXSDKHelper;
-
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactListener;
 import com.easemob.chat.EMContactManager;
@@ -59,10 +49,22 @@ import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.EMMessage.Type;
 import com.easemob.chat.TextMessageBody;
+import com.easemob.util.EMLog;
+import com.easemob.util.HanziToPinyin;
+import com.easemob.util.NetUtils;
+import com.umeng.analytics.MobclickAgent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatApplication;
+import cn.ucai.superwechat.applib.controller.HXSDKHelper;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.data.OkHttpUtils2;
@@ -74,12 +76,6 @@ import cn.ucai.superwechat.domain.User;
 import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.I;
 import cn.ucai.superwechat.utils.Utils;
-
-import com.easemob.util.EMLog;
-import com.easemob.util.HanziToPinyin;
-import com.easemob.util.NetUtils;
-import com.squareup.okhttp.internal.Util;
-import com.umeng.analytics.MobclickAgent;
 
 public class MainActivity extends BaseActivity implements EMEventListener {
 
@@ -555,7 +551,6 @@ public class MainActivity extends BaseActivity implements EMEventListener {
                                 Result result = Utils.getResultFromJson(s, UserAvatar.class);
                                 if (result != null && result.isRetMsg()) {
                                     UserAvatar userAvatar = (UserAvatar) result.getRetData();
-
                                     if (userAvatar != null) {
                                         if (!SuperWeChatApplication.getInstance().getMap()
                                                 .containsKey(userAvatar.getMUserName())) {

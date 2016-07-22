@@ -31,6 +31,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -325,7 +326,7 @@ public class ContactlistFragment extends Fragment {
     /**
      * 删除联系人
      *
-     * @param toDeleteUser
+     * @param tobeDeleteUser
      */
     public void deleteContact(final User tobeDeleteUser) {
         String st1 = getResources().getString(R.string.deleting);
@@ -354,7 +355,7 @@ public class ContactlistFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         public void run() {
                             pd.dismiss();
-                            Toast.makeText(getActivity(), st2 + e.getMessage(), 1).show();
+                            Toast.makeText(getActivity(), st2 + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -384,7 +385,7 @@ public class ContactlistFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         public void run() {
                             pd.dismiss();
-                            Toast.makeText(getActivity(), st2, 0).show();
+                            Toast.makeText(getActivity(), st2, Toast.LENGTH_SHORT).show();
                             refresh();
                         }
                     });
@@ -393,7 +394,7 @@ public class ContactlistFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         public void run() {
                             pd.dismiss();
-                            Toast.makeText(getActivity(), st3, 0).show();
+                            Toast.makeText(getActivity(), st3, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -518,6 +519,7 @@ public class ContactlistFragment extends Fragment {
     private void updateContactListener() {
         mUpdateContactReceiver = new UpDateContactReceiver();
         getActivity().registerReceiver(mUpdateContactReceiver, new IntentFilter("update_contact_list"));
+        Log.i("main", "广播接收者测试" + ContactlistFragment.class.getSimpleName());
     }
 
     @Override
