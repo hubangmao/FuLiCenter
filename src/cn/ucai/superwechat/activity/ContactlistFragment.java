@@ -22,8 +22,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -68,7 +70,6 @@ import com.easemob.util.EMLog;
 
 /**
  * 联系人列表页
- *
  */
 public class ContactlistFragment extends Fragment {
     public static final String TAG = "ContactlistFragment";
@@ -159,6 +160,7 @@ public class ContactlistFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        updateContactListener();//创建广播设置好友请求昵称
         //防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
         if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
             return;
@@ -501,5 +503,26 @@ public class ContactlistFragment extends Fragment {
             outState.putBoolean(Constant.ACCOUNT_REMOVED, true);
         }
 
+    }
+
+    class UpDateContactReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            adapter.notifyDataSetChanged();
+        }
+
+    }
+
+    UpDateContactReceiver mUpdateContactReceiver;
+
+    private void updateContactListener() {
+        mUpdateContactReceiver = new UpDateContactReceiver();
+        getActivity().registerReceiver(mUpdateContactReceiver, new IntentFilter("update_contact_list"));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().unregisterReceiver(mUpdateContactReceiver);
     }
 }
