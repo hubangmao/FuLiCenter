@@ -17,8 +17,11 @@ import cn.ucai.superwechat.task.DowAllFirendLsit;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class UserUtils {
     /**
@@ -61,6 +64,7 @@ public class UserUtils {
             Picasso.with(context).load(R.drawable.default_avatar).into(imageView);
         }
     }
+
     /**
      * 设置Super当前用户头像
      */
@@ -105,13 +109,17 @@ public class UserUtils {
 
     //设置用户昵称
     public static void setMyUserNick(String username, TextView nameTextView) {
+        Map<String, UserAvatar> map = SuperWeChatApplication.getInstance().getMap();
         UserAvatar userAvatar = SuperWeChatApplication.getInstance().getMap().get(username.trim());
         if (userAvatar != null) {
             nameTextView.setText(userAvatar.getMUserNick());
+            Log.i("main", "userUtils.setMyUserNick()用户名长度测试=" + username.length() + username + "Map.size()="
+                    + map.size() + "昵称" + map.get(username));
         } else {
             nameTextView.setText(username);
         }
     }
+
 
     //设置自己资料显示自己信息
     public static void setMyUserNick1(String username, TextView nameTextView) {
@@ -123,14 +131,15 @@ public class UserUtils {
         }
     }
     //显示本地服务器头像
+
     /**
      * 设置当前用户头像
      * ?request=download_avatar&name_or_hxid=&avatarType=
      */
     public static void setMyAvatar(Context context, String userName, ImageView imageView) {
-        if (userName == null) {
-            userName = "hbm3";
-        }
+//        if (userName == null) {
+//            userName = "hbm3";
+//        }
         String path = I.SERVER_URL + "?request=download_avatar&name_or_hxid=" + userName + "&avatarType=user_avatar";
         Log.i("main", "UserUtills.setMyAvatar()" + path);
         if (path != null && userName != null) {
@@ -139,4 +148,6 @@ public class UserUtils {
             Picasso.with(context).load(R.drawable.default_avatar).into(imageView);
         }
     }
+
+
 }

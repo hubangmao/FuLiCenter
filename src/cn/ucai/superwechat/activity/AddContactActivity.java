@@ -87,28 +87,30 @@ public class AddContactActivity extends BaseActivity {
                 startActivity(new Intent(this, AlertDialog.class).putExtra("msg", st));
                 return;
             }
-            Log.i("main", "Map长度=" + size + SuperWeChatApplication.getInstance().getMap().get(toAddUsername +" ")+toAddUsername);
+            Log.i("main", "Map长度=" + size + SuperWeChatApplication.getInstance().getMap().get(toAddUsername + " ") + toAddUsername);
             //如果存在直接跳转到资料界面
             if (SuperWeChatApplication.getInstance().getMap().get(toAddUsername) != null) {
                 startActivity(new Intent(AddContactActivity.this, UserProfileActivity.class).putExtra("username", toAddUsername));
                 return;
             }
-
             final String strUrl = I.SERVER_URL + "?request=find_user&m_user_name=" + toAddUsername;
-            //添加好友查看本地本地服务器是否存在
+            //添加好友查看本地服务器是否存在查找用户
             OkHttpUtils2<String> utils = new OkHttpUtils2<String>();
             utils.url(strUrl)
                     .targetClass(String.class)
                     .execute(new OkHttpUtils2.OnCompleteListener<String>() {
                         @Override
                         public void onSuccess(String s) {
-                            Result result = Utils.getListResultFromJson(s, UserAvatar.class);
-                            if (result != null) {
+                            Result result = Utils.getResultFromJson(s, UserAvatar.class);
+                            Log.i("main", "AddActivity.searchContact()StrUrl=" + strUrl + "S=" + s + "\n" + result);
+                            if (result != null && result.isRetMsg()) {
                                 mtvHint.setVisibility(View.GONE);
                                 UserAvatar user = (UserAvatar) result.getRetData();
                                 searchedUserLayout.setVisibility(View.VISIBLE);
+                                //显示头像
                                 UserUtils.setMyAvatar(AddContactActivity.this, toAddUsername, avatar);
-                                nameText.setText(user.getMUserNick());
+                                //设置账号信息
+                                nameText.setText(toAddUsername);
                             } else {
                                 mtvHint.setVisibility(View.VISIBLE);
                                 searchedUserLayout.setVisibility(View.GONE);
@@ -122,8 +124,8 @@ public class AddContactActivity extends BaseActivity {
                             searchedUserLayout.setVisibility(View.GONE);
                         }
                     });
-//            // TODO 从服务器获取此contact,如果不存在提示不存在此用户
-//            //服务器存在此用户，显示此用户和添加按钮
+            // TODO 从服务器获取此contact,如果不存在提示不存在此用户
+//            //TODO 服务器存在此用户，显示此用户和添加按钮
 //            searchedUserLayout.setVisibility(View.VISIBLE);
 //            nameText.setText(toAddUsername);
 
@@ -131,7 +133,7 @@ public class AddContactActivity extends BaseActivity {
     }
 
     /**
-     * 添加contact
+     * 7.22下午实现添加好友功能
      *
      * @param view
      */
