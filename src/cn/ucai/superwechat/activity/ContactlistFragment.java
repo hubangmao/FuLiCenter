@@ -52,6 +52,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.applib.controller.HXSDKHelper;
 import cn.ucai.superwechat.applib.controller.HXSDKHelper.HXSyncListener;
 
@@ -61,13 +62,17 @@ import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.adapter.ContactAdapter;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.data.OkHttpUtils2;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.domain.User;
+import cn.ucai.superwechat.utils.I;
 import cn.ucai.superwechat.widget.Sidebar;
 
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
+import com.google.gson.Gson;
 
 /**
  * 联系人列表页
@@ -82,6 +87,7 @@ public class ContactlistFragment extends Fragment {
     private InputMethodManager inputMethodManager;
     private List<String> blackList;
     ImageButton clearSearch;
+    Context mContext;
     EditText query;
     HXContactSyncListener contactSyncListener;
     HXBlackListSyncListener blackListSyncListener;
@@ -161,6 +167,7 @@ public class ContactlistFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mContext = getActivity();
         updateContactListener();//创建广播设置好友请求昵称
         //防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
         if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
@@ -292,6 +299,7 @@ public class ContactlistFragment extends Fragment {
             try {
                 // 删除此联系人
                 deleteContact(toBeProcessUser);
+
                 // 删除相关的邀请消息
                 InviteMessgeDao dao = new InviteMessgeDao(getActivity());
                 dao.deleteMessage(toBeProcessUser.getUsername());
@@ -304,6 +312,36 @@ public class ContactlistFragment extends Fragment {
             return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    //本地服务端好友
+    private void deleteMyContact(User toBeProcessUser) {
+        String userName = toBeProcessUser.getUsername();
+        String userName1 = SuperWeChatApplication.getInstance().getUserName();
+        Log.i("main", "用户账号=" + userName + "当前登录账号=" + userName1);
+        final String strUrl = I.SERVER_URL + "?request=delete_contact&m_contact_user_name=" + userName1 + "&m_contact_cname=" + userName;
+        OkHttpUtils2<Result> utils2 = new OkHttpUtils2<Result>();
+        utils2.url(strUrl)
+                .targetClass(Result.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<Result>() {
+                    @Override
+                    public void onSuccess(Result result) {
+                        if (result.isRetMsg()) {
+                            Log.i("main", "本地服务器删除好友成功" + result.isRetMsg() + strUrl);
+                            SuperWeChatApplication.mMyUtils.toast(mContext, "本地服务器删除好友成功");
+                        } else {
+                            SuperWeChatApplication.mMyUtils.toast(mContext, "删除失败稍后再试");
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        SuperWeChatApplication.mMyUtils.toast(mContext, "网络错误");
+                    }
+                });
+
+
     }
 
     @Override
@@ -339,6 +377,8 @@ public class ContactlistFragment extends Fragment {
             public void run() {
                 try {
                     EMContactManager.getInstance().deleteContact(tobeDeleteUser.getUsername());
+                    //删除本地服务端好友
+                    deleteMyContact(toBeProcessUser);
                     // 删除db和内存中此用户的数据
                     UserDao dao = new UserDao(getActivity());
                     dao.deleteContact(tobeDeleteUser.getUsername());
