@@ -21,7 +21,9 @@ import cn.ucai.superwechat.utils.Utils;
 public class DowAllFirendLsit {
     private final String TAG = DowAllFirendLsit.class.getSimpleName();
     Context mContext;
-    String userName = SuperWeChatApplication.getInstance().getUser().getMUserName();
+    String userName =SuperWeChatApplication.getInstance().getUser().getMUserName();
+
+
 
     public DowAllFirendLsit(Context mContext) {
         this.mContext = mContext;

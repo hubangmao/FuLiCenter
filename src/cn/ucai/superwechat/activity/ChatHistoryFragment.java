@@ -208,6 +208,7 @@ public class ChatHistoryFragment extends Fragment {
 	 * 
 	 * @param context
 	 * @return
+	 *
 	 */
 	private List<EMContact> loadUsersWithRecentChat() {
 		List<EMContact> resultList = new ArrayList<EMContact>();

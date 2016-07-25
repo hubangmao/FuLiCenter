@@ -153,35 +153,35 @@ public class LoginActivity extends BaseActivity {
     //http://localhost:8080/SuperWeChatServer/Server?request=login&m_user_name=&m_user_password=
     private void MySuperVerify() {
         String strUrl = I.SERVER_URL + "?request=login&m_user_name=" + currentUsername + "&m_user_password=" + currentPassword;
-        Log.i("main", "登陆url" + strUrl);
-        OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
-        utils2.url(strUrl)
-                .targetClass(String.class)
-                .execute(new OkHttpUtils2.OnCompleteListener<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Result user = Utils.getResultFromJson(result, UserAvatar.class);
-                        if (user.isRetMsg() && result != null) {
-                            Toast.makeText(LoginActivity.this, "SuperWeChat登陆验证成功", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(LoginActivity.this, "正在验证环信服务器", Toast.LENGTH_SHORT).show();
-                            //环信服务器验证
-                            HXServiceVerify();
-                            //保存用户信息至数据库
-                            addSuperDBData((UserAvatar) user.getRetData());
-                            //保存用户信息到内存
-                            userInfoAddRAM((UserAvatar) user.getRetData());
-                            //下载所有好友信存到集合 ->内存
-                            new DowAllFirendLsit(LoginActivity.this).dowAllFirendLsit();
-                        } else {
-                            Toast.makeText(LoginActivity.this, Utils.getResourceString(LoginActivity.this, user.getRetCode()), Toast.LENGTH_SHORT).show();
-                            pd.dismiss();
-                        }
-                    }
+                             Log.i("main", "登陆url" + strUrl);
+                             OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
+                             utils2.url(strUrl)
+                                     .targetClass(String.class)
+                             .execute(new OkHttpUtils2.OnCompleteListener<String>() {
+                                 @Override
+                                 public void onSuccess(String result) {
+                                     Result user = Utils.getResultFromJson(result, UserAvatar.class);
+                                     if (user.isRetMsg() && result != null) {
+                                         SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "SuperWeChat登陆验证成功");
+                                         SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "正在验证环信服务器");
+                                         //环信服务器验证
+                                         HXServiceVerify();
+                                         //保存用户信息至数据库
+                                         addSuperDBData((UserAvatar) user.getRetData());
+                                         //保存用户信息到内存
+                                         userInfoAddRAM((UserAvatar) user.getRetData());
+                                         //下载所有好友信存到集合 ->内存
+                                         new DowAllFirendLsit(LoginActivity.this).dowAllFirendLsit();
+                                     } else {
+                                         SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, Utils.getResourceString(LoginActivity.this, user.getRetCode()));
+                                         pd.dismiss();
+                                     }
+                                 }
 
                     @Override
                     public void onError(String error) {
                         pd.dismiss();
-                        Toast.makeText(LoginActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                        SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "网络错误");
                         Log.i("main", "error" + error.toString());
                     }
                 });
@@ -226,7 +226,7 @@ public class LoginActivity extends BaseActivity {
                         public void run() {
                             pd.dismiss();
                             DemoHXSDKHelper.getInstance().logout(true, null);
-                            Toast.makeText(getApplicationContext(), R.string.login_failure_failed, Toast.LENGTH_SHORT).show();
+                            SuperWeChatApplication.mMyUtils.toastResources(LoginActivity.this, R.string.login_failure_failed);
                         }
                     });
                     return;
@@ -257,8 +257,7 @@ public class LoginActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         pd.dismiss();
-                        Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
-                                Toast.LENGTH_SHORT).show();
+                        SuperWeChatApplication.mMyUtils.toastResources(LoginActivity.this, R.string.Login_failed);
                     }
                 });
             }

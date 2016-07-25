@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import cn.ucai.superwechat.Constant;
+import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.domain.InviteMessage;
 import cn.ucai.superwechat.domain.InviteMessage.InviteMesageStatus;
@@ -322,7 +323,6 @@ public class DemoDBManager {
             if (cursor.getCount() > 0) {
                 users = new HashMap<String, RobotUser>();
             }
-            ;
             while (cursor.moveToNext()) {
                 String username = cursor.getString(cursor.getColumnIndex(UserDao.ROBOT_COLUMN_NAME_ID));
                 String nick = cursor.getString(cursor.getColumnIndex(UserDao.ROBOT_COLUMN_NAME_NICK));
@@ -385,8 +385,20 @@ public class DemoDBManager {
             user.setMAvatarLastUpdateTime(cursor.getString(cursor.getColumnIndex(UserDao.SUPER_NAME_AVATAR_TIME)));
 
         }
-        Log.i("main", "userName=" + userName + user.toString());
+        if (user != null) {
+            Log.i("main", "userName=" + userName + user.toString());
+        }
         return user;
 
+    }
+
+    //修改数据库用户昵称
+    synchronized public void updateDBInfo(String userNick) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if (db.isOpen()) {
+            ContentValues values = new ContentValues();
+            values.put(UserDao.SUPER_NAME_NICK, userNick);
+            db.update(UserDao.SUPER_TABLE_NAME, values, UserDao.SUPER_USER_ID + "=? ", new String[]{SuperWeChatApplication.getInstance().getUserName()});
+        }
     }
 }

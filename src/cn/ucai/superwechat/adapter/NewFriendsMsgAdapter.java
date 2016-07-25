@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -130,7 +130,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                 holder.status.setEnabled(false);
             }
 
-            // 设置好友请求头像
+            //设置好友请求头像
             UserUtils.setMyAvatar(context, msg.getFrom(), holder.avator);
             //设置昵称http://localhost:8080/SuperWeChatServer/Server?request=find_user&m_user_nam
             String url = I.SERVER_URL + "?request=find_user&m_user_name=" + msg.getFrom();
@@ -209,7 +209,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                         @Override
                         public void run() {
                             pd.dismiss();
-                            Toast.makeText(context, str3 + e.getMessage(), 1).show();
+                            Toast.makeText(context, str3 + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
 

@@ -54,9 +54,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="无结果"
-        android:textColor="#950a0a"
-        android:textSize="30sp"
+        android:text="用户不存在"
+        android:textColor="#8c8a8a"
+        android:textSize="20sp"
         android:visibility="gone" />
 
     <LinearLayout

@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.ucai.superwechat.bean.UserAvatar;
+import cn.ucai.superwechat.utils.Utils;
 
 public class SuperWeChatApplication extends Application {
 
@@ -38,13 +39,15 @@ public class SuperWeChatApplication extends Application {
      */
     public static String currentUserNick = "";
     public static DemoHXSDKHelper hxSDKHelper = new DemoHXSDKHelper();
+    public static Utils mMyUtils;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("main","SuperWeChatApplication.onCreate()");
+        Log.i("main", "SuperWeChatApplication.onCreate()");
         applicationContext = this;
         instance = this;
+        mMyUtils = new Utils();
 
         /**
          * this function will initialize the HuanXin SDK
@@ -145,7 +148,8 @@ public class SuperWeChatApplication extends Application {
     }
 
     //储存好友Map集合
-   static  Map<String, UserAvatar> map = new HashMap<String, UserAvatar>();
+    static Map<String, UserAvatar> map = new HashMap<String, UserAvatar>();
+
     public Map<String, UserAvatar> getMap() {
         return map;
     }

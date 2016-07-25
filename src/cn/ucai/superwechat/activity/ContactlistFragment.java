@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -297,7 +297,6 @@ public class ContactlistFragment extends Fragment {
             try {
                 // 删除此联系人
                 deleteContact(toBeProcessUser);
-
                 // 删除相关的邀请消息
                 InviteMessgeDao dao = new InviteMessgeDao(getActivity());
                 dao.deleteMessage(toBeProcessUser.getUsername());
@@ -326,17 +325,14 @@ public class ContactlistFragment extends Fragment {
                     public void onSuccess(Result result) {
                         if (result.isRetMsg()) {
                             Map<String, UserAvatar> map = SuperWeChatApplication.getInstance().getMap();
-                            List<UserAvatar> userList = SuperWeChatApplication.getInstance().getUserList();
                             map.remove(userName);
-                            UserAvatar userAvatar = map.get(userName);
-                            userList.remove(userAvatar);
+                            SuperWeChatApplication.getInstance().getUserList().remove(map.get(userName));
                             //更新好友列表适配器数据
                             mContext.sendStickyBroadcast(new Intent("update_contact_list"));
                             Log.i("main", "本地服务器删除好友成功" + result.isRetMsg() + strUrl);
                             SuperWeChatApplication.mMyUtils.toast(mContext, "本地服务器删除好友成功");
                         } else {
                             SuperWeChatApplication.mMyUtils.toast(mContext, "本地服务器删除失败稍后再试");
-
                         }
                     }
 

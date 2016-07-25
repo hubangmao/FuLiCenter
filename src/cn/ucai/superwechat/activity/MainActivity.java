@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -86,9 +86,8 @@ public class MainActivity extends BaseActivity implements EMEventListener {
     private TextView unreadAddressLable;
 
     private Button[] mTabs;
-    private ContactlistFragment contactListFragment;
-    // private ChatHistoryFragment chatHistoryFragment;
-    private ChatAllHistoryFragment chatHistoryFragment;
+    private ContactlistFragment contactListFragment;//联系人列表Fragment
+    private ChatAllHistoryFragment chatHistoryFragment;//聊天记录Fragment
     private SettingsFragment settingFragment;
     private Fragment[] fragments;
     private int index;
@@ -558,6 +557,9 @@ public class MainActivity extends BaseActivity implements EMEventListener {
                                                     put(userAvatar.getMUserName(), userAvatar);
                                             SuperWeChatApplication.getInstance().getUserList().add(userAvatar);
                                             sendStickyBroadcast(new Intent("update_contact_list"));
+                                            // 1.sendStickyBroadcast()发送广播没有广播接收器接收该消息则会一直反送 消息一直存在
+                                            //2.sendBroadcast()这个发送广播则达不到这个效果
+
                                         }
                                     }
                                 }
@@ -581,6 +583,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
             Map<String, User> localUsers = ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getContactList();
             for (String username : usernameList) {
                 localUsers.remove(username);
+
                 userDao.deleteContact(username);
                 inviteMessgeDao.deleteMessage(username);
             }

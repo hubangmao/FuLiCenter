@@ -1,6 +1,8 @@
 package cn.ucai.superwechat.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
@@ -17,6 +19,8 @@ import cn.ucai.superwechat.task.DowAllFirendLsit;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Externalizable;
+import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -152,9 +156,15 @@ public class UserUtils {
         }
         String path = I.SERVER_URL + "?request=download_avatar&name_or_hxid=" + userName + "&avatarType=user_avatar";
         Log.i("main", "UserUtills.setMyAvatar()" + path);
-        if (path != null && userName != null) {
+        if (userName.equals(SuperWeChatApplication.getInstance().getUserName())) {
+            File file = new File("/storage/emulated/0/Android/data/cn.ucai.superwechat/files/Pictures/user_avatar/" + userName + ".jpg");
+            Log.i("main", "UserUtils()个人头像下载成功及路径" + userName + file.getAbsolutePath());
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imageView.setImageBitmap(bitmap);
+        } else if (userName != null) {
             Picasso.with(context).load(path).placeholder(R.drawable.default_avatar).into(imageView);
         } else {
+            Log.i("main", "个人头像下载失败" + userName);
             Picasso.with(context).load(R.drawable.default_avatar).into(imageView);
         }
     }
