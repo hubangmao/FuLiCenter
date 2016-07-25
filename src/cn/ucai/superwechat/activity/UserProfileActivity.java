@@ -305,6 +305,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
                         dialog.dismiss();
                         if (avatarUrl != null) {
                             Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatephoto_success),
