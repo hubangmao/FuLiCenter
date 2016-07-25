@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -12,14 +12,6 @@
  * limitations under the License.
  */
 package cn.ucai.superwechat.activity;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -52,27 +44,33 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import cn.ucai.superwechat.SuperWeChatApplication;
-import cn.ucai.superwechat.applib.controller.HXSDKHelper;
-import cn.ucai.superwechat.applib.controller.HXSDKHelper.HXSyncListener;
-
 import com.easemob.chat.EMContactManager;
+import com.easemob.exceptions.EaseMobException;
+import com.easemob.util.EMLog;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.adapter.ContactAdapter;
+import cn.ucai.superwechat.applib.controller.HXSDKHelper;
+import cn.ucai.superwechat.applib.controller.HXSDKHelper.HXSyncListener;
 import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.data.OkHttpUtils2;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.domain.User;
 import cn.ucai.superwechat.utils.I;
 import cn.ucai.superwechat.widget.Sidebar;
-
-import com.easemob.exceptions.EaseMobException;
-import com.easemob.util.EMLog;
-import com.google.gson.Gson;
 
 /**
  * 联系人列表页
@@ -316,7 +314,7 @@ public class ContactlistFragment extends Fragment {
 
     //本地服务端好友
     private void deleteMyContact(User toBeProcessUser) {
-        String userName = toBeProcessUser.getUsername();
+        final String userName = toBeProcessUser.getUsername();
         String userName1 = SuperWeChatApplication.getInstance().getUserName();
         Log.i("main", "用户账号=" + userName + "当前登录账号=" + userName1);
         final String strUrl = I.SERVER_URL + "?request=delete_contact&m_contact_user_name=" + userName1 + "&m_contact_cname=" + userName;
@@ -327,10 +325,17 @@ public class ContactlistFragment extends Fragment {
                     @Override
                     public void onSuccess(Result result) {
                         if (result.isRetMsg()) {
+                            Map<String, UserAvatar> map = SuperWeChatApplication.getInstance().getMap();
+                            List<UserAvatar> userList = SuperWeChatApplication.getInstance().getUserList();
+                            map.remove(userName);
+                            UserAvatar userAvatar = map.get(userName);
+                            userList.remove(userAvatar);
+                            //更新好友列表适配器数据
+                            mContext.sendStickyBroadcast(new Intent("update_contact_list"));
                             Log.i("main", "本地服务器删除好友成功" + result.isRetMsg() + strUrl);
                             SuperWeChatApplication.mMyUtils.toast(mContext, "本地服务器删除好友成功");
                         } else {
-                            SuperWeChatApplication.mMyUtils.toast(mContext, "删除失败稍后再试");
+                            SuperWeChatApplication.mMyUtils.toast(mContext, "本地服务器删除失败稍后再试");
 
                         }
                     }
