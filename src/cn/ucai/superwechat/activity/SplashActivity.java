@@ -16,9 +16,14 @@ import com.easemob.chat.EMGroupManager;
 import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatApplication;
+import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.bean.UserAvatar;
+import cn.ucai.superwechat.data.OkHttpUtils2;
+import cn.ucai.superwechat.db.DemoDBManager;
 import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.task.DowAllFirendLsit;
+import cn.ucai.superwechat.utils.I;
+import cn.ucai.superwechat.utils.Utils;
 
 /**
  * 开屏页
@@ -32,7 +37,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle arg0) {
-        Log.i("main","SplashActivity.onCreate()");
+        Log.i("main", "SplashActivity.onCreate()");
         setContentView(R.layout.activity_splash);
         super.onCreate(arg0);
 
@@ -52,7 +57,7 @@ public class SplashActivity extends BaseActivity {
         new Thread(new Runnable() {
             public void run() {
                 if (DemoHXSDKHelper.getInstance().isLogined()) {
-                    // ** 免登陆情况 加载所有本地群和会话
+                    //免登陆情况 加载所有本地群和会话
                     //不是必须的，不加sdk也会自动异步去加载(不会重复加载)；
                     //加上的话保证进了主页面会话和群组都已经load完毕
                     long start = System.currentTimeMillis();
@@ -61,15 +66,25 @@ public class SplashActivity extends BaseActivity {
 
                     //先查看全局变量有没有 用户信息
                     String userName = SuperWeChatApplication.getInstance().getUserName();
+
                     UserDao userDao = new UserDao(SplashActivity.this);
                     UserAvatar userAvatar = userDao.getDBUserInfo(userName);
+                    //数据库没拿到数据的话在下载一次数据保存到数据库
+                    if (userAvatar == null) {
+                        if (addSuperDBUserInfo(userName, SuperWeChatApplication.getInstance().getPassword())) {
+                            UserDao userDao1 = new UserDao(SplashActivity.this);
+                            UserAvatar userAvatar1 = userDao1.getDBUserInfo(userName);
+                            //全局变量 UserAvatar 保存信息
+                            SuperWeChatApplication.getInstance().setUser(userAvatar1);
+                        }
+                    }
 
                     //全局变量 UserAvatar 保存信息
                     SuperWeChatApplication.getInstance().setUser(userAvatar);
 
                     //得到用户信息后下载 好友列表保存到全局变量
                     new DowAllFirendLsit(SplashActivity.this).dowAllFirendLsit();
-                    Log.i("main","得到用户信息后下载 好友列表保存到全局变量");
+                    Log.i("main", "得到用户信息后下载 好友列表保存到全局变量");
                     long costTime = System.currentTimeMillis() - start;
                     //等待sleeptime时长
                     if (sleepTime - costTime > 0) {
@@ -93,6 +108,36 @@ public class SplashActivity extends BaseActivity {
             }
         }).start();
 
+    }
+
+    //本地数据库没有数据在下载一次
+    boolean isOk;
+
+    private boolean addSuperDBUserInfo(String userName, String psw) {
+        String strUrl = I.SERVER_URL + "?request=login&m_user_name=" + userName + "&m_user_password=" + psw;
+        Log.i("main", "登陆url" + strUrl);
+        OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
+        utils2.url(strUrl)
+                .targetClass(String.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Result user = Utils.getResultFromJson(result, UserAvatar.class);
+                        if (user.isRetMsg() && result != null) {
+                            //保存用户信息至数据库
+                            UserAvatar ua = (UserAvatar) user.getRetData();
+                            DemoDBManager.getInstance().saveSuperData(ua);
+                            isOk = true;
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        SuperWeChatApplication.mMyUtils.toast(SplashActivity.this, "网络错误");
+                        isOk = false;
+                    }
+                });
+        return isOk;
     }
 
     /**
