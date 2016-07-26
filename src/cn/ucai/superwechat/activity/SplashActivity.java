@@ -21,7 +21,8 @@ import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.data.OkHttpUtils2;
 import cn.ucai.superwechat.db.DemoDBManager;
 import cn.ucai.superwechat.db.UserDao;
-import cn.ucai.superwechat.task.DowAllFirendLsit;
+import cn.ucai.superwechat.task.DowAllFirendListTask;
+import cn.ucai.superwechat.task.DowAllGroupListTask;
 import cn.ucai.superwechat.utils.I;
 import cn.ucai.superwechat.utils.Utils;
 
@@ -81,9 +82,10 @@ public class SplashActivity extends BaseActivity {
 
                     //全局变量 UserAvatar 保存信息
                     SuperWeChatApplication.getInstance().setUser(userAvatar);
-
+                    //群组所有好友信息储存
+                    new DowAllGroupListTask(SplashActivity.this, userName).dowAllGroupLsitTask();
                     //得到用户信息后下载 好友列表保存到全局变量
-                    new DowAllFirendLsit(SplashActivity.this).dowAllFirendLsit();
+                    new DowAllFirendListTask(SplashActivity.this).dowAllFirendLsit();
                     Log.i("main", "得到用户信息后下载 好友列表保存到全局变量");
                     long costTime = System.currentTimeMillis() - start;
                     //等待sleeptime时长

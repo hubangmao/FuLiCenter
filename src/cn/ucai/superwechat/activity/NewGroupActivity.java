@@ -247,7 +247,7 @@ public class NewGroupActivity extends BaseActivity implements View.OnClickListen
         String memberStr = sb.toString().substring(1, sb.toString().length());
         //?request=add_group_members&m_member_user_name=&m_member_group_hxid=
         String strUrl = I.SERVER_URL + "?request=add_group_members&m_member_user_name=" + memberStr + "&m_member_group_hxid=" + mGroupId;
-        
+
         Log.i("main", TAG + "memberStr=" + memberStr + "\n群成员添加链接=" + strUrl);
         OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
         utils2.url(strUrl);
