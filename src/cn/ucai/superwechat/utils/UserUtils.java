@@ -15,6 +15,7 @@ import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.domain.User;
+import cn.ucai.superwechat.listener.OnSetAvatarListener;
 import cn.ucai.superwechat.task.DowAllFirendLsit;
 
 import com.squareup.picasso.Picasso;
@@ -151,21 +152,19 @@ public class UserUtils {
      * ?request=download_avatar&name_or_hxid=&avatarType=
      */
     public static void setMyAvatar(Context context, String userName, ImageView imageView) {
-        if (userName == null) {
-            userName = "hbm3";
-        }
         String path = I.SERVER_URL + "?request=download_avatar&name_or_hxid=" + userName + "&avatarType=user_avatar";
-        Log.i("main", "UserUtills.setMyAvatar()" + path);
         if (userName.equals(SuperWeChatApplication.getInstance().getUserName())) {
-            File file = new File("/storage/emulated/0/Android/data/cn.ucai.superwechat/files/Pictures/user_avatar/" + userName + ".jpg");
-            Log.i("main", "UserUtils()个人头像下载成功及路径" + userName + file.getAbsolutePath());
+            File file = new File(OnSetAvatarListener.getAvatarPath(context, I.AVATAR_TYPE_USER_PATH + "/" + userName + I.AVATAR_SUFFIX_JPG));
+            if (!file.exists()) {
+                Picasso.with(context).load(path).placeholder(R.drawable.default_avatar).into(imageView);
+                Log.i("main", "=本地头像不存在正在下载");
+                return;
+            }
+            Log.i("main", "UserUtills.setMyAvatar()个人头像下载成功及路径" + userName + file.getAbsolutePath() + "\n头像下载链接=" + path);
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             imageView.setImageBitmap(bitmap);
-        } else if (userName != null) {
-            Picasso.with(context).load(path).placeholder(R.drawable.default_avatar).into(imageView);
         } else {
-            Log.i("main", "个人头像下载失败" + userName);
-            Picasso.with(context).load(R.drawable.default_avatar).into(imageView);
+            Picasso.with(context).load(path).placeholder(R.drawable.default_avatar).into(imageView);
         }
     }
 
