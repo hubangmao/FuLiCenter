@@ -16,17 +16,11 @@ import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.domain.User;
 import cn.ucai.superwechat.listener.OnSetAvatarListener;
-import cn.ucai.superwechat.task.DowAllFirendLsit;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.Externalizable;
 import java.io.File;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class UserUtils {
     /**
@@ -166,6 +160,13 @@ public class UserUtils {
         } else {
             Picasso.with(context).load(path).placeholder(R.drawable.default_avatar).into(imageView);
         }
+    }
+
+    //下载群头像
+    public static void setMyGroupAvatar(Context mContext, String groupId, ImageView viewById) {
+        String path = I.SERVER_URL + "?request=download_avatar&name_or_hxid=" + groupId + "&avatarType=" + I.AVATAR_TYPE_GROUP_PATH;
+        Log.i("main", "UserUtills.setMyAvatar()个人头像下载成功及路径" + "\n群头像下载链接=" + path);
+        Picasso.with(mContext).load(path).placeholder(R.drawable.group_icon).into(viewById);
     }
 
 
