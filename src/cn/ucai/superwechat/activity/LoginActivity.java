@@ -47,7 +47,8 @@ import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.data.OkHttpUtils2;
 import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.domain.User;
-import cn.ucai.superwechat.task.DowAllFirendLsit;
+import cn.ucai.superwechat.task.DowAllFirendListTask;
+import cn.ucai.superwechat.task.DowAllGroupListTask;
 import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.I;
 import cn.ucai.superwechat.utils.Utils;
@@ -153,30 +154,31 @@ public class LoginActivity extends BaseActivity {
     //http://localhost:8080/SuperWeChatServer/Server?request=login&m_user_name=&m_user_password=
     private void MySuperVerify() {
         String strUrl = I.SERVER_URL + "?request=login&m_user_name=" + currentUsername + "&m_user_password=" + currentPassword;
-                             Log.i("main", "登陆url" + strUrl);
-                             OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
-                             utils2.url(strUrl)
-                                     .targetClass(String.class)
-                             .execute(new OkHttpUtils2.OnCompleteListener<String>() {
-                                 @Override
-                                 public void onSuccess(String result) {
-                                     Result user = Utils.getResultFromJson(result, UserAvatar.class);
-                                     if (user.isRetMsg() && result != null) {
-                                         SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "SuperWeChat登陆验证成功");
-                                         SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "正在验证环信服务器");
-                                         //环信服务器验证
-                                         HXServiceVerify();
-                                         //保存用户信息至数据库
-                                         addSuperDBData((UserAvatar) user.getRetData());
-                                         //保存用户信息到内存
-                                         userInfoAddRAM((UserAvatar) user.getRetData());
-                                         //下载所有好友信存到集合 ->内存
-                                         new DowAllFirendLsit(LoginActivity.this).dowAllFirendLsit();
-                                     } else {
-                                         SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, Utils.getResourceString(LoginActivity.this, user.getRetCode()));
-                                         pd.dismiss();
-                                     }
-                                 }
+        Log.i("main", "登陆url" + strUrl);
+        OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
+        utils2.url(strUrl)
+                .targetClass(String.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Result user = Utils.getResultFromJson(result, UserAvatar.class);
+                        if (user.isRetMsg() && result != null) {
+                            SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "SuperWeChat登陆验证成功");
+                            SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "正在验证环信服务器");
+                            //环信服务器验证
+                            HXServiceVerify();
+                            //保存用户信息至数据库
+                            addSuperDBData((UserAvatar) user.getRetData());
+                            //保存用户信息到内存
+                            userInfoAddRAM((UserAvatar) user.getRetData());
+                            //下载所有好友信存到集合 ->内存
+                            new DowAllFirendListTask(LoginActivity.this).dowAllFirendLsit();
+                            new DowAllGroupListTask(LoginActivity.this, currentUsername).dowAllGroupLsitTask();
+                        } else {
+                            SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, Utils.getResourceString(LoginActivity.this, user.getRetCode()));
+                            pd.dismiss();
+                        }
+                    }
 
                     @Override
                     public void onError(String error) {

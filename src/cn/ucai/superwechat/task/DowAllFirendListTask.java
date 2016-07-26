@@ -18,14 +18,14 @@ import cn.ucai.superwechat.utils.Utils;
 /**
  * Created by Administrator on 2016/7/20.
  */
-public class DowAllFirendLsit {
-    private final String TAG = DowAllFirendLsit.class.getSimpleName();
+public class DowAllFirendListTask {
+    private final String TAG = DowAllFirendListTask.class.getSimpleName();
     Context mContext;
     String userName =SuperWeChatApplication.getInstance().getUser().getMUserName();
 
 
 
-    public DowAllFirendLsit(Context mContext) {
+    public DowAllFirendListTask(Context mContext) {
         this.mContext = mContext;
     }
 

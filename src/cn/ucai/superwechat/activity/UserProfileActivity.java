@@ -174,31 +174,8 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 
     private void uploadHeadPhoto() {
         //打开popupWindows选择图片
-        mSetAvatar = new OnSetAvatarListener(UserProfileActivity.this,R.id.linearPopupWindow, SuperWeChatApplication.getInstance().getUserName().trim(), I.AVATAR_TYPE_USER_PATH);
+        mSetAvatar = new OnSetAvatarListener(UserProfileActivity.this, R.id.linearPopupWindow, SuperWeChatApplication.getInstance().getUserName().trim(), I.AVATAR_TYPE_USER_PATH);
 
-
-      /*  AlertDialog.Builder builder = new Builder(this);
-        builder.setTitle(R.string.dl_title_upload_photo);
-        builder.setItems(new String[]{getString(R.string.dl_msg_take_photo), getString(R.string.dl_msg_local_upload)},
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        switch (which) {
-                            case 0:
-                                Toast.makeText(UserProfileActivity.this, getString(R.string.toast_no_support),
-                                        Toast.LENGTH_SHORT).show();
-                                break;
-                            case 1:
-                                Intent pickIntent = new Intent(Intent.ACTION_PICK, null);
-                                pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image");
-                                startActivityForResult(pickIntent, REQUESTCODE_PICK);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                });
-        builder.create().show();*/
     }
 
 
@@ -214,28 +191,14 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
             updateUserAvatarData(SuperWeChatApplication.getInstance().getUserName());
         }
 
-      /*  switch (requestCode) {
-            case REQUESTCODE_PICK:
-                if (data == null || data.getData() == null) {
-                    return;
-                }
-                startPhotoZoom(data.getData());
-                break;
-            //
-            case REQUESTCODE_CUTTING:
-                if (data != null) {
-                    setPicToView(data);
-                }
-                break;
 
-        }*/
     }
 
     //更新本地服务器头像
     private void updateUserAvatarData(String userName) {
         dialog = ProgressDialog.show(this, getString(R.string.dl_update_nick), getString(R.string.dl_waiting));
         String updateAvatarUrl = I.SERVER_URL + "?request=upload_avatar&avatarType=" + I.AVATAR_TYPE_USER_PATH + "&name_or_hxid=" + userName;
-        final File file = new File(OnSetAvatarListener.getAvatarPath(UserProfileActivity.this, I.AVATAR_TYPE_USER_PATH),userName + I.AVATAR_SUFFIX_JPG);
+        final File file = new File(OnSetAvatarListener.getAvatarPath(UserProfileActivity.this, I.AVATAR_TYPE_USER_PATH), userName + I.AVATAR_SUFFIX_JPG);
         Log.i("main", "头像路径" + file.getAbsolutePath());
         OkHttpUtils2<Result> utils2 = new OkHttpUtils2<Result>();
         utils2.url(updateAvatarUrl)
@@ -247,9 +210,6 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                         if (result.isRetMsg()) {
                             dialog.dismiss();
                             SuperWeChatApplication.mMyUtils.toast(UserProfileActivity.this, "头像修改成功");
-                            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                            headAvatar.setImageBitmap(bitmap);
-
                         } else {
                             dialog.dismiss();
                             SuperWeChatApplication.mMyUtils.toast(UserProfileActivity.this, "头像修改失败");
@@ -264,71 +224,6 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                 });
 
 
-    }
-
-    //????????????????????????????????????????????????研究这段代码
-    public void startPhotoZoom(Uri uri) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", true);
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 300);
-        intent.putExtra("outputY", 300);
-        intent.putExtra("return-data", true);
-        intent.putExtra("noFaceDetection", true);
-        startActivityForResult(intent, REQUESTCODE_CUTTING);
-    }
-
-    /**
-     * save the picture data
-     *
-     * @param picdata
-     */
-    private void setPicToView(Intent picdata) {
-        Bundle extras = picdata.getExtras();
-        if (extras != null) {
-            Bitmap photo = extras.getParcelable("data");
-            Drawable drawable = new BitmapDrawable(getResources(), photo);
-            headAvatar.setImageDrawable(drawable);
-            uploadUserAvatar(Bitmap2Bytes(photo));
-        }
-
-    }
-
-    private void uploadUserAvatar(final byte[] data) {
-        dialog = ProgressDialog.show(this, getString(R.string.dl_update_photo), getString(R.string.dl_waiting));
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final String avatarUrl = ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager().uploadUserAvatar(data);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        dialog.dismiss();
-                        if (avatarUrl != null) {
-                            Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatephoto_success),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatephoto_fail),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-
-            }
-        }).start();
-
-        dialog.show();
-    }
-
-
-    public byte[] Bitmap2Bytes(Bitmap bm) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        return baos.toByteArray();
     }
 
     //更新环信昵称

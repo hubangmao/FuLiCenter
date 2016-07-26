@@ -95,7 +95,8 @@ public class OnSetAvatarListener implements View.OnClickListener {
      * @param parentLayout
      */
     private void showPopupWindow(View parentLayout) {
-        mPopuWindow = new PopupWindow(mLayout, getScreenDisplay().widthPixels, (int)(90*getScreenDisplay().density));
+//        mPopuWindow = new PopupWindow(mLayout, getScreenDisplay().widthPixels, (int)(90*getScreenDisplay().density));
+        mPopuWindow = new PopupWindow(mLayout, 350, 230);
         //设置触摸PopupWindow之外的区域能关闭PopupWindow
         mPopuWindow.setOutsideTouchable(true);
         //设置PopupWindow可触摸
@@ -107,7 +108,7 @@ public class OnSetAvatarListener implements View.OnClickListener {
         //设置popuWindow进入和隐藏的动画
         mPopuWindow.setAnimationStyle(R.style.styles_pop_window);
         //设置PopuWindow从屏幕底部进入
-        mPopuWindow.showAtLocation(parentLayout, Gravity.BOTTOM, 0, 0);
+        mPopuWindow.showAtLocation(parentLayout, Gravity.CENTER_HORIZONTAL, 10, 10);
     }
 
     /**
