@@ -13,15 +13,14 @@
  */
 package cn.ucai.superwechat.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -44,6 +43,12 @@ import android.widget.Toast;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
+import com.easemob.exceptions.EaseMobException;
+import com.easemob.util.EMLog;
+import com.easemob.util.NetUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatApplication;
@@ -55,10 +60,6 @@ import cn.ucai.superwechat.utils.I;
 import cn.ucai.superwechat.utils.UserUtils;
 import cn.ucai.superwechat.utils.Utils;
 import cn.ucai.superwechat.widget.ExpandGridView;
-
-import com.easemob.exceptions.EaseMobException;
-import com.easemob.util.EMLog;
-import com.easemob.util.NetUtils;
 
 public class GroupDetailsActivity extends BaseActivity implements OnClickListener {
     private static final String TAG = "GroupDetailsActivity";
@@ -225,6 +226,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                     progressDialog.setMessage(st2);
                     progressDialog.show();
                     exitGrop();
+                    deleteMyMembersFromGroup(SuperWeChatApplication.getInstance().getUserName(), true);
                     break;
                 case REQUEST_CODE_EXIT_DELETE: // 解散群
                     progressDialog.setMessage(st3);
@@ -302,13 +304,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void refreshMembers() {
         adapter.clear();
 
         List<String> members = new ArrayList<String>();
         members.addAll(group.getMembers());
         adapter.addAll(members);
-
         adapter.notifyDataSetChanged();
     }
 
@@ -684,7 +686,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                     });
                 }
             } else { // 普通item，显示群组成员
-                final String username = getItem(position);
+                final String username;
+                username = getItem(position);
                 convertView.setVisibility(View.VISIBLE);
                 button.setVisibility(View.VISIBLE);
 //				Drawable avatar = getResources().getDrawable(R.drawable.default_avatar);
@@ -722,7 +725,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                             EMLog.d("group", "remove user from group:" + username);
                             deleteMembersFromGroup(username);
                             /**删除本地服务器群成员*/
-                            deleteMyMembersFromGroup(username);
+                            deleteMyMembersFromGroup(username, false);
 
                         } else {
                             // 正常情况下点击user，可以进入用户详情或者聊天页面等等
@@ -805,7 +808,40 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
     }
 
     //删除本地服务器群成员
-    private void deleteMyMembersFromGroup(String username) {
+    private void deleteMyMembersFromGroup(final String username, final boolean isExit) {
+//?request=delete_group_member& m_member_group_hxid =&m_member_user_name=
+        final GroupAvatar groupAvatar = SuperWeChatApplication.getInstance().getGroupMap().get(groupId);
+        if (groupAvatar != null) {
+            String deleteGroupUserUrl = I.SERVER_URL + "?request=delete_group_member& m_member_group_hxid="
+                    + groupAvatar.getMGroupId() + "&m_member_user_name=" + username;
+            OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
+            utils2.url(deleteGroupUserUrl).
+                    targetClass(String.class)
+                    .execute(new OkHttpUtils2.OnCompleteListener<String>() {
+                        @Override
+                        public void onSuccess(String s) {
+                            Result result = Utils.getResultFromJson(s, GroupAvatar.class);
+                            if (result.isRetMsg()) {
+                                if (isExit) {
+                                    SuperWeChatApplication.mMyUtils.toast(GroupDetailsActivity.this, "已成功退出该群");
+                                    SuperWeChatApplication.getInstance().getGroupAvatarList().remove(groupAvatar);
+                                    SuperWeChatApplication.getInstance().getGroupMap().remove(groupId);
+                                } else {
+                                    SuperWeChatApplication.getInstance().getMemberMap().get(groupId).remove(username);
+                                    SuperWeChatApplication.mMyUtils.toast(GroupDetailsActivity.this, "该群成员以已经移除");
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onError(String error) {
+
+                        }
+                    });
+        } else {
+            finish();
+            return;
+        }
 
     }
 
