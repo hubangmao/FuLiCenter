@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,7 +44,13 @@ import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatApplication;
+import cn.ucai.superwechat.bean.GroupAvatar;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.data.OkHttpUtils2;
+import cn.ucai.superwechat.utils.I;
 import cn.ucai.superwechat.utils.UserUtils;
+import cn.ucai.superwechat.utils.Utils;
 import cn.ucai.superwechat.widget.ExpandGridView;
 
 import com.easemob.exceptions.EaseMobException;
@@ -427,12 +434,64 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                     runOnUiThread(new Runnable() {
                         public void run() {
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), st6 + e.getMessage(), 1).show();
+                            Toast.makeText(getApplicationContext(), st6 + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             }
         }).start();
+        addGroupMembers(groupId, newmembers);
+    }
+
+    //添加群成员
+    private void addGroupMembers(String groupId, String[] members) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : members) {
+            sb.append("," + s);
+        }
+        String memberStr = sb.toString().substring(1, sb.toString().length());
+        //?request=add_group_members&m_member_user_name=&m_member_group_hxid=
+        String strUrl = I.SERVER_URL + "?request=add_group_members&m_member_user_name=" + memberStr + "&m_member_group_hxid=" + groupId;
+
+        Log.i("main", TAG + "memberStr=" + memberStr + "\n群成员添加链接=" + strUrl);
+        OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
+        utils2.url(strUrl);
+        utils2.targetClass(String.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        Result result = Utils.getResultFromJson(s, GroupAvatar.class);
+                        if (result.isRetMsg()) {
+                            GroupAvatar mAddGroupAvatar = (GroupAvatar) result.getRetData();
+                            Log.i("main", "NewGroupActivity.addGroupMembers()添加群成员返回数据=\n" + mAddGroupAvatar.toString());
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    progressDialog.dismiss();
+                                    setResult(RESULT_OK);
+                                    finish();
+                                }
+                            });
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    progressDialog.dismiss();
+                                    SuperWeChatApplication.mMyUtils.toast(GroupDetailsActivity.this, "添加群成员失败");
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                progressDialog.dismiss();
+                                SuperWeChatApplication.mMyUtils.toast(GroupDetailsActivity.this, "群成员添加服务端异常");
+                            }
+                        });
+                    }
+                });
+
     }
 
     @Override
@@ -630,7 +689,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 //				button.setCompoundDrawables(null, avatar, null, null);
 //                holder.textView.setText(username);
 //                UserUtils.setUserAvatar(getContext(), username, holder.imageView);
-//设置本地服务器头像
+                //设置本地服务器头像
                 UserUtils.setGroupUserNick(groupId, username, holder.textView);
                 UserUtils.setMyAvatar(getContext(), username, holder.imageView);
                 // demo群组成员的头像都用默认头像，需由开发者自己去设置头像
