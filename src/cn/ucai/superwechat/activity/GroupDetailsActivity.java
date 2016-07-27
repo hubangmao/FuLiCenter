@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -48,6 +50,7 @@ import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.bean.GroupAvatar;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.data.OkHttpUtils2;
+import cn.ucai.superwechat.task.DowAllGroupListTask;
 import cn.ucai.superwechat.utils.I;
 import cn.ucai.superwechat.utils.UserUtils;
 import cn.ucai.superwechat.utils.Utils;
@@ -187,6 +190,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
         clearAllHistory.setOnClickListener(this);
         blacklistLayout.setOnClickListener(this);
         changeGroupNameLayout.setOnClickListener(this);
+        updateGroupInfo();
 
     }
 
@@ -249,7 +253,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                                             ((TextView) findViewById(R.id.group_name)).setText(returnData + "(" + group.getAffiliationsCount()
                                                     + st);
                                             progressDialog.dismiss();
-                                            Toast.makeText(getApplicationContext(), st6, 0).show();
+                                            Toast.makeText(getApplicationContext(), st6, Toast.LENGTH_SHORT).show();
                                         }
                                     });
 
@@ -258,7 +262,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                                     runOnUiThread(new Runnable() {
                                         public void run() {
                                             progressDialog.dismiss();
-                                            Toast.makeText(getApplicationContext(), st7, 0).show();
+                                            Toast.makeText(getApplicationContext(), st7, Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
@@ -277,14 +281,14 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                                     public void run() {
                                         refreshMembers();
                                         progressDialog.dismiss();
-                                        Toast.makeText(getApplicationContext(), stsuccess, 0).show();
+                                        Toast.makeText(getApplicationContext(), stsuccess, Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             } catch (EaseMobException e) {
                                 runOnUiThread(new Runnable() {
                                     public void run() {
                                         progressDialog.dismiss();
-                                        Toast.makeText(getApplicationContext(), st9, 0).show();
+                                        Toast.makeText(getApplicationContext(), st9, Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
@@ -343,7 +347,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
     /**
      * 退出群组
      *
-     * @param groupId
+     * @param
      */
     private void exitGrop() {
         String st1 = getResources().getString(R.string.Exit_the_group_chat_failure);
@@ -364,7 +368,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                     runOnUiThread(new Runnable() {
                         public void run() {
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.Exit_the_group_chat_failure) + " " + e.getMessage(), 1).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.Exit_the_group_chat_failure) + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -374,8 +378,6 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
     /**
      * 解散群组
-     *
-     * @param groupId
      */
     private void deleteGrop() {
         final String st5 = getResources().getString(R.string.Dissolve_group_chat_tofail);
@@ -396,7 +398,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                     runOnUiThread(new Runnable() {
                         public void run() {
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), st5 + e.getMessage(), 1).show();
+                            Toast.makeText(getApplicationContext(), st5 + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -444,7 +446,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
     }
 
     //添加群成员
-    private void addGroupMembers(String groupId, String[] members) {
+    private void addGroupMembers(final String groupId, String[] members) {
         StringBuilder sb = new StringBuilder();
         for (String s : members) {
             sb.append("," + s);
@@ -463,6 +465,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                         Result result = Utils.getResultFromJson(s, GroupAvatar.class);
                         if (result.isRetMsg()) {
                             GroupAvatar mAddGroupAvatar = (GroupAvatar) result.getRetData();
+                            new DowAllGroupListTask(getApplicationContext(), groupId).dowAllGroupLsitTask();
                             Log.i("main", "NewGroupActivity.addGroupMembers()添加群成员返回数据=\n" + mAddGroupAvatar.toString());
                             runOnUiThread(new Runnable() {
                                 public void run() {
@@ -524,7 +527,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                                 runOnUiThread(new Runnable() {
                                     public void run() {
                                         progressDialog.dismiss();
-                                        Toast.makeText(getApplicationContext(), st7, 1).show();
+                                        Toast.makeText(getApplicationContext(), st7, Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
@@ -558,7 +561,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                                 runOnUiThread(new Runnable() {
                                     public void run() {
                                         progressDialog.dismiss();
-                                        Toast.makeText(getApplicationContext(), st9, 1).show();
+                                        Toast.makeText(getApplicationContext(), st9, Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
@@ -713,11 +716,14 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                                 return;
                             }
                             if (!NetUtils.hasNetwork(getApplicationContext())) {
-                                Toast.makeText(getApplicationContext(), getString(R.string.network_unavailable), 0).show();
+                                Toast.makeText(getApplicationContext(), getString(R.string.network_unavailable), Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             EMLog.d("group", "remove user from group:" + username);
                             deleteMembersFromGroup(username);
+                            /**删除本地服务器群成员*/
+                            deleteMyMembersFromGroup(username);
+
                         } else {
                             // 正常情况下点击user，可以进入用户详情或者聊天页面等等
                             // startActivity(new
@@ -734,6 +740,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                      * @param username
                      */
                     protected void deleteMembersFromGroup(final String username) {
+
                         final ProgressDialog deleteDialog = new ProgressDialog(GroupDetailsActivity.this);
                         deleteDialog.setMessage(st13);
                         deleteDialog.setCanceledOnTouchOutside(false);
@@ -760,7 +767,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                                     deleteDialog.dismiss();
                                     runOnUiThread(new Runnable() {
                                         public void run() {
-                                            Toast.makeText(getApplicationContext(), st14 + e.getMessage(), 1).show();
+                                            Toast.makeText(getApplicationContext(), st14 + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
@@ -787,6 +794,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                     }
                 });
             }
+
             return convertView;
         }
 
@@ -795,6 +803,12 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
             return super.getCount() + 2;
         }
     }
+
+    //删除本地服务器群成员
+    private void deleteMyMembersFromGroup(String username) {
+
+    }
+
 
     protected void updateGroup() {
         new Thread(new Runnable() {
@@ -858,6 +872,10 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
     protected void onDestroy() {
         super.onDestroy();
         instance = null;
+        if (updateGroupInfo != null) {
+            unregisterReceiver(updateGroupInfo);
+        }
+
     }
 
     private static class ViewHolder {
@@ -866,4 +884,18 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
         ImageView badgeDeleteView;
     }
 
+    class UpdateGroupInfo extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            adapter.notifyDataSetChanged();
+            refreshMembers();
+        }
+    }
+
+    UpdateGroupInfo updateGroupInfo;
+
+    public void updateGroupInfo() {
+        registerReceiver(updateGroupInfo = new UpdateGroupInfo(), new IntentFilter("update_member_list"));
+    }
 }
