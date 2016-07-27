@@ -41,10 +41,11 @@ public class DowAllGroupListTask {
                         List<GroupAvatar> list = (List<GroupAvatar>) result.getRetData();
                         if (list.size() > 0) {
                             SuperWeChatApplication.getInstance().setGroupAvatarList(list);
-                            mContext.sendStickyBroadcast(new Intent("update_group_list"));
                             for (GroupAvatar l : list) {
+                                SuperWeChatApplication.getInstance().getGroupMap().put(l.getMGroupHxid(), l);
                                 Log.i("main", "所该用户的群信息=" + l.toString());
                             }
+                            mContext.sendStickyBroadcast(new Intent("update_group_list"));
                         }
                     }
 
