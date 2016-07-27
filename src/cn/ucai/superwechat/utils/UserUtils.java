@@ -13,6 +13,7 @@ import cn.ucai.superwechat.applib.controller.HXSDKHelper;
 import cn.ucai.superwechat.DemoHXSDKHelper;
 
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.bean.MemberUserAvatar;
 import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.domain.User;
 import cn.ucai.superwechat.listener.OnSetAvatarListener;
@@ -20,6 +21,7 @@ import cn.ucai.superwechat.listener.OnSetAvatarListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 public class UserUtils {
@@ -169,5 +171,36 @@ public class UserUtils {
         Picasso.with(mContext).load(path).placeholder(R.drawable.group_icon).into(viewById);
     }
 
+    /**
+     * 得到MemberUserAvatar
+     */
+    public static MemberUserAvatar getMember(String hxId, String username) {
+        MemberUserAvatar member = null;
+        HashMap<String, MemberUserAvatar> memberMap = SuperWeChatApplication.getInstance().getMemberMap().get(hxId);
+        if (memberMap == null) {
+            return null;
+        } else {
+            member = memberMap.get(username);
+            Log.i("main", "2=" + member.toString());
+        }
+        return member;
+    }
+
+    /**
+     * 设置群聊天列表好友昵称显示
+     */
+    public static void setGroupUserNick(String userName, String hxId, TextView textView) {
+        MemberUserAvatar member = getMember(hxId, userName);
+        if (member != null && member.getMUserNick() != null) {
+            textView.setText(member.getMUserNick());
+            Log.i("main", "UserUtils.setGroupUserNick()群消息列表用户昵称=" + member.getMUserNick());
+        } else {
+            textView.setText(userName);
+            Log.i("main", "UserUtils.setGroupUserNick()群消息列表用户昵称=");
+
+        }
+    }
 
 }
+
+

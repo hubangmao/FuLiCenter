@@ -88,6 +88,7 @@ import cn.ucai.superwechat.utils.ImageCache;
 import cn.ucai.superwechat.utils.ImageUtils;
 import cn.ucai.superwechat.utils.SmileUtils;
 import cn.ucai.superwechat.utils.UserUtils;
+import cn.ucai.superwechat.utils.Utils;
 
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.DensityUtil;
@@ -421,7 +422,9 @@ public class MessageAdapter extends BaseAdapter {
         // 群聊时，显示接收的消息的发送人的名称
         if ((chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom) && message.direct == EMMessage.Direct.RECEIVE) {
             //demo里使用username代码nick
-            UserUtils.setUserNick(message.getFrom(), holder.tv_usernick);
+//            UserUtils.setUserNick(message.getFrom(), holder.tv_usernick);
+            Log.i("main", "1");
+            UserUtils.setGroupUserNick(username, message.getFrom(), holder.tv_usernick);
         }
         if (message.direct == EMMessage.Direct.SEND) {
             UserUtils.setCurrentUserNick(holder.tv_usernick);
@@ -569,6 +572,7 @@ public class MessageAdapter extends BaseAdapter {
 
     /**
      * 以修改Super显示头像
+     *
      * @param message
      * @param imageView
      */
@@ -842,7 +846,6 @@ public class MessageAdapter extends BaseAdapter {
     private void handleVideoMessage(final EMMessage message, final ViewHolder holder, final int position, View convertView) {
 
         VideoMessageBody videoBody = (VideoMessageBody) message.getBody();
-        // final File image=new File(PathUtil.getInstance().getVideoPath(),
         // videoBody.getFileName());
         String localThumb = videoBody.getLocalThumb();
 
@@ -941,7 +944,7 @@ public class MessageAdapter extends BaseAdapter {
                                     // message.setProgress(0);
                                     holder.staus_iv.setVisibility(View.VISIBLE);
                                     Toast.makeText(activity,
-                                            activity.getString(R.string.send_fail) + activity.getString(R.string.connect_failuer_toast), 0)
+                                            activity.getString(R.string.send_fail) + activity.getString(R.string.connect_failuer_toast), Toast.LENGTH_SHORT)
                                             .show();
                                     timer.cancel();
                                 }
@@ -1488,11 +1491,9 @@ public class MessageAdapter extends BaseAdapter {
     /**
      * 展示视频缩略图
      *
-     * @param localThumb
-     *            本地缩略图路径
+     * @param localThumb   本地缩略图路径
      * @param iv
-     * @param thumbnailUrl
-     *            远程缩略图路径
+     * @param thumbnailUrl 远程缩略图路径
      * @param message
      */
     private void showVideoThumbView(String localThumb, ImageView iv, String thumbnailUrl, final EMMessage message) {
