@@ -42,7 +42,7 @@ public class DowAllFirendListTask {
                         if (list.size() > 0 && list != null) {
                             SuperWeChatApplication.getInstance().setUserList(list);
                             Map<String, UserAvatar> map = SuperWeChatApplication.getInstance().getMap();
-                            mContext.sendStickyBroadcast(new Intent("dowAllFriend"));
+                            mContext.sendStickyBroadcast(new Intent("update_contact_list"));
                             for (UserAvatar l : list) {
                                 Log.i("main", "用户昵称=" + l.getMUserNick());
                                 map.put(l.getMUserName(), l);
