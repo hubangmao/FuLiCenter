@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,6 +20,7 @@ import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -34,12 +35,15 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatApplication;
+import cn.ucai.superwechat.bean.GroupAvatar;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.data.OkHttpUtils2;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.domain.InviteMessage;
 import cn.ucai.superwechat.domain.InviteMessage.InviteMesageStatus;
+import cn.ucai.superwechat.task.DowAllMemberListTask;
 import cn.ucai.superwechat.utils.I;
 import cn.ucai.superwechat.utils.UserUtils;
 import cn.ucai.superwechat.utils.Utils;
@@ -183,10 +187,16 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
             public void run() {
                 // 调用sdk的同意方法
                 try {
-                    if (msg.getGroupId() == null) //同意好友请求
+                    if (msg.getGroupId() == null) { //同意好友请求
                         EMChatManager.getInstance().acceptInvitation(msg.getFrom());
-                    else //同意加群申请
+
+                    } else {
+                        //同意加群申请
                         EMGroupManager.getInstance().acceptApplication(msg.getFrom(), msg.getGroupId());
+                        //群主同意新成员入群申请后,本地服务器数据库添加新群成员到群用户表
+                        addSuperGroup(msg.getFrom(), msg.getGroupId());
+
+                    }
                     ((Activity) context).runOnUiThread(new Runnable() {
 
                         @Override
@@ -216,6 +226,35 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                 }
             }
         }).start();
+    }
+
+    //群主同意新成员入群申请后,本地服务器数据库添加新群成员到群用户表
+    private void addSuperGroup(String newGroupUser, final String groupId) {
+        final String addGroupUserUrl = I.SERVER_URL + "?request=add_group_member&m_member_user_name=" + newGroupUser + "&m_member_group_hxid=" + groupId;
+        OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
+        utils2.url(addGroupUserUrl)
+                .targetClass(String.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        Log.i("main", "addGuperUserUrl=" + addGroupUserUrl + "\ns=" + s);
+                        if (s == null) {
+                            return;
+                        }
+                        Result result = Utils.getResultFromJson(s, GroupAvatar.class);
+                        if (result.isRetMsg()) {
+                            SuperWeChatApplication.mMyUtils.toast(context, "本地服务器添加新群成员成功");
+                            new DowAllMemberListTask(context, groupId).dowAllMemberLsit();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
     }
 
     private static class ViewHolder {
