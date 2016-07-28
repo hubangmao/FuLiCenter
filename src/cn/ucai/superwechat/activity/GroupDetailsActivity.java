@@ -241,6 +241,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                     break;
 
                 case REQUEST_CODE_EDIT_GROUPNAME: //修改群名称
+                    updateSuperGroupNick();
                     final String returnData = data.getStringExtra("data");
                     if (!TextUtils.isEmpty(returnData)) {
                         progressDialog.setMessage(st5);
@@ -302,6 +303,10 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                     break;
             }
         }
+    }
+
+    private void updateSuperGroupNick() {
+
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -389,6 +394,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                     EMGroupManager.getInstance().exitAndDeleteGroup(groupId);
                     runOnUiThread(new Runnable() {
                         public void run() {
+                            //删除本地服务端好友
+                            deleteSuperGroup();
                             progressDialog.dismiss();
                             setResult(RESULT_OK);
                             finish();
@@ -407,6 +414,31 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
             }
         }).start();
     }
+
+    private void deleteSuperGroup() {
+        final String deleteGroupUrl = I.SERVER_URL + "?request=delete_group&m_group_id=" + SuperWeChatApplication.getInstance().getGroupMap().get(groupId).getMGroupId();
+        OkHttpUtils2<Result> utils2 = new OkHttpUtils2<Result>();
+        utils2.url(deleteGroupUrl)
+                .targetClass(Result.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<Result>() {
+                    @Override
+                    public void onSuccess(Result result) {
+                        Log.i("main", "GroupDetailsActivity.deleteSuperGroup()Rrl=\n" + deleteGroupUrl + "\n" + result.toString());
+                        if (result.isRetMsg()) {
+                            SuperWeChatApplication.mMyUtils.toast(GroupDetailsActivity.this, "本地服务器群成员删除成功");
+                            return;
+                        }
+                        SuperWeChatApplication.mMyUtils.toast(GroupDetailsActivity.this, "本地服务器群成员删除失败");
+
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        SuperWeChatApplication.mMyUtils.toast(GroupDetailsActivity.this, "本地服务器网络错误");
+                    }
+                });
+    }
+
 
     /**
      * 增加群成员
@@ -807,12 +839,12 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
         }
     }
 
-    //删除本地服务器群成员
+    //删除本地服务器群成员  isExit代表是群主删除删除群成员还是用户退出该群
     private void deleteMyMembersFromGroup(final String username, final boolean isExit) {
-//?request=delete_group_member& m_member_group_hxid =&m_member_user_name=
         final GroupAvatar groupAvatar = SuperWeChatApplication.getInstance().getGroupMap().get(groupId);
         if (groupAvatar != null) {
-            String deleteGroupUserUrl = I.SERVER_URL + "?request=delete_group_member& m_member_group_hxid="
+            //request=delete_group_member& m_member_group_hxid =&m_member_user_name=
+            final String deleteGroupUserUrl = I.SERVER_URL + "?request=delete_group_member&m_member_group_hxid="
                     + groupAvatar.getMGroupId() + "&m_member_user_name=" + username;
             OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
             utils2.url(deleteGroupUserUrl).
@@ -821,6 +853,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                         @Override
                         public void onSuccess(String s) {
                             Result result = Utils.getResultFromJson(s, GroupAvatar.class);
+                            Log.i("main", TAG + "deleteMyMembersFromGroup()删除群成员Url=" + deleteGroupUserUrl + "\n响应信息" + ((GridAdapter) result.getRetData()).toString());
+
                             if (result.isRetMsg()) {
                                 if (isExit) {
                                     SuperWeChatApplication.mMyUtils.toast(GroupDetailsActivity.this, "已成功退出该群");
