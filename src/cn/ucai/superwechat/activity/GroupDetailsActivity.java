@@ -240,39 +240,6 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                     clearGroupHistory();
                     break;
 
-                case REQUEST_CODE_EDIT_GROUPNAME: //修改群名称
-                    updateSuperGroupNick();
-                    final String returnData = data.getStringExtra("data");
-                    if (!TextUtils.isEmpty(returnData)) {
-                        progressDialog.setMessage(st5);
-                        progressDialog.show();
-
-                        new Thread(new Runnable() {
-                            public void run() {
-                                try {
-                                    EMGroupManager.getInstance().changeGroupName(groupId, returnData);
-                                    runOnUiThread(new Runnable() {
-                                        public void run() {
-                                            ((TextView) findViewById(R.id.group_name)).setText(returnData + "(" + group.getAffiliationsCount()
-                                                    + st);
-                                            progressDialog.dismiss();
-                                            Toast.makeText(getApplicationContext(), st6, Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-                                } catch (EaseMobException e) {
-                                    e.printStackTrace();
-                                    runOnUiThread(new Runnable() {
-                                        public void run() {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(getApplicationContext(), st7, Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }
-                        }).start();
-                    }
-                    break;
                 case REQUEST_CODE_ADD_TO_BALCKLIST:
                     progressDialog.setMessage(st8);
                     progressDialog.show();
@@ -299,13 +266,74 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                     }).start();
 
                     break;
+                case REQUEST_CODE_EDIT_GROUPNAME: //修改群名称
+                    final String returnData = data.getStringExtra("data");
+                    if (!TextUtils.isEmpty(returnData)) {
+                        //修改本地服务器群名称
+                        updateSuperGroupNick(returnData);
+                        progressDialog.setMessage(st5);
+                        progressDialog.show();
+                        new Thread(new Runnable() {
+                            public void run() {
+                                try {
+                                    EMGroupManager.getInstance().changeGroupName(groupId, returnData);
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            ((TextView) findViewById(R.id.group_name)).setText(returnData + "(" + group.getAffiliationsCount()
+                                                    + st);
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), st6, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                } catch (EaseMobException e) {
+                                    e.printStackTrace();
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), st7, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }
+                        }).start();
+                    }
+                    break;
                 default:
                     break;
             }
         }
     }
 
-    private void updateSuperGroupNick() {
+
+    //更新本地服务器群名称
+    private void updateSuperGroupNick(String returnData) {
+        final String updateGroupNickUrl = I.SERVER_URL + "?request=update_group_name&m_group_name=" + returnData + "&m_group_id=" + SuperWeChatApplication.getInstance().getGroupMap().get(groupId).getMGroupId();
+        OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
+        utils2.url(updateGroupNickUrl)
+                .targetClass(String.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        Result result = Utils.getResultFromJson(s, GroupAvatar.class);
+                        Log.i("main", GroupDetailsActivity.class.getName() + "updateSuperGroupNick()\nurl=" + updateGroupNickUrl);
+                        if (result.isRetMsg()) {
+                            GroupAvatar groupAvatar = (GroupAvatar) result.getRetData();
+                            SuperWeChatApplication.getInstance().getGroupMap().put(groupId, groupAvatar);
+                            SuperWeChatApplication.mMyUtils.toast(GroupDetailsActivity.this, "本地服务器更新群名成功");
+                            return;
+                        }
+                        SuperWeChatApplication.mMyUtils.toast(GroupDetailsActivity.this, "本地服务器更新群名失败");
+
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        SuperWeChatApplication.mMyUtils.toast(GroupDetailsActivity.this, "本地服务器异常");
+
+                    }
+                });
+
 
     }
 
