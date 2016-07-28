@@ -141,7 +141,6 @@ public class PublicGroupsActivity extends BaseActivity {
                                     groupsList.add(g);
                                 }
                             }
-                            groupsList.addAll(returnGroups);
                             if (returnGroups.size() != 0) {
                                 //获取cursor
                                 cursor = result.getCursor();

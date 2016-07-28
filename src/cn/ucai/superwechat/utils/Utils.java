@@ -1,7 +1,11 @@
 package cn.ucai.superwechat.utils;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -15,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.bean.Pager;
 import cn.ucai.superwechat.bean.Result;
 
@@ -168,8 +173,30 @@ public class Utils {
         return null;
     }
 
-    public void toast(Context context, String string) {
-        Toast.makeText(context, string + "", Toast.LENGTH_SHORT).show();
+    Toast toast;
+
+    public void toast(final Context context, String string) {
+        View view = View.inflate(context, R.layout.toast_layout, null);
+        TextView toast_Tv = (TextView) view.findViewById(R.id.toast_tv);
+        toast_Tv.setText(string);
+        toast = new Toast(context);
+        toast.setGravity(Gravity.TOP, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(view);
+        toast.show();
+        view.findViewById(R.id.toast_iv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "别点我", Toast.LENGTH_SHORT).show();
+            }
+        });
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        }, 1600);
+
     }
 
     public void toastResources(Context context, int id) {

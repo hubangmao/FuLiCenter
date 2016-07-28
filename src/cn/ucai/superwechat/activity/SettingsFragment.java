@@ -37,16 +37,20 @@ import cn.ucai.superwechat.applib.controller.HXSDKHelper;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
 
+import java.util.List;
+import java.util.Map;
+
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.DemoHXSDKModel;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.bean.GroupAvatar;
+import cn.ucai.superwechat.bean.UserAvatar;
 
 /**
  * 设置界面
  *
  * @author Administrator
- *
  */
 public class SettingsFragment extends Fragment implements OnClickListener {
 
@@ -361,12 +365,21 @@ public class SettingsFragment extends Fragment implements OnClickListener {
             public void onSuccess() {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-                        SuperWeChatApplication.getInstance().getMap().clear();
-                        SuperWeChatApplication.getInstance().getUserList().clear();
-                        SuperWeChatApplication.getInstance().getGroupAvatarList().clear();
+                        Map<String, UserAvatar> map = SuperWeChatApplication.getInstance().getMap();
+                        List<UserAvatar> userList = SuperWeChatApplication.getInstance().getUserList();
+                        List<GroupAvatar> groupAvatarList = SuperWeChatApplication.getInstance().getGroupAvatarList();
+                        if (map != null) {
+                            map.clear();
+                        }
+                        if (userList != null) {
+                            userList.clear();
+                        }
+                        if (groupAvatarList != null) {
+                            groupAvatarList.clear();
+                        }
                         pd.dismiss();
                         // 重新显示登陆页面
-                        ((MainActivity) getActivity()).finish();
+                        getActivity().finish();
                         startActivity(new Intent(getActivity(), LoginActivity.class));
 
                     }

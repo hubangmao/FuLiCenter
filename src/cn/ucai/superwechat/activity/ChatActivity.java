@@ -431,6 +431,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
                 forwardMessage(forward_msg_id);
             }
         }
+        adapter.notifyDataSetChanged();
         updateGroupAdapter();
 
     }
@@ -1473,6 +1474,9 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
         if (groupListener != null) {
             EMGroupManager.getInstance().removeGroupChangeListener(groupListener);
         }
+        if (mUpdateGroupAdapter != null) {
+            unregisterReceiver(mUpdateGroupAdapter);
+        }
     }
 
     @Override
@@ -1763,9 +1767,10 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
         }
     }
 
+    UpdateGroupAdapter mUpdateGroupAdapter;
+
     public void updateGroupAdapter() {
-        IntentFilter intentFilter = new IntentFilter("update_member_list");
-        registerReceiver(new UpdateGroupAdapter(), intentFilter);
+        registerReceiver(mUpdateGroupAdapter = new UpdateGroupAdapter(), new IntentFilter("update_member_list"));
     }
 
 }

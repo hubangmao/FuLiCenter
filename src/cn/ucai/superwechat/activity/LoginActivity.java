@@ -161,6 +161,10 @@ public class LoginActivity extends BaseActivity {
                 .execute(new OkHttpUtils2.OnCompleteListener<String>() {
                     @Override
                     public void onSuccess(String result) {
+                        if (result == null) {
+                            SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "登陆失败网络错误");
+                            return;
+                        }
                         Result user = Utils.getResultFromJson(result, UserAvatar.class);
                         if (user.isRetMsg() && result != null) {
                             SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "SuperWeChat登陆验证成功");

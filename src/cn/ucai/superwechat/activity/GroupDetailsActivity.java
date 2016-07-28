@@ -308,7 +308,11 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
     //更新本地服务器群名称
     private void updateSuperGroupNick(String returnData) {
-        final String updateGroupNickUrl = I.SERVER_URL + "?request=update_group_name&m_group_name=" + returnData + "&m_group_id=" + SuperWeChatApplication.getInstance().getGroupMap().get(groupId).getMGroupId();
+        GroupAvatar groupAvatar = SuperWeChatApplication.getInstance().getGroupMap().get(groupId);
+        if (groupAvatar == null) {
+            return;
+        }
+        final String updateGroupNickUrl = I.SERVER_URL + "?request=update_group_name&m_group_name=" + returnData + "&m_group_id=" + groupAvatar.getMGroupId();
         OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
         utils2.url(updateGroupNickUrl)
                 .targetClass(String.class)
@@ -444,7 +448,12 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
     }
 
     private void deleteSuperGroup() {
-        final String deleteGroupUrl = I.SERVER_URL + "?request=delete_group&m_group_id=" + SuperWeChatApplication.getInstance().getGroupMap().get(groupId).getMGroupId();
+        GroupAvatar groupAvatar = SuperWeChatApplication.getInstance().getGroupMap().get(groupId);
+        if (groupAvatar == null) {
+            return;
+        }
+        final String deleteGroupUrl = I.SERVER_URL + "?request=delete_group&m_group_id=" +
+                groupAvatar.getMGroupId();
         OkHttpUtils2<Result> utils2 = new OkHttpUtils2<Result>();
         utils2.url(deleteGroupUrl)
                 .targetClass(Result.class)

@@ -176,12 +176,12 @@ public class UserUtils {
      */
     public static MemberUserAvatar getMember(String hxId, String username) {
         MemberUserAvatar member = null;
-        HashMap<String, MemberUserAvatar> memberMap = SuperWeChatApplication.getInstance().getMemberMap().get(hxId);
+        HashMap<String, MemberUserAvatar> memberMap = SuperWeChatApplication.getInstance().getMemberMap().get(username);
         if (memberMap == null) {
             return null;
         } else {
-            member = memberMap.get(username);
-            Log.i("main", "2=" + member.toString());
+            member = memberMap.get(hxId);
+            Log.i("main", "2=" + memberMap.toString());
         }
         return member;
     }

@@ -590,6 +590,7 @@ public class MessageAdapter extends BaseAdapter {
                 Intent intent = new Intent();
                 intent.setClass(context, UserProfileActivity.class);
                 intent.putExtra("username", message.getFrom());
+                intent.putExtra("groupId", message.getFrom());
                 context.startActivity(intent);
             }
         });
@@ -638,7 +639,7 @@ public class MessageAdapter extends BaseAdapter {
             }
         }
     }
-
+    @SuppressWarnings("ResourceType")
     private void setRobotMenuMessageLayout(LinearLayout parentView, JSONArray jsonArr) {
         try {
             parentView.removeAllViews();
@@ -963,6 +964,8 @@ public class MessageAdapter extends BaseAdapter {
 
     }
 
+
+
     /**
      * 语音消息
      *
@@ -971,6 +974,7 @@ public class MessageAdapter extends BaseAdapter {
      * @param position
      * @param convertView
      */
+    @SuppressWarnings("ResourceType")
     private void handleVoiceMessage(final EMMessage message, final ViewHolder holder, final int position, View convertView) {
         VoiceMessageBody voiceBody = (VoiceMessageBody) message.getBody();
         int len = voiceBody.getLength();
@@ -1166,7 +1170,7 @@ public class MessageAdapter extends BaseAdapter {
                                     holder.tv.setVisibility(View.INVISIBLE);
                                     holder.staus_iv.setVisibility(View.VISIBLE);
                                     Toast.makeText(activity,
-                                            activity.getString(R.string.send_fail) + activity.getString(R.string.connect_failuer_toast), 0)
+                                            activity.getString(R.string.send_fail) + activity.getString(R.string.connect_failuer_toast), Toast.LENGTH_SHORT)
                                             .show();
                                     timer.cancel();
                                 }
