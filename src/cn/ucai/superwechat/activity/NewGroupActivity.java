@@ -54,6 +54,7 @@ public class NewGroupActivity extends BaseActivity implements View.OnClickListen
     GroupAvatar mAddGroupAvatar;
 
     String[] members;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -214,6 +215,8 @@ public class NewGroupActivity extends BaseActivity implements View.OnClickListen
                             SuperWeChatApplication.mMyUtils.toast(NewGroupActivity.this, "本地服务器创建群成功");
                             //添加群成员
                             if (members != null && members.length != 0) {
+                                SuperWeChatApplication.getInstance().getGroupMap().put(mGroupAvatar.getMGroupHxid(), mGroupAvatar);
+                                SuperWeChatApplication.getInstance().getGroupAvatarList().add(mGroupAvatar);
                                 addGroupMembers();
                             }
                             runOnUiThread(new Runnable() {
