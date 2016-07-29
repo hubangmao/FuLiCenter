@@ -81,7 +81,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         setContentView(R.layout.activity_login);
-
+        setListener();
         usernameEditText = (EditText) findViewById(R.id.username);
         passwordEditText = (EditText) findViewById(R.id.password);
 
@@ -105,6 +105,18 @@ public class LoginActivity extends BaseActivity {
         if (SuperWeChatApplication.getInstance().getUserName() != null) {
             usernameEditText.setText(SuperWeChatApplication.getInstance().getUserName());
         }
+    }
+
+    private void setListener() {
+        findViewById(R.id.but_login).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+                return false;
+            }
+        });
+
     }
 
     /**
