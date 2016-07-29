@@ -29,10 +29,10 @@ import cn.ucai.fulicenter.bean.MemberUserAvatar;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.utils.Utils;
 
-public class SuperWeChatApplication extends Application {
+public class FuLiCenterApplication extends Application {
 
     public static Context applicationContext;
-    private static SuperWeChatApplication instance;
+    private static FuLiCenterApplication instance;
     // login user name
     public final String PREF_USERNAME = "username";
 
@@ -46,7 +46,7 @@ public class SuperWeChatApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("main", "SuperWeChatApplication.onCreate()");
+        Log.i("main", "FuLiCenterApplication.onCreate()");
         applicationContext = this;
         instance = this;
         mMyUtils = new Utils();
@@ -72,7 +72,7 @@ public class SuperWeChatApplication extends Application {
         hxSDKHelper.onInit(applicationContext);
     }
 
-    public static SuperWeChatApplication getInstance() {
+    public static FuLiCenterApplication getInstance() {
         return instance;
     }
 
