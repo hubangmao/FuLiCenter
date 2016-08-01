@@ -37,7 +37,6 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="cn.ucai.fulicenter.permission.C2D_MESSAGE" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -45,16 +44,10 @@
         android:allowBackup="true"
         android:icon="@drawable/logo_uidemo"
         android:label="@string/app_name">
-        <activity
-            android:name="cn.ucai.fulicenter.activity.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
 
         <!-- 开屏页 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.SplashActivity"
+            android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide">
             <intent-filter>
@@ -63,185 +56,166 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".activity.FuLiCenterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
         <!-- 登陆 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible" />
 
         <!-- 注册 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.RegisterActivity"
+            android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <!-- 聊天页面 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.ChatActivity"
+            android:name=".activity.ChatActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize" />
         <!-- 添加好友 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.AddContactActivity"
+            android:name=".activity.AddContactActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateVisible" />
         <!-- 群组详情 -->
-        <activity
-            android:name="cn.ucai.fulicenter.activity.GroupDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+
+
         <!-- 群组列表 -->
+
         <activity
-            android:name="cn.ucai.fulicenter.activity.GroupsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="cn.ucai.fulicenter.activity.ChatRoomActivity"
+            android:name=".activity.ChatRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
         <!-- 聊天室详情 -->
-        <activity
-            android:name="cn.ucai.fulicenter.activity.ChatRoomDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+
 
         <!-- 退出群组提示框 -->
-        <activity
-            android:name="cn.ucai.fulicenter.activity.ExitGroupDialog"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyleBottom" />
+
+
         <!-- 群组选人 -->
-        <activity
-            android:name="cn.ucai.fulicenter.activity.GroupPickContactsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
+
+
         <!-- 地图 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.BaiduMapActivity"
+            android:name=".activity.BaiduMapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
 
         <!-- 新的朋友邀请消息页面 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.NewFriendsMsgActivity"
+            android:name=".activity.NewFriendsMsgActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <!-- 转发消息用户列表页面 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.ForwardMessageActivity"
+            android:name=".activity.ForwardMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
         <!-- 自定义的contextmenu -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.ContextMenu"
+            android:name=".activity.ContextMenu"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyle" />
         <!-- 自定义的alertdialog -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.AlertDialog"
+            android:name=".activity.AlertDialog"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyle" />
         <!-- 显示下载大图页面 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.ShowBigImage"
+            android:name=".activity.ShowBigImage"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <!-- 下载文件 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.ShowNormalFileActivity"
+            android:name=".activity.ShowNormalFileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <!-- 黑名单 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.BlacklistActivity"
+            android:name=".activity.BlacklistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
 
-        <activity
-            android:name="cn.ucai.fulicenter.activity.PublicChatRoomsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
-
         <!-- 语音通话 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.VoiceCallActivity"
+            android:name=".activity.VoiceCallActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/nornal_style" />
         <!-- 视频通话 -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.VideoCallActivity"
+            android:name=".activity.VideoCallActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <!-- 群聊简单信息 -->
-        <activity
-            android:name="cn.ucai.fulicenter.activity.GroupSimpleDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+
+
         <!-- 群组黑名单用户列表 -->
+
         <activity
-            android:name="cn.ucai.fulicenter.activity.GroupBlacklistActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <activity
-            android:name="cn.ucai.fulicenter.activity.PublicGroupsSeachActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <activity
-            android:name="cn.ucai.fulicenter.activity.EditActivity"
+            android:name=".activity.EditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name="cn.ucai.fulicenter.activity.ShowVideoActivity"
+            android:name=".activity.ShowVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- choose video -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.ImageGridActivity"
+            android:name=".activity.ImageGridActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="cn.ucai.fulicenter.activity.RecorderVideoActivity"
+            android:name=".activity.RecorderVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- upload error log -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.DiagnoseActivity"
+            android:name=".activity.DiagnoseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <!-- iOS offline push nick -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.OfflinePushNickActivity"
+            android:name=".activity.OfflinePushNickActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- robots list -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.RobotsActivity"
+            android:name=".activity.RobotsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- user profile -->
         <activity
-            android:name="cn.ucai.fulicenter.activity.UserProfileActivity"
+            android:name=".activity.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
 
@@ -272,7 +246,7 @@
             android:exported="false" />
 
         <receiver
-            android:name="cn.ucai.fulicenter.chatuidemo.receiver.GCMPushBroadCast"
+            android:name=".chatuidemo.receiver.GCMPushBroadCast"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.easemob.sdk.push" />
@@ -286,7 +260,7 @@
         <!-- 设置环信应用的appkey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="hubangmao#superwechat" />
+            android:value="hubangmao#fulicenter" />
         <!-- 声明sdk所需的service -->
         <service android:name="com.easemob.chat.EMChatService" />
         <!-- 声明sdk所需的receiver -->
@@ -316,9 +290,11 @@
             android:value="3ecea51f560650b1ed8a4b99808f52e8" />
 
         <service
-            android:name="cn.ucai.fulicenter.widget.MyService"
+            android:name=".widget.MyService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
+
+
     </application>
 
 </manifest>

@@ -1,7 +1,7 @@
 package cn.ucai.fulicenter.utils;
 
 public interface F {
-    String SERVER_ROOT = "http://10.0.2.2:8080/FuLiCenterServer/Server";
+    public static String SERVIEW_URL = "http://10.0.2.2:8080/FuLiCenterServer/Server?";
     public static final String FILE_NAME="file_name";
 
     public static final int REQUEST_CODE_LOGIN = 1;
@@ -358,10 +358,10 @@ public interface F {
 	String REQUEST_FIND_GROUP_BY_HXID 				= 		"find_group_by_group_hxid";
 	/** 客户端发送的根据群组环信id查找公开群组请求 */
 	String REQUEST_FIND_PUBLIC_GROUP_BY_HXID 		= 		"find_public_group_by_group_hxid";
-    String DOWNLOAD_USER_AVATAR_URL                 =       SERVER_ROOT
+    String DOWNLOAD_USER_AVATAR_URL                 =       SERVIEW_URL
             +  "?" + KEY_REQUEST + "=" + REQUEST_DOWNLOAD_AVATAR + "&" + AVATAR_TYPE + "=";
     /** 客户端发送的根据根据群组环信id下载群组头像的请求 */
-    String DOWNLOAD_GROUP_AVATAR_URL                 =       SERVER_ROOT
+    String DOWNLOAD_GROUP_AVATAR_URL                 =       SERVIEW_URL
             +  "?" + KEY_REQUEST + "=" + REQUEST_DOWNLOAD_GROUP_AVATAR + "&time=123" + "&" + AVATAR_TYPE + "=";
 	String REQUEST_FIND_CHARGE = "find_charge";
     
@@ -411,39 +411,39 @@ public interface F {
     String REQUEST_DOWNLOAD_COLOR_IMG = "download_color_img";
     
     /** 下载商品相册图像的URL*/
-    String DOWNLOAD_AVATAR_URL= SERVER_ROOT+
+    String DOWNLOAD_AVATAR_URL= SERVIEW_URL+
         "?request="+REQUEST_DOWNLOAD_AVATAR+"&avatar=";
     
     /** 下载商品相册图像的请求*/
     String REQUEST_DOWNLOAD_ALBUM_IMG="download_album_img_url";
     /** 下载商品相册图像的接口*/
-    String DOWNLOAD_ALBUM_IMG_URL= SERVER_ROOT+
+    String DOWNLOAD_ALBUM_IMG_URL= SERVIEW_URL+
         "?request="+REQUEST_DOWNLOAD_ALBUM_IMG+"&img_url=";
     
     /** 下载精选首页图像的请求*/
     String REQUEST_DOWNLOAD_BOUTIQUE_IMG="download_boutique_img";
     /** 下载精选首页图像的接口*/
-    String DOWNLOAD_BOUTIQUE_IMG_URL= SERVER_ROOT+
+    String DOWNLOAD_BOUTIQUE_IMG_URL= SERVIEW_URL+
         "?request="+REQUEST_DOWNLOAD_BOUTIQUE_IMG+"&"+Boutique.IMAGE_URL+"=";
     
     /** 下载分类商品大类图像的请求*/
     String REQUEST_DOWNLOAD_CATEGORY_GROUP_IMAGE="download_category_group_image";
     /** 下载分类商品大类图像的接口*/
-    String DOWNLOAD_DOWNLOAD_CATEGORY_GROUP_IMAGE_URL= SERVER_ROOT+
+    String DOWNLOAD_DOWNLOAD_CATEGORY_GROUP_IMAGE_URL= SERVIEW_URL+
         "?request="+REQUEST_DOWNLOAD_CATEGORY_GROUP_IMAGE
         +"&"+ cn.ucai.fulicenter.D.CategoryGroup.IMAGE_URL+"=";
 
     /** 下载收藏商品图像的请求*/
     String REQUEST_DOWNLOAD_GOODS_THUMB="download_goods_thumb";
     /** 下载收藏商品图像的接口*/
-    String DOWNLOAD_GOODS_THUMB_URL= SERVER_ROOT+
+    String DOWNLOAD_GOODS_THUMB_URL= SERVIEW_URL+
         "?request="+REQUEST_DOWNLOAD_GOODS_THUMB
         +"&"+Collect.GOODS_THUMB+"=";
     
     /** 下载分类商品小类图像的请求*/
     String REQUEST_DOWNLOAD_CATEGORY_CHILD_IMAGE="download_category_child_image";
     /** 下载分类商品小类图像的接口*/
-    String DOWNLOAD_DOWNLOAD_CATEGORY_CHILD_IMAGE_URL= SERVER_ROOT+
+    String DOWNLOAD_DOWNLOAD_CATEGORY_CHILD_IMAGE_URL= SERVIEW_URL+
         "?request="+REQUEST_DOWNLOAD_CATEGORY_GROUP_IMAGE
         +"&"+ cn.ucai.fulicenter.D.CategoryChild.IMAGE_URL+"=";
     
@@ -451,7 +451,7 @@ public interface F {
     //壹收款支付请求
     String REQUEST_PAY="pay";
     /**壹收款服务端支付URL*/
-    String PAY_URL= SERVER_ROOT+"?request="+ F.REQUEST_PAY;
+    String PAY_URL= SERVIEW_URL+"?request="+ F.REQUEST_PAY;
 
     String ACTION_TYPE_PERSONAL = "personal";
     String ACTION_TYPE_CART = "cart";

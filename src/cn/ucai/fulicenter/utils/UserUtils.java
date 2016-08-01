@@ -161,12 +161,6 @@ public class UserUtils {
         }
     }
 
-    //下载群头像
-    public static void setMyGroupAvatar(Context mContext, String groupId, ImageView viewById) {
-        String path = I.SERVER_URL + "?request=download_avatar&name_or_hxid=" + groupId + "&avatarType=" + I.AVATAR_TYPE_GROUP_PATH;
-        Log.i("main", "UserUtills.setMyAvatar()个人头像下载成功及路径" + "\n群头像下载链接=" + path);
-        Picasso.with(mContext).load(path).placeholder(R.drawable.group_icon).into(viewById);
-    }
 
 
 }

@@ -38,7 +38,6 @@ public class FuLiCenterApplication extends Application {
      */
     public static String currentUserNick = "";
     public static DemoHXSDKHelper hxSDKHelper = new DemoHXSDKHelper();
-    public static Utils mMyUtils;
 
     @Override
     public void onCreate() {
@@ -46,7 +45,6 @@ public class FuLiCenterApplication extends Application {
         Log.i("main", "FuLiCenterApplication.onCreate()");
         applicationContext = this;
         instance = this;
-        mMyUtils = new Utils();
 
         /**
          * this function will initialize the HuanXin SDK

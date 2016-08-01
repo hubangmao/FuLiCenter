@@ -34,6 +34,7 @@ import cn.ucai.fulicenter.domain.User;
 import cn.ucai.fulicenter.listener.OnSetAvatarListener;
 import cn.ucai.fulicenter.utils.I;
 import cn.ucai.fulicenter.utils.UserUtils;
+import cn.ucai.fulicenter.utils.Utils;
 
 import com.squareup.picasso.Picasso;
 
@@ -115,7 +116,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                             public void onClick(DialogInterface dialog, int which) {
                                 final String nickString = editText.getText().toString();
                                 if (TextUtils.isEmpty(nickString)) {
-                                    FuLiCenterApplication.mMyUtils.toastResources(UserProfileActivity.this, R.string.toast_nick_not_isnull);
+                                    Utils.toastResources(UserProfileActivity.this, R.string.toast_nick_not_isnull);
                                     return;
                                 }
                                 UserProfileActivity.dialog = ProgressDialog.show(UserProfileActivity.this, getString(R.string.dl_update_nick), getString(R.string.dl_waiting));
@@ -146,12 +147,12 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                             //更新全局变量用户昵称数据
                             UserAvatar user = FuLiCenterApplication.getInstance().getUser();
                             user.setMUserNick(nickString);
-                            FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "本地服务器更新昵称成功=" + user.getMUserNick());
+                            Utils.toast(UserProfileActivity.this, "本地服务器更新昵称成功=" + user.getMUserNick());
                             //更新数据库数据
                             DemoDBManager.getInstance().updateDBInfo(nickString);
                         } else {
                             dialog.dismiss();
-                            FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "本地服务器更新昵称失败");
+                            Utils.toast(UserProfileActivity.this, "本地服务器更新昵称失败");
                         }
 
                     }
@@ -159,7 +160,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                     @Override
                     public void onError(String error) {
                         dialog.dismiss();
-                        FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "网络错误");
+                        Utils.toast(UserProfileActivity.this, "网络错误");
                     }
                 });
 
@@ -202,17 +203,17 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                     public void onSuccess(Result result) {
                         if (result.isRetMsg()) {
                             dialog.dismiss();
-                            FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "头像修改成功");
+                            Utils.toast(UserProfileActivity.this, "头像修改成功");
                         } else {
                             dialog.dismiss();
-                            FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "头像修改失败");
+                            Utils.toast(UserProfileActivity.this, "头像修改失败");
                         }
                     }
 
                     @Override
                     public void onError(String error) {
                         dialog.dismiss();
-                        FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "服务器异常");
+                        Utils.toast(UserProfileActivity.this, "服务器异常");
                     }
                 });
 
