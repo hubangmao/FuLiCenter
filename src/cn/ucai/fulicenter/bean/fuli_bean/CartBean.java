@@ -1,24 +1,30 @@
 package cn.ucai.fulicenter.bean.fuli_bean;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.io.Serializable;
 
 /**
  * 购物车
- * 
- * @author yao
  *
+ * @author yao
  */
 public class CartBean implements Serializable {
-	int id;
-	String userName;
-	int goodsId;
-	/** 购物车中的商品信息 */
-	private GoodDetailsBean goods;
-	/** 该商品被选中的件数 */
-	private int count;
-	private boolean isChecked;
-	
-	public boolean isChecked() {
+    int id;
+    String userName;
+    int goodsId;
+    /**
+     * 购物车中的商品信息
+     */
+    private GoodDetailsBean goods;
+    /**
+     * 该商品被选中的件数
+     */
+    private int count;
+    @JsonProperty("isChecked")
+    private boolean isChecked;
+
+    public boolean isChecked() {
         return isChecked;
     }
 
@@ -27,12 +33,12 @@ public class CartBean implements Serializable {
     }
 
     public int getId() {
-		return id;
-	}
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public GoodDetailsBean getGoods() {
         return goods;
@@ -43,35 +49,35 @@ public class CartBean implements Serializable {
     }
 
     public String getUserName() {
-		return userName;
-	}
+        return userName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public int getGoodsId() {
-		return goodsId;
-	}
+    public int getGoodsId() {
+        return goodsId;
+    }
 
-	public void setGoodsId(int goodsId) {
-		this.goodsId = goodsId;
-	}
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
+    }
 
-	public int getCount() {
-		return count;
-	}
+    public int getCount() {
+        return count;
+    }
 
-	public void setCount(int count) {
-		this.count = count;
-	}
+    public void setCount(int count) {
+        this.count = count;
+    }
 
-	public CartBean() {
-		// TODO Auto-generated constructor stub
-	}
+    public CartBean() {
+        // TODO Auto-generated constructor stub
+    }
 
     public CartBean(int id, String userName, int goodsId,
-            int count, boolean isChecked) {
+                    int count, boolean isChecked) {
         super();
         this.id = id;
         this.userName = userName;
