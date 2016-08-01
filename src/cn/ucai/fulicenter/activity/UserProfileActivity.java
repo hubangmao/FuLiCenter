@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.easemob.EMValueCallBack;
 
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
 
 import com.easemob.chat.EMChatManager;
@@ -87,15 +87,10 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 
         if (username == null || username.equals(EMChatManager.getInstance().getCurrentUser())) {
             Log.i("main", "UserProfileActivity.initListener()设置个人资料" + username);
-            username = SuperWeChatApplication.getInstance().getUserName();
+            username = FuLiCenterApplication.getInstance().getUserName();
             tvUsername.setText(EMChatManager.getInstance().getCurrentUser());
             UserUtils.setMyAvatar(UserProfileActivity.this, username, headAvatar);
             UserUtils.setMyUserNick1(username, tvNickName);
-        } else if (groupId != null) {
-            //设置群成员昵称头像
-            tvUsername.setText(username);
-            UserUtils.setGroupUserNick(groupId, username, tvNickName);
-            UserUtils.setMyAvatar(this, username, headAvatar);
         } else {
             tvUsername.setText(username);
             UserUtils.setMyUserNick(username, tvNickName);
@@ -120,7 +115,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                             public void onClick(DialogInterface dialog, int which) {
                                 final String nickString = editText.getText().toString();
                                 if (TextUtils.isEmpty(nickString)) {
-                                    SuperWeChatApplication.mMyUtils.toastResources(UserProfileActivity.this, R.string.toast_nick_not_isnull);
+                                    FuLiCenterApplication.mMyUtils.toastResources(UserProfileActivity.this, R.string.toast_nick_not_isnull);
                                     return;
                                 }
                                 UserProfileActivity.dialog = ProgressDialog.show(UserProfileActivity.this, getString(R.string.dl_update_nick), getString(R.string.dl_waiting));
@@ -139,7 +134,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     //更新本地用户昵称
     private void updateSuperUserNick(final String nickString) {
         String updateNickUrl = I.SERVER_URL + "?request=update_nick&m_user_name="
-                + SuperWeChatApplication.getInstance().getUserName() + "&m_user_nick=" + nickString;
+                + FuLiCenterApplication.getInstance().getUserName() + "&m_user_nick=" + nickString;
         OkHttpUtils2<Result> utils2 = new OkHttpUtils2<Result>();
         utils2.url(updateNickUrl)
                 .targetClass(Result.class)
@@ -149,14 +144,14 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                         if (result.isRetMsg()) {
                             dialog.dismiss();
                             //更新全局变量用户昵称数据
-                            UserAvatar user = SuperWeChatApplication.getInstance().getUser();
+                            UserAvatar user = FuLiCenterApplication.getInstance().getUser();
                             user.setMUserNick(nickString);
-                            SuperWeChatApplication.mMyUtils.toast(UserProfileActivity.this, "本地服务器更新昵称成功=" + user.getMUserNick());
+                            FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "本地服务器更新昵称成功=" + user.getMUserNick());
                             //更新数据库数据
                             DemoDBManager.getInstance().updateDBInfo(nickString);
                         } else {
                             dialog.dismiss();
-                            SuperWeChatApplication.mMyUtils.toast(UserProfileActivity.this, "本地服务器更新昵称失败");
+                            FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "本地服务器更新昵称失败");
                         }
 
                     }
@@ -164,7 +159,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                     @Override
                     public void onError(String error) {
                         dialog.dismiss();
-                        SuperWeChatApplication.mMyUtils.toast(UserProfileActivity.this, "网络错误");
+                        FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "网络错误");
                     }
                 });
 
@@ -172,7 +167,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 
     private void uploadHeadPhoto() {
         //打开popupWindows选择图片
-        mSetAvatar = new OnSetAvatarListener(UserProfileActivity.this, R.id.linearPopupWindow, SuperWeChatApplication.getInstance().getUserName().trim(), I.AVATAR_TYPE_USER_PATH);
+        mSetAvatar = new OnSetAvatarListener(UserProfileActivity.this, R.id.linearPopupWindow, FuLiCenterApplication.getInstance().getUserName().trim(), I.AVATAR_TYPE_USER_PATH);
 
     }
 
@@ -186,7 +181,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
         mSetAvatar.setAvatar(requestCode, data, headAvatar);//得到数据后传入setAvatar()方法
         //更新本地服务器头像
         if (requestCode == 3) {
-            updateUserAvatarData(SuperWeChatApplication.getInstance().getUserName());
+            updateUserAvatarData(FuLiCenterApplication.getInstance().getUserName());
         }
 
 
@@ -207,17 +202,17 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                     public void onSuccess(Result result) {
                         if (result.isRetMsg()) {
                             dialog.dismiss();
-                            SuperWeChatApplication.mMyUtils.toast(UserProfileActivity.this, "头像修改成功");
+                            FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "头像修改成功");
                         } else {
                             dialog.dismiss();
-                            SuperWeChatApplication.mMyUtils.toast(UserProfileActivity.this, "头像修改失败");
+                            FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "头像修改失败");
                         }
                     }
 
                     @Override
                     public void onError(String error) {
                         dialog.dismiss();
-                        SuperWeChatApplication.mMyUtils.toast(UserProfileActivity.this, "服务器异常");
+                        FuLiCenterApplication.mMyUtils.toast(UserProfileActivity.this, "服务器异常");
                     }
                 });
 

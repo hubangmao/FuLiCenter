@@ -7,7 +7,7 @@ import android.util.Log;
 import java.util.List;
 import java.util.Map;
 
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
@@ -21,11 +21,18 @@ import cn.ucai.fulicenter.utils.Utils;
 public class DowAllFirendListTask {
     private final String TAG = DowAllFirendListTask.class.getSimpleName();
     Context mContext;
-    String userName =SuperWeChatApplication.getInstance().getUser().getMUserName();
+    UserAvatar userAvatar;
+    String userName;
 
 
 
     public DowAllFirendListTask(Context mContext) {
+        userAvatar = FuLiCenterApplication.getInstance().getUser();
+        if (userAvatar == null) {
+            return;
+        } else {
+            userName = userAvatar.getMUserName();
+        }
         this.mContext = mContext;
     }
 
@@ -43,14 +50,14 @@ public class DowAllFirendListTask {
                         Result result = Utils.getListResultFromJson(s, UserAvatar.class);
                         List<UserAvatar> list = (List<UserAvatar>) result.getRetData();
                         if (list.size() > 0 && list != null) {
-                            SuperWeChatApplication.getInstance().setUserList(list);
-                            Map<String, UserAvatar> map = SuperWeChatApplication.getInstance().getMap();
+                            FuLiCenterApplication.getInstance().setUserList(list);
+                            Map<String, UserAvatar> map = FuLiCenterApplication.getInstance().getMap();
                             mContext.sendStickyBroadcast(new Intent("update_contact_list"));
                             for (UserAvatar l : list) {
                                 Log.i("main", "用户昵称=" + l.getMUserNick());
                                 map.put(l.getMUserName(), l);
                             }
-                            SuperWeChatApplication.getInstance().setMap(map);
+                            FuLiCenterApplication.getInstance().setMap(map);
                         }
                     }
 

@@ -31,7 +31,7 @@ import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
 
 import com.easemob.chat.EMContactManager;
 
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
@@ -77,7 +77,7 @@ public class AddContactActivity extends BaseActivity {
      */
 
     public void searchContact(View v) {
-        int size = SuperWeChatApplication.getInstance().getMap().size();
+        int size = FuLiCenterApplication.getInstance().getMap().size();
         final String name = editText.getText().toString();
         String saveText = searchBtn.getText().toString();
         if (getString(R.string.button_search).equals(saveText)) {
@@ -87,9 +87,9 @@ public class AddContactActivity extends BaseActivity {
                 startActivity(new Intent(this, AlertDialog.class).putExtra("msg", st));
                 return;
             }
-            Log.i("main", "Map长度=" + size + SuperWeChatApplication.getInstance().getMap().get(toAddUsername + " ") + toAddUsername);
+            Log.i("main", "Map长度=" + size + FuLiCenterApplication.getInstance().getMap().get(toAddUsername + " ") + toAddUsername);
             //如果存在直接跳转到资料界面
-            if (SuperWeChatApplication.getInstance().getMap().get(toAddUsername) != null) {
+            if (FuLiCenterApplication.getInstance().getMap().get(toAddUsername) != null) {
                 startActivity(new Intent(AddContactActivity.this, UserProfileActivity.class).putExtra("username", toAddUsername));
                 return;
             }
@@ -138,7 +138,7 @@ public class AddContactActivity extends BaseActivity {
      * @param view
      */
     public void addContact(View view) {
-        if (SuperWeChatApplication.getInstance().getUserName().equals(nameText.getText().toString())) {
+        if (FuLiCenterApplication.getInstance().getUserName().equals(nameText.getText().toString())) {
             String str = getString(R.string.not_add_myself);
             startActivity(new Intent(this, AlertDialog.class).putExtra("msg", str));
             return;

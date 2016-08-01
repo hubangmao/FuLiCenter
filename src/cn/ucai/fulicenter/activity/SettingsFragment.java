@@ -30,10 +30,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easemob.EMCallBack;
-
-import cn.ucai.fulicenter.SuperWeChatApplication;
-import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
-
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
 
@@ -43,8 +39,9 @@ import java.util.Map;
 import cn.ucai.fulicenter.Constant;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.DemoHXSDKModel;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.bean.GroupAvatar;
+import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
 import cn.ucai.fulicenter.bean.UserAvatar;
 
 /**
@@ -365,17 +362,13 @@ public class SettingsFragment extends Fragment implements OnClickListener {
             public void onSuccess() {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-                        Map<String, UserAvatar> map = SuperWeChatApplication.getInstance().getMap();
-                        List<UserAvatar> userList = SuperWeChatApplication.getInstance().getUserList();
-                        List<GroupAvatar> groupAvatarList = SuperWeChatApplication.getInstance().getGroupAvatarList();
+                        Map<String, UserAvatar> map = FuLiCenterApplication.getInstance().getMap();
+                        List<UserAvatar> userList = FuLiCenterApplication.getInstance().getUserList();
                         if (map != null) {
                             map.clear();
                         }
                         if (userList != null) {
                             userList.clear();
-                        }
-                        if (groupAvatarList != null) {
-                            groupAvatarList.clear();
                         }
                         pd.dismiss();
                         // 重新显示登陆页面

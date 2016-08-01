@@ -63,7 +63,7 @@ import java.util.UUID;
 import cn.ucai.fulicenter.Constant;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvatar;
@@ -522,7 +522,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
             // 保存增加的联系人
             Map<String, User> localUsers = ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getContactList();
             Map<String, User> toAddUsers = new HashMap<String, User>();
-            Map<String, UserAvatar> map = SuperWeChatApplication.getInstance().getMap();
+            Map<String, UserAvatar> map = FuLiCenterApplication.getInstance().getMap();
             ArrayList<String> list = new ArrayList<String>();
 
             for (String username : usernameList) {
@@ -540,7 +540,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
             localUsers.putAll(toAddUsers);
             for (final String userName : list) {
                 //保存信息到本地服务器
-                String strUrl = I.SERVER_URL + "?request=add_contact&m_contact_user_name=" + SuperWeChatApplication.getInstance().getUserName() + "&m_contact_cname=" + userName;
+                String strUrl = I.SERVER_URL + "?request=add_contact&m_contact_user_name=" + FuLiCenterApplication.getInstance().getUserName() + "&m_contact_cname=" + userName;
                 OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
                 utils2.url(strUrl)
                         .targetClass(String.class)
@@ -551,11 +551,11 @@ public class MainActivity extends BaseActivity implements EMEventListener {
                                 if (result != null && result.isRetMsg()) {
                                     UserAvatar userAvatar = (UserAvatar) result.getRetData();
                                     if (userAvatar != null) {
-                                        if (!SuperWeChatApplication.getInstance().getMap()
+                                        if (!FuLiCenterApplication.getInstance().getMap()
                                                 .containsKey(userAvatar.getMUserName())) {
-                                            SuperWeChatApplication.getInstance().getMap().
+                                            FuLiCenterApplication.getInstance().getMap().
                                                     put(userAvatar.getMUserName(), userAvatar);
-                                            SuperWeChatApplication.getInstance().getUserList().add(userAvatar);
+                                            FuLiCenterApplication.getInstance().getUserList().add(userAvatar);
                                             sendStickyBroadcast(new Intent("update_contact_list"));
                                             // 1.sendStickyBroadcast()发送广播没有广播接收器接收该消息则会一直反送 消息一直存在
                                             //2.sendBroadcast()这个发送广播则达不到这个效果

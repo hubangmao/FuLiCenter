@@ -39,7 +39,7 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 
 import cn.ucai.fulicenter.Constant;
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
@@ -48,7 +48,6 @@ import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.db.UserDao;
 import cn.ucai.fulicenter.domain.User;
 import cn.ucai.fulicenter.task.DowAllFirendListTask;
-import cn.ucai.fulicenter.task.DowAllGroupListTask;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.I;
 import cn.ucai.fulicenter.utils.Utils;
@@ -102,8 +101,8 @@ public class LoginActivity extends BaseActivity {
 
             }
         });
-        if (SuperWeChatApplication.getInstance().getUserName() != null) {
-            usernameEditText.setText(SuperWeChatApplication.getInstance().getUserName());
+        if (FuLiCenterApplication.getInstance().getUserName() != null) {
+            usernameEditText.setText(FuLiCenterApplication.getInstance().getUserName());
         }
     }
 
@@ -174,13 +173,13 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onSuccess(String result) {
                         if (result == null) {
-                            SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "登陆失败网络错误");
+                            FuLiCenterApplication.mMyUtils.toast(LoginActivity.this, "登陆失败网络错误");
                             return;
                         }
                         Result user = Utils.getResultFromJson(result, UserAvatar.class);
                         if (user.isRetMsg() && result != null) {
-                            SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "SuperWeChat登陆验证成功");
-                            SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "正在验证环信服务器");
+                            FuLiCenterApplication.mMyUtils.toast(LoginActivity.this, "SuperWeChat登陆验证成功");
+                            FuLiCenterApplication.mMyUtils.toast(LoginActivity.this, "正在验证环信服务器");
                             //环信服务器验证
                             HXServiceVerify();
                             //保存用户信息至数据库
@@ -189,9 +188,8 @@ public class LoginActivity extends BaseActivity {
                             userInfoAddRAM((UserAvatar) user.getRetData());
                             //下载所有好友信存到集合 ->内存
                             new DowAllFirendListTask(LoginActivity.this).dowAllFirendLsit();
-                            new DowAllGroupListTask(LoginActivity.this, currentUsername).dowAllGroupLsitTask();
                         } else {
-                            SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, Utils.getResourceString(LoginActivity.this, user.getRetCode()));
+                            FuLiCenterApplication.mMyUtils.toast(LoginActivity.this, Utils.getResourceString(LoginActivity.this, user.getRetCode()));
                             pd.dismiss();
                         }
                     }
@@ -199,7 +197,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onError(String error) {
                         pd.dismiss();
-                        SuperWeChatApplication.mMyUtils.toast(LoginActivity.this, "网络错误");
+                        FuLiCenterApplication.mMyUtils.toast(LoginActivity.this, "网络错误");
                         Log.i("main", "error" + error.toString());
                     }
                 });
@@ -208,8 +206,8 @@ public class LoginActivity extends BaseActivity {
     //保存用户信息至内存中
     private void userInfoAddRAM(UserAvatar userInfo) {
         Log.i("main", "查看" + userInfo.getMAvatarId());
-        SuperWeChatApplication.getInstance().getUser().setMUserName(userInfo.getMUserName());
-        SuperWeChatApplication.getInstance().getUser().setMUserNick(userInfo.getMUserNick());
+        FuLiCenterApplication.getInstance().getUser().setMUserName(userInfo.getMUserName());
+        FuLiCenterApplication.getInstance().getUser().setMUserNick(userInfo.getMUserNick());
     }
 
     private void addSuperDBData(UserAvatar userInfo) {
@@ -228,8 +226,8 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 // 登陆成功，保存用户名密码
-                SuperWeChatApplication.getInstance().setUserName(currentUsername);
-                SuperWeChatApplication.getInstance().setPassword(currentPassword);
+                FuLiCenterApplication.getInstance().setUserName(currentUsername);
+                FuLiCenterApplication.getInstance().setPassword(currentPassword);
                 try {
                     // ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
                     // ** manually load all local groups and
@@ -244,14 +242,14 @@ public class LoginActivity extends BaseActivity {
                         public void run() {
                             pd.dismiss();
                             DemoHXSDKHelper.getInstance().logout(true, null);
-                            SuperWeChatApplication.mMyUtils.toastResources(LoginActivity.this, R.string.login_failure_failed);
+                            FuLiCenterApplication.mMyUtils.toastResources(LoginActivity.this, R.string.login_failure_failed);
                         }
                     });
                     return;
                 }
                 // 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
                 boolean updatenick = EMChatManager.getInstance().updateCurrentUserNick(
-                        SuperWeChatApplication.currentUserNick.trim());
+                        FuLiCenterApplication.currentUserNick.trim());
                 if (!updatenick) {
                     Log.e("LoginActivity", "update current user nick fail");
                 }
@@ -275,7 +273,7 @@ public class LoginActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         pd.dismiss();
-                        SuperWeChatApplication.mMyUtils.toastResources(LoginActivity.this, R.string.Login_failed);
+                        FuLiCenterApplication.mMyUtils.toastResources(LoginActivity.this, R.string.Login_failed);
                     }
                 });
             }

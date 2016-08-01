@@ -19,13 +19,10 @@ import android.util.Log;
 
 import com.easemob.EMCallBack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.ucai.fulicenter.bean.GroupAvatar;
-import cn.ucai.fulicenter.bean.MemberUserAvatar;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.utils.Utils;
 
@@ -164,42 +161,5 @@ public class FuLiCenterApplication extends Application {
         this.map = map;
     }
 
-    /**
-     * 储存群成员信息集合
-     */
-    List<GroupAvatar> groupAvatarList = new ArrayList<GroupAvatar>();
 
-    public List<GroupAvatar> getGroupAvatarList() {
-        return groupAvatarList;
-    }
-
-    public void setGroupAvatarList(List<GroupAvatar> groupAvatarList) {
-        this.groupAvatarList = groupAvatarList;
-    }
-
-    /**
-     * 储存该用户群的群成员
-     */
-    Map<String, HashMap<String, MemberUserAvatar>> memberMap = new HashMap<String, HashMap<String, MemberUserAvatar>>();
-
-    public Map<String, HashMap<String, MemberUserAvatar>> getMemberMap() {
-        return memberMap;
-    }
-
-    public void setMemberMap(Map<String, HashMap<String, MemberUserAvatar>> memberMap) {
-        this.memberMap = memberMap;
-    }
-
-    /**
-     * 储存当前用户的所有群组Map集合
-     */
-    HashMap<String, GroupAvatar> groupMap = new HashMap<String, GroupAvatar>();
-
-    public HashMap<String, GroupAvatar> getGroupMap() {
-        return groupMap;
-    }
-
-    public void setGroupMap(HashMap<String, GroupAvatar> groupMap) {
-        this.groupMap = groupMap;
-    }
 }

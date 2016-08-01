@@ -109,10 +109,10 @@ public class GroupsActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 1) {
                     // 新建群聊
-                    startActivityForResult(new Intent(GroupsActivity.this, NewGroupActivity.class), 0);
+//                    startActivityForResult(new Intent(GroupsActivity.this, NewGroupActivity.class), 0);
                 } else if (position == 2) {
                     // 添加公开群
-                    startActivityForResult(new Intent(GroupsActivity.this, PublicGroupsActivity.class), 0);
+//                    startActivityForResult(new Intent(GroupsActivity.this, PublicGroupsActivity.class), 0);
                 } else {
                     // 进入群聊
                     Intent intent = new Intent(GroupsActivity.this, ChatActivity.class);
@@ -151,12 +151,7 @@ public class GroupsActivity extends BaseActivity {
         refresh();
     }
 
-    /**
-     * 进入公开群聊列表
-     */
-    public void onPublicGroups(View view) {
-        startActivity(new Intent(this, PublicGroupsActivity.class));
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

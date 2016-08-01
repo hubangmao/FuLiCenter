@@ -22,7 +22,7 @@ import com.easemob.exceptions.EaseMobException;
 
 import java.io.File;
 
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
@@ -173,7 +173,7 @@ public class RegisterActivity extends BaseActivity {
                             if (!RegisterActivity.this.isFinishing())
                                 pd.dismiss();
                             // 保存用户名
-                            SuperWeChatApplication.getInstance().setUserName(username);
+                            FuLiCenterApplication.getInstance().setUserName(username);
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
                             finish();
                         }

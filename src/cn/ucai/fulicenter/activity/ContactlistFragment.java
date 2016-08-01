@@ -59,7 +59,7 @@ import java.util.Map.Entry;
 import cn.ucai.fulicenter.Constant;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.adapter.ContactAdapter;
 import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
 import cn.ucai.fulicenter.applib.controller.HXSDKHelper.HXSyncListener;
@@ -314,7 +314,7 @@ public class ContactlistFragment extends Fragment {
     //本地服务端好友
     private void deleteMyContact(User toBeProcessUser) {
         final String userName = toBeProcessUser.getUsername();
-        String userName1 = SuperWeChatApplication.getInstance().getUserName();
+        String userName1 = FuLiCenterApplication.getInstance().getUserName();
         Log.i("main", "用户账号=" + userName + "当前登录账号=" + userName1);
         final String strUrl = I.SERVER_URL + "?request=delete_contact&m_contact_user_name=" + userName1 + "&m_contact_cname=" + userName;
         OkHttpUtils2<Result> utils2 = new OkHttpUtils2<Result>();
@@ -324,21 +324,21 @@ public class ContactlistFragment extends Fragment {
                     @Override
                     public void onSuccess(Result result) {
                         if (result.isRetMsg()) {
-                            Map<String, UserAvatar> map = SuperWeChatApplication.getInstance().getMap();
+                            Map<String, UserAvatar> map = FuLiCenterApplication.getInstance().getMap();
                             map.remove(userName);
-                            SuperWeChatApplication.getInstance().getUserList().remove(map.get(userName));
+                            FuLiCenterApplication.getInstance().getUserList().remove(map.get(userName));
                             //更新好友列表适配器数据
                             mContext.sendStickyBroadcast(new Intent("update_contact_list"));
                             Log.i("main", "本地服务器删除好友成功" + result.isRetMsg() + strUrl);
-                            SuperWeChatApplication.mMyUtils.toast(mContext, "本地服务器删除好友成功");
+                            FuLiCenterApplication.mMyUtils.toast(mContext, "本地服务器删除好友成功");
                         } else {
-                            SuperWeChatApplication.mMyUtils.toast(mContext, "本地服务器删除失败稍后再试");
+                            FuLiCenterApplication.mMyUtils.toast(mContext, "本地服务器删除失败稍后再试");
                         }
                     }
 
                     @Override
                     public void onError(String error) {
-                        SuperWeChatApplication.mMyUtils.toast(mContext, "网络错误");
+                        FuLiCenterApplication.mMyUtils.toast(mContext, "网络错误");
                     }
                 });
 

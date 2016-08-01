@@ -14,15 +14,14 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 
 import cn.ucai.fulicenter.DemoHXSDKHelper;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.SuperWeChatApplication;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.db.DemoDBManager;
 import cn.ucai.fulicenter.db.UserDao;
 import cn.ucai.fulicenter.task.DowAllFirendListTask;
-import cn.ucai.fulicenter.task.DowAllGroupListTask;
 import cn.ucai.fulicenter.utils.I;
 import cn.ucai.fulicenter.utils.Utils;
 
@@ -66,25 +65,23 @@ public class SplashActivity extends BaseActivity {
                     EMChatManager.getInstance().loadAllConversations();
 
                     //先查看全局变量有没有 用户信息
-                    String userName = SuperWeChatApplication.getInstance().getUserName();
+                    String userName = FuLiCenterApplication.getInstance().getUserName();
 
                     UserDao userDao = new UserDao(SplashActivity.this);
                     UserAvatar userAvatar = userDao.getDBUserInfo(userName);
                     //数据库没拿到数据的话在下载一次数据保存到数据库
                     if (userAvatar == null) {
-                        if (addSuperDBUserInfo(userName, SuperWeChatApplication.getInstance().getPassword())) {
+                        if (addSuperDBUserInfo(userName, FuLiCenterApplication.getInstance().getPassword())) {
                             UserDao userDao1 = new UserDao(SplashActivity.this);
                             UserAvatar userAvatar1 = userDao1.getDBUserInfo(userName);
                             //全局变量 UserAvatar 保存信息
-                            SuperWeChatApplication.getInstance().setUser(userAvatar1);
+                            FuLiCenterApplication.getInstance().setUser(userAvatar1);
                         }
                     }
 
                     //全局变量 UserAvatar 保存信息
-                    SuperWeChatApplication.getInstance().setUser(userAvatar);
-                    //群组所有好友信息储存
-                    new DowAllGroupListTask(SplashActivity.this, userName).dowAllGroupLsitTask();
-                    //得到用户信息后下载 好友列表保存到全局变量
+                    FuLiCenterApplication.getInstance().setUser(userAvatar);
+                     //得到用户信息后下载 好友列表保存到全局变量
                     new DowAllFirendListTask(SplashActivity.this).dowAllFirendLsit();
                     Log.i("main", "得到用户信息后下载 好友列表保存到全局变量");
                     long costTime = System.currentTimeMillis() - start;
@@ -135,7 +132,7 @@ public class SplashActivity extends BaseActivity {
 
                     @Override
                     public void onError(String error) {
-                        SuperWeChatApplication.mMyUtils.toast(SplashActivity.this, "网络错误");
+                        FuLiCenterApplication.mMyUtils.toast(SplashActivity.this, "网络错误");
                         isOk = false;
                     }
                 });

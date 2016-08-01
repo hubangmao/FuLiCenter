@@ -8,21 +8,18 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import cn.ucai.fulicenter.SuperWeChatApplication;
-import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
-import cn.ucai.fulicenter.DemoHXSDKHelper;
-
-import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.bean.MemberUserAvatar;
-import cn.ucai.fulicenter.bean.UserAvatar;
-import cn.ucai.fulicenter.domain.User;
-import cn.ucai.fulicenter.listener.OnSetAvatarListener;
-
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
+
+import cn.ucai.fulicenter.DemoHXSDKHelper;
+import cn.ucai.fulicenter.FuLiCenterApplication;
+import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
+import cn.ucai.fulicenter.bean.UserAvatar;
+import cn.ucai.fulicenter.domain.User;
+import cn.ucai.fulicenter.listener.OnSetAvatarListener;
 
 public class UserUtils {
     /**
@@ -70,7 +67,7 @@ public class UserUtils {
      * 设置Super当前用户头像
      */
     public static void setMyUserAvatar(Context context, ImageView imageView) {
-        String userName = SuperWeChatApplication.getInstance().getUserName();
+        String userName = FuLiCenterApplication.getInstance().getUserName();
         setMyAvatar(context, userName, imageView);
     }
 
@@ -110,8 +107,8 @@ public class UserUtils {
 
     //设置用户昵称
     public static void setMyUserNick(String username, TextView nameTextView) {
-        Map<String, UserAvatar> map = SuperWeChatApplication.getInstance().getMap();
-        UserAvatar userAvatar = SuperWeChatApplication.getInstance().getMap().get(username.trim());
+        Map<String, UserAvatar> map = FuLiCenterApplication.getInstance().getMap();
+        UserAvatar userAvatar = FuLiCenterApplication.getInstance().getMap().get(username.trim());
         if (userAvatar != null) {
             nameTextView.setText(userAvatar.getMUserNick());
             Log.i("main", "userUtils.setMyUserNick()用户名长度测试=" + username.length() + username + "Map.size()="
@@ -134,7 +131,7 @@ public class UserUtils {
 
     //设置自己资料显示自己信息
     public static void setMyUserNick1(String username, TextView nameTextView) {
-        UserAvatar userAvatar = SuperWeChatApplication.getInstance().getUser();
+        UserAvatar userAvatar = FuLiCenterApplication.getInstance().getUser();
         if (userAvatar != null) {
             nameTextView.setText(userAvatar.getMUserNick());
         } else {
@@ -149,7 +146,7 @@ public class UserUtils {
      */
     public static void setMyAvatar(Context context, String userName, ImageView imageView) {
         String path = I.SERVER_URL + "?request=download_avatar&name_or_hxid=" + userName + "&avatarType=user_avatar";
-        if (userName.equals(SuperWeChatApplication.getInstance().getUserName())) {
+        if (userName.equals(FuLiCenterApplication.getInstance().getUserName())) {
             File file = new File(OnSetAvatarListener.getAvatarPath(context, I.AVATAR_TYPE_USER_PATH + "/" + userName + I.AVATAR_SUFFIX_JPG));
             if (!file.exists()) {
                 Picasso.with(context).load(path).placeholder(R.drawable.default_avatar).into(imageView);
@@ -171,35 +168,6 @@ public class UserUtils {
         Picasso.with(mContext).load(path).placeholder(R.drawable.group_icon).into(viewById);
     }
 
-    /**
-     * 得到MemberUserAvatar
-     */
-    public static MemberUserAvatar getMember(String hxId, String username) {
-        MemberUserAvatar member = null;
-        HashMap<String, MemberUserAvatar> memberMap = SuperWeChatApplication.getInstance().getMemberMap().get(username);
-        if (memberMap == null) {
-            return null;
-        } else {
-            member = memberMap.get(hxId);
-            Log.i("main", "2=" + memberMap.toString());
-        }
-        return member;
-    }
-
-    /**
-     * 设置群聊天列表好友昵称显示
-     */
-    public static void setGroupUserNick(String userName, String hxId, TextView textView) {
-        MemberUserAvatar member = getMember(hxId, userName);
-        if (member != null && member.getMUserNick() != null) {
-            textView.setText(member.getMUserNick());
-            Log.i("main", "UserUtils.setGroupUserNick()群消息列表用户昵称=" + member.getMUserNick());
-        } else {
-            textView.setText(userName);
-            Log.i("main", "UserUtils.setGroupUserNick()群消息列表用户昵称=");
-
-        }
-    }
 
 }
 

@@ -13,14 +13,6 @@
  */
 package cn.ucai.fulicenter.activity;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -73,10 +65,6 @@ import com.easemob.EMError;
 import com.easemob.EMEventListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.EMValueCallBack;
-
-import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
-import cn.ucai.fulicenter.applib.model.GroupRemoveListener;
-
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatRoom;
 import com.easemob.chat.EMContactManager;
@@ -92,16 +80,29 @@ import com.easemob.chat.NormalFileMessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.VideoMessageBody;
 import com.easemob.chat.VoiceMessageBody;
+import com.easemob.exceptions.EaseMobException;
+import com.easemob.util.EMLog;
+import com.easemob.util.PathUtil;
+import com.easemob.util.VoiceRecorder;
 
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import cn.ucai.fulicenter.DemoHXSDKHelper;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.adapter.ExpressionAdapter;
 import cn.ucai.fulicenter.adapter.ExpressionPagerAdapter;
 import cn.ucai.fulicenter.adapter.MessageAdapter;
 import cn.ucai.fulicenter.adapter.VoicePlayClickListener;
+import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
+import cn.ucai.fulicenter.applib.model.GroupRemoveListener;
 import cn.ucai.fulicenter.domain.RobotUser;
-import cn.ucai.fulicenter.task.DowAllMemberListTask;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageUtils;
 import cn.ucai.fulicenter.utils.SmileUtils;
@@ -109,11 +110,6 @@ import cn.ucai.fulicenter.utils.UserUtils;
 import cn.ucai.fulicenter.utils.Utils;
 import cn.ucai.fulicenter.widget.ExpandGridView;
 import cn.ucai.fulicenter.widget.PasteEditText;
-
-import com.easemob.exceptions.EaseMobException;
-import com.easemob.util.EMLog;
-import com.easemob.util.PathUtil;
-import com.easemob.util.VoiceRecorder;
 
 /**
  * 聊天页面
@@ -529,9 +525,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
         } else {
             ((TextView) findViewById(R.id.name)).setText(toChatUsername);
         }
-        //开始所有群成员信息
-        new DowAllMemberListTask(getApplicationContext(), toChatUsername).dowAllMemberLsit();
-        // 监听当前会话的群聊解散被T事件
+           // 监听当前会话的群聊解散被T事件
         groupListener = new GroupListener();
         EMGroupManager.getInstance().addGroupChangeListener(groupListener);
     }
@@ -864,7 +858,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
             return;
         }
 
-        cameraFile = new File(PathUtil.getInstance().getImagePath(), SuperWeChatApplication.getInstance().getUserName()
+        cameraFile = new File(PathUtil.getInstance().getImagePath(), FuLiCenterApplication.getInstance().getUserName()
                 + System.currentTimeMillis() + ".jpg");
         cameraFile.getParentFile().mkdirs();
         startActivityForResult(

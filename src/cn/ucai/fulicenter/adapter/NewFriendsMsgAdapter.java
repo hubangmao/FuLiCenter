@@ -35,15 +35,13 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.SuperWeChatApplication;
-import cn.ucai.fulicenter.bean.GroupAvatar;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.db.InviteMessgeDao;
 import cn.ucai.fulicenter.domain.InviteMessage;
 import cn.ucai.fulicenter.domain.InviteMessage.InviteMesageStatus;
-import cn.ucai.fulicenter.task.DowAllMemberListTask;
 import cn.ucai.fulicenter.utils.I;
 import cn.ucai.fulicenter.utils.UserUtils;
 import cn.ucai.fulicenter.utils.Utils;
@@ -193,8 +191,6 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                     } else {
                         //同意加群申请
                         EMGroupManager.getInstance().acceptApplication(msg.getFrom(), msg.getGroupId());
-                        //群主同意新成员入群申请后,本地服务器数据库添加新群成员到群用户表
-                        addSuperGroup(msg.getFrom(), msg.getGroupId());
 
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {
@@ -228,34 +224,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
         }).start();
     }
 
-    //群主同意新成员入群申请后,本地服务器数据库添加新群成员到群用户表
-    private void addSuperGroup(String newGroupUser, final String groupId) {
-        final String addGroupUserUrl = I.SERVER_URL + "?request=add_group_member&m_member_user_name=" + newGroupUser + "&m_member_group_hxid=" + groupId;
-        OkHttpUtils2<String> utils2 = new OkHttpUtils2<String>();
-        utils2.url(addGroupUserUrl)
-                .targetClass(String.class)
-                .execute(new OkHttpUtils2.OnCompleteListener<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-                        Log.i("main", "addGuperUserUrl=" + addGroupUserUrl + "\ns=" + s);
-                        if (s == null) {
-                            return;
-                        }
-                        Result result = Utils.getResultFromJson(s, GroupAvatar.class);
-                        if (result.isRetMsg()) {
-                            SuperWeChatApplication.mMyUtils.toast(context, "本地服务器添加新群成员成功");
-                            new DowAllMemberListTask(context, groupId).dowAllMemberLsit();
-                        }
 
-
-                    }
-
-                    @Override
-                    public void onError(String error) {
-
-                    }
-                });
-    }
 
     private static class ViewHolder {
         ImageView avator;

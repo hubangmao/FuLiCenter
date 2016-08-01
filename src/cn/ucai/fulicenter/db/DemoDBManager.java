@@ -13,7 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import cn.ucai.fulicenter.Constant;
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.domain.InviteMessage;
 import cn.ucai.fulicenter.domain.InviteMessage.InviteMesageStatus;
@@ -398,7 +398,7 @@ public class DemoDBManager {
         if (db.isOpen()) {
             ContentValues values = new ContentValues();
             values.put(UserDao.SUPER_NAME_NICK, userNick);
-            db.update(UserDao.SUPER_TABLE_NAME, values, UserDao.SUPER_USER_ID + "=? ", new String[]{SuperWeChatApplication.getInstance().getUserName()});
+            db.update(UserDao.SUPER_TABLE_NAME, values, UserDao.SUPER_USER_ID + "=? ", new String[]{FuLiCenterApplication.getInstance().getUserName()});
         }
     }
 }

@@ -106,12 +106,7 @@ public class ChatRoomActivity extends BaseActivity {
 		});
 	}
 
-	/**
-	 * 进入公开群聊列表
-	 */
-	public void onPublicGroups(View view) {
-		startActivity(new Intent(this, PublicGroupsActivity.class));
-	}
+
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
