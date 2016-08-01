@@ -13,11 +13,6 @@
  */
 package cn.ucai.fulicenter.activity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -31,17 +26,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 import com.easemob.EMCallBack;
-
-import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
-
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import cn.ucai.fulicenter.Constant;
-import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
@@ -49,6 +48,7 @@ import cn.ucai.fulicenter.db.UserDao;
 import cn.ucai.fulicenter.domain.User;
 import cn.ucai.fulicenter.task.DowAllFirendListTask;
 import cn.ucai.fulicenter.utils.CommonUtils;
+import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.I;
 import cn.ucai.fulicenter.utils.Utils;
 
@@ -155,8 +155,41 @@ public class LoginActivity extends BaseActivity {
 
         final long start = System.currentTimeMillis();
 
-        //验证我们的 服务器
-        MySuperVerify();
+//        //验证我们的 服务器
+//        MySuperVerify();
+        //福利社服务器
+        FuLiCenterLogin();
+
+    }
+
+    //request=login&userName=&password=
+    private void FuLiCenterLogin() {
+        final String logUrl = F.SERVIEW_URL + "request=login&userName=" + currentUsername + "&password=" + currentPassword;
+        OkHttpUtils2<cn.ucai.fulicenter.bean.fulibean.User> utils = new OkHttpUtils2<cn.ucai.fulicenter.bean.fulibean.User>();
+        utils.url(logUrl)
+                .targetClass(cn.ucai.fulicenter.bean.fulibean.User.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<cn.ucai.fulicenter.bean.fulibean.User>() {
+                    @Override
+                    public void onSuccess(cn.ucai.fulicenter.bean.fulibean.User result) {
+                        if (result == null) {
+                            Utils.toast(LoginActivity.this, "登陆失败网络错误");
+                            return;
+                        }
+                        if (result.isResult()) {
+                            Utils.toast(LoginActivity.this, "FuLiCenter登陆验证成功");
+                            Utils.toast(LoginActivity.this, "正在验证环信服务器");
+                            //环信服务器验证
+                            HXServiceVerify();
+                            Log.i("main", "值" + logUrl + result.toString());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Utils.toast(LoginActivity.this, "登陆失败网络错误");
+                    }
+                });
 
 
     }
@@ -173,13 +206,13 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onSuccess(String result) {
                         if (result == null) {
-                            FuLiCenterApplication.mMyUtils.toast(LoginActivity.this, "登陆失败网络错误");
+                            Utils.toast(LoginActivity.this, "登陆失败网络错误");
                             return;
                         }
                         Result user = Utils.getResultFromJson(result, UserAvatar.class);
                         if (user.isRetMsg() && result != null) {
-                            FuLiCenterApplication.mMyUtils.toast(LoginActivity.this, "SuperWeChat登陆验证成功");
-                            FuLiCenterApplication.mMyUtils.toast(LoginActivity.this, "正在验证环信服务器");
+                            Utils.toast(LoginActivity.this, "SuperWeChat登陆验证成功");
+                            Utils.toast(LoginActivity.this, "正在验证环信服务器");
                             //环信服务器验证
                             HXServiceVerify();
                             //保存用户信息至数据库
@@ -189,7 +222,7 @@ public class LoginActivity extends BaseActivity {
                             //下载所有好友信存到集合 ->内存
                             new DowAllFirendListTask(LoginActivity.this).dowAllFirendLsit();
                         } else {
-                            FuLiCenterApplication.mMyUtils.toast(LoginActivity.this, Utils.getResourceString(LoginActivity.this, user.getRetCode()));
+                            Utils.toast(LoginActivity.this, Utils.getResourceString(LoginActivity.this, user.getRetCode()));
                             pd.dismiss();
                         }
                     }
@@ -197,7 +230,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onError(String error) {
                         pd.dismiss();
-                        FuLiCenterApplication.mMyUtils.toast(LoginActivity.this, "网络错误");
+                        Utils.toast(LoginActivity.this, "网络错误");
                         Log.i("main", "error" + error.toString());
                     }
                 });
@@ -242,7 +275,7 @@ public class LoginActivity extends BaseActivity {
                         public void run() {
                             pd.dismiss();
                             DemoHXSDKHelper.getInstance().logout(true, null);
-                            FuLiCenterApplication.mMyUtils.toastResources(LoginActivity.this, R.string.login_failure_failed);
+                            Utils.toastResources(LoginActivity.this, R.string.login_failure_failed);
                         }
                     });
                     return;
@@ -273,7 +306,7 @@ public class LoginActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         pd.dismiss();
-                        FuLiCenterApplication.mMyUtils.toastResources(LoginActivity.this, R.string.Login_failed);
+                        Utils.toastResources(LoginActivity.this, R.string.Login_failed);
                     }
                 });
             }
