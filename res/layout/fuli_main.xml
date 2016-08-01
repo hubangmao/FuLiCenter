@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="3dp"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/tvNew_Goods1"
+            style="@style/MyStyle"
+            android:drawableTop="@drawable/menu_item_new_good_selected"
+            android:text="新品" />
+
+        <TextView
+            android:id="@+id/tvBoutique2"
+            style="@style/MyStyle"
+            android:drawableTop="@drawable/selector_menu_item_boutique"
+            android:text="精选" />
+
+        <TextView
+            android:id="@+id/tvCategory3"
+            style="@style/MyStyle"
+            android:drawableTop="@drawable/menu_item_category_normal"
+            android:text="分类" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tvCater4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:drawableTop="@drawable/menu_item_cart_normal"
+                android:gravity="center"
+                android:text="购物车"
+                android:textColor="@drawable/selector_menu_item"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/cart_hint"
+                android:gravity="center"
+                android:text="5"
+                android:textSize="9sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvFriends5"
+            style="@style/MyStyle"
+            android:drawableTop="@drawable/menu_item_personal_center_normal"
+            android:text="好友" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_above="@id/linear"
+        android:background="@color/bd_wallet_black" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_viewPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/view" />
+
+    <TextView
+        android:id="@+id/backHint"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:text="在点击一次键退出程序"
+        android:textColor="@color/myTextColor"
+        android:visibility="gone" />
+</RelativeLayout>
