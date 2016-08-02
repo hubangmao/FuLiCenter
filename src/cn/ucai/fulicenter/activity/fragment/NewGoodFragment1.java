@@ -12,10 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.adapter.NewGoodsAdapter;
@@ -34,8 +36,12 @@ public class NewGoodFragment1 extends Fragment {
     RecyclerView mRecycler;
     GridLayoutManager mGrid;
     NewGoodsAdapter mGoodsAdapter;
+    TextView mTvHint;
     ArrayList<NewGoodBean> mList;
     public static int PAGE_ID = 1;
+    final public static int DOWN_PULL = 1;
+    final public static int UP_PULL = 2;
+    boolean isNoData = true;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -43,7 +49,7 @@ public class NewGoodFragment1 extends Fragment {
         mContext = getActivity();
         initView();
         setListener();
-        initData();
+        initData(DOWN_PULL);
     }
 
     private void setListener() {
@@ -51,54 +57,77 @@ public class NewGoodFragment1 extends Fragment {
         mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initData();
-                mSwipe.setRefreshing(false);
+                isNoData = true;
+                PAGE_ID = 1;
+                initData(DOWN_PULL);
             }
         });
         //上拉加载
+
         mRecycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            int itemMax;
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && itemMax == mGoodsAdapter.getItemCount() - 1 && isNoData) {
+                    Log.i("main", "上拉加载=" + recyclerView.SCROLL_STATE_IDLE + "\\ =" + RecyclerView.SCROLL_STATE_IDLE + "//" + itemMax + "=" + (mGoodsAdapter.getItemCount() - 1));
+                    PAGE_ID++;
+                    mTvHint.setVisibility(View.VISIBLE);
+                    mTvHint.setText("加载更多...");
+                    initData(UP_PULL);
+                }
                 super.onScrollStateChanged(recyclerView, newState);
-
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                itemMax = mGrid.findLastVisibleItemPosition();//获取当前屏幕显示的最后一项下标
+                if (dx > 0.3 || dy > 0.3) {
+                    mTvHint.setVisibility(View.GONE);
+                }
             }
         });
     }
 
-    private void initData() {
-        String goodsRrl = F.SERVIEW_URL + "request=find_new_boutique_goods&cat_id=" +
+    private void initData(final int where) {
+        String goodsRrl = F.SERVIEW_URL + "find_new_boutique_goods&cat_id=" +
                 F.CAT_ID + "&page_id=" + PAGE_ID +
                 "&page_size=" + F.PAGE_SIZE_DEFAULT;
-        Log.i("main", "bean" + goodsRrl);
-
         final OkHttpUtils2<NewGoodBean[]> utils = new OkHttpUtils2<NewGoodBean[]>();
         utils.url(goodsRrl)
                 .targetClass(NewGoodBean[].class)
                 .execute(new OkHttpUtils2.OnCompleteListener<NewGoodBean[]>() {
                     @Override
                     public void onSuccess(NewGoodBean[] result) {
-                        if (result == null) {
-                            Utils.toast(mContext, "网络错误");
+                        if (result == null || result.length == 0) {
+                            isNoData = false;
+                            mTvHint.setVisibility(View.VISIBLE);
+                            mTvHint.setText("已经没有更多加载...");
+                            mSwipe.setRefreshing(false);
                             return;
                         }
-                        Log.i("main", "result=" + result);
+                        Log.i("main", "result=" + result[0]);
                         ArrayList<NewGoodBean> bean = utils.array2List(result);
-                        mGoodsAdapter.upAdapterData(bean);
-                        mSwipe.setRefreshing(false);
+                        switch (where) {
+                            //下拉刷新
+                            case DOWN_PULL:
+                                mGoodsAdapter.updateAdapterData(bean, mSwipe);
+                                break;
+                            //上拉加载
+                            case UP_PULL:
+                                mGoodsAdapter.upAdapterData(bean, mSwipe);
+                                break;
+                        }
                     }
 
                     @Override
                     public void onError(String error) {
-                        Utils.toast(mContext, "网络错误");
+                        mTvHint.setVisibility(View.VISIBLE);
+                        mTvHint.setText("网络错误");
+                        mSwipe.setRefreshing(false);
                     }
                 });
-
-
     }
 
     private void initView() {
@@ -110,6 +139,7 @@ public class NewGoodFragment1 extends Fragment {
         mList = new ArrayList<NewGoodBean>();
         mGoodsAdapter = new NewGoodsAdapter(mContext, mList);
         mRecycler.setAdapter(mGoodsAdapter);
+        mTvHint = (TextView) mView.findViewById(R.id.tvGoodHint);
 
     }
 
