@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.fulibean.NewGoodBean;
@@ -30,6 +32,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.NewGoo
     //下拉刷新
     public void updateAdapterData(ArrayList<NewGoodBean> mList, SwipeRefreshLayout swipe) {
         this.mList.clear();
+        soryTime();
         this.mList.addAll(mList);
         swipe.setRefreshing(false);
         notifyDataSetChanged();
@@ -37,6 +40,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.NewGoo
 
     //上拉加载
     public void upAdapterData(ArrayList<NewGoodBean> mList, SwipeRefreshLayout swipe) {
+        soryTime();
         this.mList.addAll(mList);
         swipe.setRefreshing(false);
         notifyDataSetChanged();
@@ -45,6 +49,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.NewGoo
     @Override
     public NewGoodsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new NewGoodsHolder(View.inflate(mContext, R.layout.goods_adapter, null));
+
     }
 
     @Override
@@ -54,9 +59,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.NewGoo
         UserUtils.setImage(mContext, holder.mIvGood, imageUrl);
         holder.mTvPrice.setText(bean.getShopPrice());
         holder.mTvPrice.setTextColor(bean.getColorId());
-
         holder.mTvGoodName.setText(bean.getGoodsName());
-
     }
 
 
@@ -64,7 +67,6 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.NewGoo
     public int getItemCount() {
         return mList.size() == 0 ? 0 : mList.size();
     }
-
 
     class NewGoodsHolder extends RecyclerView.ViewHolder {
         ImageView mIvGood;
@@ -77,6 +79,15 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.NewGoo
             mTvGoodName = (TextView) itemView.findViewById(R.id.tv_good_name);
             mTvPrice = (TextView) itemView.findViewById(R.id.tv_good_price);
         }
+    }
+
+    private void soryTime() {
+        Collections.sort(mList, new Comparator<NewGoodBean>() {
+            @Override
+            public int compare(NewGoodBean goodLeft, NewGoodBean goodRight) {
+                return (int) (Long.valueOf(goodLeft.getAddTime()) - (Long.valueOf(goodRight.getAddTime())));
+            }
+        });
     }
 
 }
