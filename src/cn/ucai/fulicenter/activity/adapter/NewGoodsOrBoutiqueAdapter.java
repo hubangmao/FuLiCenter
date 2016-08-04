@@ -21,20 +21,19 @@ import cn.ucai.fulicenter.bean.fulibean.NewGoodBean;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.UserUtils;
 
-/**
- * Created by Administrator on 2016/8/1.
- */
-public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.NewGoodsHolder> {
-    private Context mContext;
-    private ArrayList<NewGoodBean> mList;
 
-    public NewGoodsAdapter(Context mContext, ArrayList<NewGoodBean> list) {
+public class NewGoodsOrBoutiqueAdapter extends RecyclerView.Adapter<NewGoodsOrBoutiqueAdapter.NewGoodsHolder> {
+    private Context mContext;
+    public ArrayList<NewGoodBean> mList;
+
+    public NewGoodsOrBoutiqueAdapter(Context mContext, ArrayList<NewGoodBean> list) {
         this.mContext = mContext;
         this.mList = list;
     }
 
     //下拉刷新
     public void updateAdapterData(ArrayList<NewGoodBean> mList, SwipeRefreshLayout swipe) {
+        Log.i("main", "NewBoutiqueAdapterList=" + mList.get(1));
         this.mList.clear();
         this.mList.addAll(mList);
         swipe.setRefreshing(false);
@@ -61,17 +60,16 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.NewGoo
         final NewGoodBean bean = mList.get(position);
         String imageUrl = F.SERVIEW_URL + F.REQUEST_DOWNLOAD_NEW_GOOD + F.FILE_NAME + bean.getGoodsImg();
         UserUtils.setImage(mContext, holder.mIvGood, imageUrl);
+        Log.i("main", "bean=name" + bean.getGoodsName());
         holder.mTvPrice.setText(bean.getShopPrice());
-        holder.mTvPrice.setTextColor(bean.getColorId());
         holder.mTvGoodName.setText(bean.getGoodsName());
         holder.mRelative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("main","test");
                 mContext.startActivity(new Intent(mContext, GoodsInfoActivity.class).putExtra("Good_Id", bean.getGoodsId()));
-
             }
         });
+
     }
 
     @Override
@@ -84,6 +82,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.NewGoo
         TextView mTvGoodName;
         TextView mTvPrice;
         RelativeLayout mRelative;
+
         public NewGoodsHolder(View itemView) {
             super(itemView);
             mIvGood = (ImageView) itemView.findViewById(R.id.iv_goods);
