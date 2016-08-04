@@ -3,6 +3,7 @@ package cn.ucai.fulicenter.activity.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.adapter.ExpandableAdapter;
@@ -46,9 +49,10 @@ public class CategoryFragment3 extends Fragment {
         initData();
     }
 
+    Timer mTimer;
+    int i = 0;
 
     private void initData() {
-
         final OkHttpUtils2<CategoryGroupBean[]> utils = new OkHttpUtils2<CategoryGroupBean[]>();
         utils.setRequestUrl(F.REQUEST_FIND_CATEGORY_GROUP)
                 .targetClass(CategoryGroupBean[].class)
@@ -61,9 +65,23 @@ public class CategoryFragment3 extends Fragment {
                         }
                         mMaxList = utils.array2List(group);
                         mAdapter.updateMax(mMaxList);
-                        for (int i = 0; i < mMaxList.size(); i++) {
-                            downChildData(mMaxList.get(i).getId());
-                        }
+                        mTimer = new Timer();
+                        mTimer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                downChildData(mMaxList.get(i).getId());
+                                i++;
+                            }
+                        }, 0, 1500);
+                        Log.i("main", "线程2已开启=");
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mTimer.cancel();
+                            }
+                        }, 12000);
+
                     }
 
                     @Override
@@ -73,6 +91,7 @@ public class CategoryFragment3 extends Fragment {
                 });
 
     }
+
 
     private void downChildData(int maxId) {
         final OkHttpUtils2<CategoryChildBean[]> utils1 = new OkHttpUtils2<CategoryChildBean[]>();
@@ -84,7 +103,9 @@ public class CategoryFragment3 extends Fragment {
                 .execute(new OkHttpUtils2.OnCompleteListener<CategoryChildBean[]>() {
                     @Override
                     public void onSuccess(CategoryChildBean[] child) {
-                        Log.i("main", "胡邦茂=" + child[1]);
+                        if (child.length == 0) {
+                            return;
+                        }
                         mAdapter.updateMin(utils1.array2List(child));
                     }
 
