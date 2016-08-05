@@ -37,16 +37,16 @@ public class NewGoodsOrBoutiqueAdapter extends RecyclerView.Adapter<NewGoodsOrBo
         this.mList.clear();
         this.mList.addAll(mList);
         swipe.setRefreshing(false);
-        soryTime();
+        soryTime(0);
         notifyDataSetChanged();
     }
 
     //上拉加载
     public void upAdapterData(ArrayList<NewGoodBean> mList, SwipeRefreshLayout swipe) {
-        soryTime();
+        soryTime(0);
         this.mList.addAll(mList);
         swipe.setRefreshing(false);
-        soryTime();
+        soryTime(0);
         notifyDataSetChanged();
     }
 
@@ -69,7 +69,6 @@ public class NewGoodsOrBoutiqueAdapter extends RecyclerView.Adapter<NewGoodsOrBo
                 mContext.startActivity(new Intent(mContext, GoodsInfoActivity.class).putExtra("Good_Id", bean.getGoodsId()));
             }
         });
-
     }
 
     @Override
@@ -93,13 +92,43 @@ public class NewGoodsOrBoutiqueAdapter extends RecyclerView.Adapter<NewGoodsOrBo
         }
     }
 
-    private void soryTime() {
+
+    public void setGoodsSort(int where) {
+        soryTime(where);
+        notifyDataSetChanged();
+    }
+
+    int soroy;
+
+    private void soryTime(final int where) {
         Collections.sort(mList, new Comparator<NewGoodBean>() {
             @Override
             public int compare(NewGoodBean goodLeft, NewGoodBean goodRight) {
-                return (int) (Long.valueOf(goodLeft.getAddTime()) - (Long.valueOf(goodRight.getAddTime())));
+                switch (where) {
+                    case 0://默认排序
+                        soroy = (int) (Long.valueOf(goodLeft.getAddTime()) - (Long.valueOf(goodRight.getAddTime())));
+                        break;
+                    case 1://价格高到低
+                        soroy = (int) (Long.valueOf(getSubStr(goodLeft.getCurrencyPrice())) - (Long.valueOf(getSubStr(goodRight.getCurrencyPrice()))));
+                        break;
+                    case 2://价格低到高
+                        soroy = (int) (int) ((Long.valueOf(getSubStr(goodRight.getCurrencyPrice()))) - Long.valueOf(getSubStr(goodLeft.getCurrencyPrice())));
+                        break;
+                    case 3://上市时间先
+                        soroy = (int) (Long.valueOf(goodLeft.getAddTime()) - (Long.valueOf(goodRight.getAddTime())));
+                        break;
+                    case 4://上市时间后
+                        soroy = (int) ((Long.valueOf(goodRight.getAddTime()) - Long.valueOf(goodLeft.getAddTime())));
+                        break;
+                }
+                return soroy;
             }
         });
     }
 
+    private int getSubStr(String price) {
+        int i = Integer.parseInt(price.substring(1, price.length()));
+        Log.i("main", "getSubStr=" + i);
+        return i;
+    }
 }
