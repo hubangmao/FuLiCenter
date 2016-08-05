@@ -47,6 +47,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
+
     public void updateMin(ArrayList<CategoryChildBean> minList) {
         this.mMinList.add(minList);
         notifyDataSetChanged();
@@ -106,7 +107,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         holder.mRelative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCntext.startActivity(new Intent(mCntext, CategoryInfoActivity.class).putExtra("ChildBean", bean));
+                mCntext.startActivity(new Intent(mCntext, CategoryInfoActivity.class).putExtra("ChildBean", bean.getId()));
             }
         });
         return minView;
