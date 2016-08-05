@@ -31,7 +31,6 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
 
     public ExpandableAdapter(Context context, ArrayList<CategoryGroupBean> maxList, ArrayList<ArrayList<CategoryChildBean>> minList) {
         this.mCntext = context;
-        Utils.toast(mCntext, "适配器接收值成功");
         this.mMaxList = maxList;
         this.mMinList = minList;
     }
@@ -87,8 +86,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
 
     //小类
     @Override
-    public View getChildView(int maxPosition, int minPosition, boolean isListChild, View minView, ViewGroup viewGroup) {
-        Log.i("main", "O(∩_∩)O~max=" + maxPosition + "min=" + minPosition);
+    public View getChildView(final int maxPosition, int minPosition, boolean isListChild, View minView, ViewGroup viewGroup) {
         final CategoryChildBean bean = mMinList.get(maxPosition).get(minPosition);
         ChildHolder holder;
         if (minView == null) {
@@ -107,7 +105,9 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         holder.mRelative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCntext.startActivity(new Intent(mCntext, CategoryInfoActivity.class).putExtra("ChildBean", bean.getId()));
+                mCntext.startActivity(new Intent(mCntext, CategoryInfoActivity.class).putExtra("childList", mMinList.get(maxPosition))
+                        .putExtra("GroupName", mMaxList.get(maxPosition).getName())
+                        .putExtra("id", bean.getId()));
             }
         });
         return minView;

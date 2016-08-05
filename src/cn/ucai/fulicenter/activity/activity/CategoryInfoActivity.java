@@ -17,7 +17,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.activity.activity.day3.CatChildFilterButton;
 import cn.ucai.fulicenter.activity.adapter.NewGoodsOrBoutiqueAdapter;
+import cn.ucai.fulicenter.activity.bean.CategoryGroupBean;
+import cn.ucai.fulicenter.bean.fulibean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.fulibean.NewGoodBean;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.super_activity.BaseActivity;
@@ -41,21 +44,26 @@ public class CategoryInfoActivity extends BaseActivity implements View.OnClickLi
     final public static int UP_PULL = 2;
     boolean isNoData = true;
     int Id;
+    ArrayList<CategoryChildBean> mChildList;
+    CatChildFilterButton mPopouWidows;
+    String GroupName;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_good_fragment);
+        setContentView(R.layout.category_info_fragment);
         mContext = this;
-        Id = getIntent().getIntExtra("ChildBean", 0);
+        GroupName = getIntent().getStringExtra("GroupName");
+        Id = getIntent().getIntExtra("id", 0);
+        mChildList = (ArrayList<CategoryChildBean>) getIntent().getSerializableExtra("childList");
+        Log.i("main", "GroupName=" + GroupName + "mChildList=" + mChildList.get(1));
         initView();
         setListener();
         if (Id == 0) {
-            Log.i("main", "胡邦茂3" + Id);
             return;
         }
         initData(DOWN_PULL);
-        Log.i("main", "胡邦茂3" + Id);
 
     }
 
@@ -165,6 +173,13 @@ public class CategoryInfoActivity extends BaseActivity implements View.OnClickLi
 
         mButProce = (Button) findViewById(R.id.butPrice);
         mButTime = (Button) findViewById(R.id.butTime);
+        mPopouWidows = (CatChildFilterButton) findViewById(R.id.btnCatChildFilter);
+        mPopouWidows.setVisibility(View.VISIBLE);
+
+        mPopouWidows.setText(GroupName);
+
+        mPopouWidows.setOnCatFilterClickListener(GroupName, mChildList);
+
     }
 
     boolean isWhat1 = true;
