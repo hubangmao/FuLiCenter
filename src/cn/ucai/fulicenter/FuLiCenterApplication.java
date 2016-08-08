@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -159,5 +159,16 @@ public class FuLiCenterApplication extends Application {
         this.map = map;
     }
 
+    /**
+     * 储存收藏商品数量
+     */
+    int collocation = 0;
 
+    public static void setCollocation(int collocation) {
+        collocation = collocation;
+    }
+
+    public int getCollocation() {
+        return collocation;
+    }
 }

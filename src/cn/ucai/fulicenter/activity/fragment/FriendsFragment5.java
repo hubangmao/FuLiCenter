@@ -1,7 +1,10 @@
 package cn.ucai.fulicenter.activity.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,24 +15,34 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.ucai.fulicenter.DemoHXSDKHelper;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.activity.SettingsActivity;
 import cn.ucai.fulicenter.super_activity.LoginActivity;
+import cn.ucai.fulicenter.super_activity.MainActivity;
+import cn.ucai.fulicenter.utils.UserUtils;
 
 
 //购物车Fragment
 public class FriendsFragment5 extends Fragment implements View.OnClickListener {
+    Context mContext;
     View mLayout;
-    ImageView mIvIcon, mIvMessage, mIv2;
-    TextView mTvName;
+    ImageView mIvIcon, mIv2;
+    TextView mTvName, mTvCollection;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mContext = getActivity();
         mLayout = inflater.inflate(R.layout.my_center_layout, container, false);
         initView();
+        initData();
         setListener();
         return mLayout;
+    }
+
+    private void initData() {
+        UserUtils.setFuLiAvatar(mContext, FuLiCenterApplication.getInstance().getUserName(), mIvIcon);
     }
 
     private void setListener() {
@@ -38,15 +51,16 @@ public class FriendsFragment5 extends Fragment implements View.OnClickListener {
         mLayout.findViewById(R.id.relative2).setOnClickListener(this);
         mLayout.findViewById(R.id.relative3).setOnClickListener(this);
         mLayout.findViewById(R.id.tvSet).setOnClickListener(this);
+        mLayout.findViewById(R.id.ivMessage).setOnClickListener(this);
+
     }
 
     private void initView() {
-        mIvMessage = (ImageView) mLayout.findViewById(R.id.ivMessage);
-
+        registerBroad();
         mIvIcon = (ImageView) mLayout.findViewById(R.id.ivIcon);
         mTvName = (TextView) mLayout.findViewById(R.id.tvUserName);
         mIv2 = (ImageView) mLayout.findViewById(R.id.iv2);
-
+        mTvCollection = (TextView) mLayout.findViewById(R.id.tvCollection);
 
     }
 
@@ -55,11 +69,11 @@ public class FriendsFragment5 extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             //设置
             case R.id.tvSet:
-                if (isLogin()) {
-                    startActivity(new Intent(getActivity(), SettingsActivity.class));
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                break;
+            //消息列表
+            case R.id.ivMessage:
+                startActivity(new Intent(getActivity(), MainActivity.class));
                 break;
             //收藏宝贝
             case R.id.relative1:
@@ -77,11 +91,36 @@ public class FriendsFragment5 extends Fragment implements View.OnClickListener {
         }
     }
 
+    //验证是否登录成功
     public boolean isLogin() {
         if (DemoHXSDKHelper.getInstance().isLogined()) {
             return true;
         } else {
             return false;
+        }
+    }
+
+    class UpdateCollection extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mTvCollection.setText(FuLiCenterApplication.getInstance().getCollocation() + "");
+        }
+    }
+
+    UpdateCollection mUpdate;
+
+    public void registerBroad() {
+        mUpdate = new UpdateCollection();
+        IntentFilter intentFilter = new IntentFilter("update_collect");
+        mContext.registerReceiver(mUpdate, intentFilter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mUpdate != null) {
+            mContext.unregisterReceiver(mUpdate);
         }
     }
 }

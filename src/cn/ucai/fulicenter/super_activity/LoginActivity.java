@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -47,6 +47,7 @@ import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.db.UserDao;
 import cn.ucai.fulicenter.task.DowAllFirendListTask;
+import cn.ucai.fulicenter.task.DowCollectask;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.I;
@@ -104,6 +105,8 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    int exit = -1;
+
     private void initView() {
         usernameEditText = (EditText) findViewById(R.id.username);
         passwordEditText = (EditText) findViewById(R.id.password);
@@ -112,7 +115,7 @@ public class LoginActivity extends BaseActivity {
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(100);
+                setResult(exit);
                 finish();
             }
         });
@@ -166,23 +169,30 @@ public class LoginActivity extends BaseActivity {
     //request=login&userName=&password=
     private void FuLiCenterLogin() {
         final String logUrl = F.SERVIEW_URL + "login&userName=" + currentUsername + "&password=" + currentPassword;
-        OkHttpUtils2<cn.ucai.fulicenter.activity.bean.User> utils = new OkHttpUtils2<cn.ucai.fulicenter.activity.bean.User>();
+        OkHttpUtils2<UserAvatar> utils = new OkHttpUtils2<UserAvatar>();
         utils.url(logUrl)
-                .targetClass(cn.ucai.fulicenter.activity.bean.User.class)
-                .execute(new OkHttpUtils2.OnCompleteListener<cn.ucai.fulicenter.activity.bean.User>() {
+                .targetClass(UserAvatar.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<UserAvatar>() {
                     @Override
-                    public void onSuccess(cn.ucai.fulicenter.activity.bean.User result) {
+                    public void onSuccess(UserAvatar result) {
                         if (result == null) {
                             Utils.toast(LoginActivity.this, "登陆失败网络错误");
                             return;
                         }
-                        if (result.isResult()) {
-                            Utils.toast(LoginActivity.this, "FuLiCenter登陆验证成功");
-                            Utils.toast(LoginActivity.this, "正在验证环信服务器");
-                            //环信服务器验证
-                            HXServiceVerify();
-                            Log.i("main", "值" + logUrl + result.toString());
-                        }
+                        Log.i("main", "result=" + result);
+                        Utils.toast(LoginActivity.this, "FuLiCenter登陆验证成功");
+                        Utils.toast(LoginActivity.this, "正在验证环信服务器");
+                        //环信服务器验证
+                        HXServiceVerify();
+                        //保存用户信息至数据库
+                        addSuperDBData(result);
+                        //保存用户信息到内存
+                        userInfoAddRAM(result);
+                        //下载商品收藏数量
+                        new DowCollectask().dowAllFirendLsit(LoginActivity.this);
+                        //下载所有好友信存到集合 ->内存
+//                        new DowAllFirendListTask(LoginActivity.this).dowAllFirendLsit();
+                        Log.i("main", "值" + logUrl + result.toString());
 
                     }
 
@@ -290,7 +300,6 @@ public class LoginActivity extends BaseActivity {
                 if (!LoginActivity.this.isFinishing() && pd.isShowing()) {
                     pd.dismiss();
                 }
-                startActivity(new Intent(LoginActivity.this, SettingsActivity.class));
                 finish();
             }
 
