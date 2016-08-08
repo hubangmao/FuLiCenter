@@ -17,6 +17,7 @@ import android.widget.TextView;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.activity.activity.CollectActivity;
 import cn.ucai.fulicenter.activity.activity.SettingsActivity;
 import cn.ucai.fulicenter.super_activity.LoginActivity;
 import cn.ucai.fulicenter.super_activity.MainActivity;
@@ -77,7 +78,7 @@ public class FriendsFragment5 extends Fragment implements View.OnClickListener {
                 break;
             //收藏宝贝
             case R.id.relative1:
-
+               startActivity(new Intent(mContext, CollectActivity.class));
                 break;
             //收藏店铺
             case R.id.relative2:
