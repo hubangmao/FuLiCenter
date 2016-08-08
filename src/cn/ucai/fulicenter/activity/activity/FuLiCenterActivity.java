@@ -1,24 +1,26 @@
 package cn.ucai.fulicenter.activity.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
+import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.activity.BaseActivity;
+import cn.ucai.fulicenter.super_activity.BaseActivity;
 import cn.ucai.fulicenter.activity.fragment.BoutiqueFragment2;
 import cn.ucai.fulicenter.activity.fragment.CartFragment4;
 import cn.ucai.fulicenter.activity.fragment.CategoryFragment3;
 import cn.ucai.fulicenter.activity.fragment.FriendsFragment5;
 import cn.ucai.fulicenter.activity.fragment.NewGoodFragment1;
+import cn.ucai.fulicenter.super_activity.LoginActivity;
 import cn.ucai.fulicenter.utils.Utils;
 
 public class FuLiCenterActivity extends BaseActivity implements View.OnClickListener {
@@ -26,6 +28,7 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
     ViewPager mViewPager;
     Fragment[] mFragments;
     ViewPageAdapter mAdapter;
+    static final int LOG_RETURN = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,6 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         mTvCategory3.setOnClickListener(this);
         mTvCart4.setOnClickListener(this);
         mTvFragment5.setOnClickListener(this);
-
 
     }
 
@@ -65,36 +67,72 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         mFragments[3] = new CartFragment4();
         mFragments[4] = new FriendsFragment5();
         mAdapter = new ViewPageAdapter(getSupportFragmentManager(), mFragments);
+        mViewPager.setAdapter(mAdapter);
     }
 
+    int item;
 
     @Override
     public void onClick(View view) {
         setAllItem();
         switch (view.getId()) {
             case R.id.tvNew_Goods1:
+                item = 0;
                 mViewPager.setCurrentItem(0);
                 setItemImageAndText(mTvNew_goods1, R.drawable.menu_item_new_good_selected, getResources().getColor(R.color.ebpay_red));
                 break;
             case R.id.tvBoutique2:
+                item = 1;
                 mViewPager.setCurrentItem(1);
                 setItemImageAndText(mTvBoutique2, R.drawable.boutique_selected, getResources().getColor(R.color.ebpay_red));
                 break;
             case R.id.tvCategory3:
-                mViewPager.setCurrentItem(2);
+                item = 2;
                 setItemImageAndText(mTvCategory3, R.drawable.menu_item_category_selected, getResources().getColor(R.color.ebpay_red));
+                mViewPager.setCurrentItem(2);
                 break;
             case R.id.tvCater4:
-                mViewPager.setCurrentItem(3);
+                item = 3;
                 setItemImageAndText(mTvCart4, R.drawable.menu_item_cart_selected, getResources().getColor(R.color.ebpay_red));
+                if (isLogin()) {
+                    mViewPager.setCurrentItem(3);
+                } else {
+                    startActivityForResult(new Intent(this, LoginActivity.class), LOG_RETURN);
+                }
                 break;
             case R.id.tvFriends5:
-                mViewPager.setCurrentItem(4);
+                item = 4;
+                if (isLogin()) {
+                    mViewPager.setCurrentItem(4);
+                } else {
+                    startActivityForResult(new Intent(this, LoginActivity.class), LOG_RETURN);
+                }
                 setItemImageAndText(mTvFragment5, R.drawable.menu_item_personal_center_selected, getResources().getColor(R.color.ebpay_red));
                 break;
         }
     }
 
+    //验证是否登录
+    public boolean isLogin() {
+        if (DemoHXSDKHelper.getInstance().isLogined()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == LOG_RETURN) {
+            mViewPager.setCurrentItem(item);
+        } else {
+            mViewPager.setCurrentItem(item);
+            item = -1;
+        }
+
+    }
+
+    //初始化全部
     private void setAllItem() {
         setItemImageAndText(mTvNew_goods1, R.drawable.menu_item_new_good_normal, getResources().getColor(R.color.myTextColor));
         setItemImageAndText(mTvBoutique2, R.drawable.boutique_normal, getResources().getColor(R.color.myTextColor));
@@ -139,6 +177,5 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         if (Utils.setBackListener(this, mSetBackListener)) {
             return;
         }
-        finish();
     }
 }

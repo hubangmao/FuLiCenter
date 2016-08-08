@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.ucai.fulicenter.activity;
+package cn.ucai.fulicenter.super_activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -24,8 +24,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
-
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
@@ -40,12 +40,12 @@ import cn.ucai.fulicenter.Constant;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.activity.activity.SettingsActivity;
 import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.db.UserDao;
-import cn.ucai.fulicenter.domain.User;
 import cn.ucai.fulicenter.task.DowAllFirendListTask;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.F;
@@ -60,7 +60,7 @@ public class LoginActivity extends BaseActivity {
     public static final int REQUEST_CODE_SETNICK = 1;
     private EditText usernameEditText;
     private EditText passwordEditText;
-
+    private ImageView mBack;
     private boolean progressShow;
     private boolean autoLogin = false;
 
@@ -73,16 +73,14 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 如果用户名密码都有，直接进入主页面
+       /* // 如果用户名密码都有，直接进入主页面
         if (DemoHXSDKHelper.getInstance().isLogined()) {
             autoLogin = true;
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             return;
-        }
-        setContentView(R.layout.activity_login);
-        setListener();
-        usernameEditText = (EditText) findViewById(R.id.username);
-        passwordEditText = (EditText) findViewById(R.id.password);
+        }*/
+        setContentView(R.layout.fuli_login);
+        initView();
 
         // 如果用户名改变，清空密码
         usernameEditText.addTextChangedListener(new TextWatcher() {
@@ -106,17 +104,20 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void setListener() {
-        findViewById(R.id.but_login).setOnLongClickListener(new View.OnLongClickListener() {
+    private void initView() {
+        usernameEditText = (EditText) findViewById(R.id.username);
+        passwordEditText = (EditText) findViewById(R.id.password);
+        mBack = (ImageView) findViewById(R.id.ivBack);
+
+        mBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            public void onClick(View view) {
+                setResult(100);
                 finish();
-                return false;
             }
         });
-
     }
+
 
     /**
      * 登录
@@ -164,13 +165,13 @@ public class LoginActivity extends BaseActivity {
 
     //request=login&userName=&password=
     private void FuLiCenterLogin() {
-        final String logUrl = F.SERVIEW_URL + "request=login&userName=" + currentUsername + "&password=" + currentPassword;
-        OkHttpUtils2<cn.ucai.fulicenter.bean.fulibean.User> utils = new OkHttpUtils2<cn.ucai.fulicenter.bean.fulibean.User>();
+        final String logUrl = F.SERVIEW_URL + "login&userName=" + currentUsername + "&password=" + currentPassword;
+        OkHttpUtils2<cn.ucai.fulicenter.activity.bean.User> utils = new OkHttpUtils2<cn.ucai.fulicenter.activity.bean.User>();
         utils.url(logUrl)
-                .targetClass(cn.ucai.fulicenter.bean.fulibean.User.class)
-                .execute(new OkHttpUtils2.OnCompleteListener<cn.ucai.fulicenter.bean.fulibean.User>() {
+                .targetClass(cn.ucai.fulicenter.activity.bean.User.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<cn.ucai.fulicenter.activity.bean.User>() {
                     @Override
-                    public void onSuccess(cn.ucai.fulicenter.bean.fulibean.User result) {
+                    public void onSuccess(cn.ucai.fulicenter.activity.bean.User result) {
                         if (result == null) {
                             Utils.toast(LoginActivity.this, "登陆失败网络错误");
                             return;
@@ -289,8 +290,7 @@ public class LoginActivity extends BaseActivity {
                 if (!LoginActivity.this.isFinishing() && pd.isShowing()) {
                     pd.dismiss();
                 }
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(LoginActivity.this, SettingsActivity.class));
                 finish();
             }
 
@@ -314,9 +314,9 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initializeContacts() {
-        Map<String, User> userlist = new HashMap<String, User>();
+        Map<String, cn.ucai.fulicenter.domain.User> userlist = new HashMap<String, cn.ucai.fulicenter.domain.User>();
         // 添加user"申请与通知"
-        User newFriends = new User();
+        cn.ucai.fulicenter.domain.User newFriends = new cn.ucai.fulicenter.domain.User();
         newFriends.setUsername(Constant.NEW_FRIENDS_USERNAME);
         String strChat = getResources().getString(
                 R.string.Application_and_notify);
@@ -324,7 +324,7 @@ public class LoginActivity extends BaseActivity {
 
         userlist.put(Constant.NEW_FRIENDS_USERNAME, newFriends);
         // 添加"群聊"
-        User groupUser = new User();
+        cn.ucai.fulicenter.domain.User groupUser = new cn.ucai.fulicenter.domain.User();
         String strGroup = getResources().getString(R.string.group_chat);
         groupUser.setUsername(Constant.GROUP_USERNAME);
         groupUser.setNick(strGroup);
@@ -332,7 +332,7 @@ public class LoginActivity extends BaseActivity {
         userlist.put(Constant.GROUP_USERNAME, groupUser);
 
         // 添加"Robot"
-        User robotUser = new User();
+        cn.ucai.fulicenter.domain.User robotUser = new cn.ucai.fulicenter.domain.User();
         String strRobot = getResources().getString(R.string.robot_chat);
         robotUser.setUsername(Constant.CHAT_ROBOT);
         robotUser.setNick(strRobot);
@@ -343,7 +343,7 @@ public class LoginActivity extends BaseActivity {
         ((DemoHXSDKHelper) HXSDKHelper.getInstance()).setContactList(userlist);
         // 存入db
         UserDao dao = new UserDao(LoginActivity.this);
-        List<User> users = new ArrayList<User>(userlist.values());
+        List<cn.ucai.fulicenter.domain.User> users = new ArrayList<cn.ucai.fulicenter.domain.User>(userlist.values());
         dao.saveContactList(users);
     }
 
