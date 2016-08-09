@@ -4,6 +4,7 @@
     android:id="@+id/RelativeGoodsInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="@color/good_detail_bg">
 
     <include layout="@layout/back_haed_layout" />
@@ -14,18 +15,22 @@
         android:layout_height="wrap_content">
 
         <ImageView
+
             android:id="@+id/iv_goods_info_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="0.7dp"
             android:paddingRight="12dp"
             android:src="@drawable/bg_share_sel" />
 
         <ImageView
-            android:layout_width="wrap_content"
             android:id="@+id/iv_goods_info_selected"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
             android:layout_toLeftOf="@id/iv_goods_info_share"
             android:paddingRight="12dp"
             android:src="@drawable/menu_item_collect_normal" />
@@ -40,6 +45,7 @@
                 android:id="@+id/iv_goods_info_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:src="@drawable/menu_item_cart_normal" />
 
             <TextView

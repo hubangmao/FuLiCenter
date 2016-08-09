@@ -12,7 +12,7 @@
 
         <ImageView
             android:id="@+id/ivMessage"
-            android:layout_width="wrap_content"
+            android:layout_width="28dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="6dp"
@@ -27,12 +27,12 @@
             android:layout_toLeftOf="@id/ivMessage"
             android:text="设置"
             android:textColor="@color/good_detail_bg"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/ivIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_centerVertical="true"
             android:src="@drawable/default_face" />
 
