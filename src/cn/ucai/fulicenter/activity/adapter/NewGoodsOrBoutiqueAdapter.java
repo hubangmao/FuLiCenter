@@ -17,7 +17,7 @@ import java.util.Comparator;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.activity.GoodsInfoActivity;
-import cn.ucai.fulicenter.bean.fulibean.NewGoodBean;
+import cn.ucai.fulicenter.activity.bean.NewGoodBean;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.UserUtils;
 
@@ -66,7 +66,7 @@ public class NewGoodsOrBoutiqueAdapter extends RecyclerView.Adapter<NewGoodsOrBo
         holder.mRelative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, GoodsInfoActivity.class).putExtra("Good_Id", bean.getGoodsId()));
+                mContext.startActivity(new Intent(mContext, GoodsInfoActivity.class).putExtra("Good_Id", bean.getGoodsId()).putExtra("bean", bean));
             }
         });
     }

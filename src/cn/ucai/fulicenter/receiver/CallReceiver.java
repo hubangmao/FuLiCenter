@@ -19,8 +19,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import cn.ucai.fulicenter.DemoHXSDKHelper;
-import cn.ucai.fulicenter.activity.VideoCallActivity;
-import cn.ucai.fulicenter.activity.VoiceCallActivity;
+import cn.ucai.fulicenter.super_activity.VideoCallActivity;
+import cn.ucai.fulicenter.super_activity.VoiceCallActivity;
 import com.easemob.util.EMLog;
 
 public class CallReceiver extends BroadcastReceiver{

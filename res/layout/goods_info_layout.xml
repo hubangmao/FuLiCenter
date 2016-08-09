@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/RelativeGoodsInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/good_detail_bg">
@@ -17,37 +18,116 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="0.7dp"
             android:paddingRight="12dp"
             android:src="@drawable/bg_share_sel" />
 
         <ImageView
-            android:id="@+id/iv_goods_info_selected"
             android:layout_width="wrap_content"
+            android:id="@+id/iv_goods_info_selected"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/iv_goods_info_share"
             android:paddingRight="12dp"
             android:src="@drawable/menu_item_collect_normal" />
 
-        <ImageView
-            android:id="@+id/iv_goods_info_cart"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/iv_goods_info_selected"
-            android:paddingRight="12dp"
-            android:src="@drawable/menu_item_cart_normal" />
+            android:paddingRight="12dp">
+
+            <ImageView
+                android:id="@+id/iv_goods_info_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu_item_cart_normal" />
+
+            <TextView
+                android:id="@+id/tv_goods_info_carts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/iv_goods"
+                android:background="@drawable/cart_hint"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="12"
+                android:textColor="@color/btn_login_normal"
+                android:textSize="10sp" />
+
+        </RelativeLayout>
+
+
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:id="@+id/relative1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative"
+        android:layout_marginTop="90dp">
 
-        <cn.ucai.fulicenter.view.SlideAutoLoopView
+        <TextView
+            android:id="@+id/tv_English_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_goods"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:text="英文名称"
+            android:textColor="@color/menu_item_normal"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_Good_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_English_Name"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:text="商品名称"
+            android:textColor="@color/menu_item_normal"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_good_price1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_good_name"
+            android:paddingRight="10dp"
+            android:text="2399￥"
+            android:textColor="@color/btn_logout_pressed"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_good_price2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_good_price1"
+            android:paddingRight="10dp"
+            android:text="299￥"
+            android:textColor="@color/btn_logout_pressed"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative2"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_below="@+id/relative1">
+
+        <cn.ucai.fulicenter.activity.activity.day3.SlideAutoLoopView
             android:id="@+id/salv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/good_detail_bg_white" />
 
-        <cn.ucai.fulicenter.view.FlowIndicator
+        <cn.ucai.fulicenter.activity.activity.day3.FlowIndicator
             android:id="@+id/indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,5 +143,7 @@
     <WebView
         android:id="@+id/goodsInfo_WebView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative2"
+        android:layout_marginTop="5dp" />
 </RelativeLayout>

@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.ucai.fulicenter.FuLiCenterApplication;
+import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.I;
 
 /**
@@ -37,7 +38,7 @@ import cn.ucai.fulicenter.utils.I;
  * 2、上传文件
  * 3、下载文件，当下载文件直接由服务端读写，则可以实现更新下载进度的效果。
  * 没有图片下载、二级缓存的功能。
- * <p/>
+ * <p>
  * Created by yao on 2016/5/16.
  * 1.增加两个重载的downloadFile方法，一个用于更新下载进度，一个不更新下载进度。
  * 2.在initHandler方法中增加对下载状态的响应。
@@ -167,7 +168,7 @@ public class OkHttpUtils2<T> {
      *
      * @param listener:保存处理返回结果的代码
      */
-    public void execute(OnCompleteListener<T> listener) {
+    synchronized public void execute(OnCompleteListener<T> listener) {
         if (listener != null) {
             mListener = listener;
         }
@@ -269,6 +270,13 @@ public class OkHttpUtils2<T> {
         return this;
     }
 
+
+    public OkHttpUtils2<T> setRequestUrl(String request) {
+        mUrl = new StringBuilder(F.SERVIEW_URL + request);
+//        Log.e("okhttp","1 murl="+ mUrl.toString());
+        return this;
+    }
+
     /**
      * 添加请求参数
      *
@@ -280,7 +288,6 @@ public class OkHttpUtils2<T> {
             return this;
         }
         try {
-
             if (mUrl.indexOf("?") == -1) {
                 mUrl.append("?").append(key).append("=").append(URLEncoder.encode(value, UTF_8));
             } else {
@@ -293,13 +300,6 @@ public class OkHttpUtils2<T> {
         return this;
     }
 
-
-    public OkHttpUtils2<T> setRequestUrl(String request) {
-        mUrl = new StringBuilder(I.SERVER_URL);
-        mUrl.append(I.QUESTION).append(I.KEY_REQUEST + "=").append(request);
-//        Log.e("okhttp","1 murl="+ mUrl.toString());
-        return this;
-    }
     public OkHttpUtils2<T> addFile(File file) {
         if (mUrl == null) {
             return this;
@@ -307,6 +307,7 @@ public class OkHttpUtils2<T> {
         mFileBody = RequestBody.create(null, file);
         return this;
     }
+
     public OkHttpUtils2<T> addFile1(File file) {
         if (mUrl == null) {
             return this;

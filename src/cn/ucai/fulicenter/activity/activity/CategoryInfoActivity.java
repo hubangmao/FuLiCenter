@@ -19,9 +19,8 @@ import java.util.ArrayList;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.activity.day3.CatChildFilterButton;
 import cn.ucai.fulicenter.activity.adapter.NewGoodsOrBoutiqueAdapter;
-import cn.ucai.fulicenter.activity.bean.CategoryGroupBean;
-import cn.ucai.fulicenter.bean.fulibean.CategoryChildBean;
-import cn.ucai.fulicenter.bean.fulibean.NewGoodBean;
+import cn.ucai.fulicenter.activity.bean.CategoryChildBean;
+import cn.ucai.fulicenter.activity.bean.NewGoodBean;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.super_activity.BaseActivity;
 import cn.ucai.fulicenter.utils.F;
@@ -169,7 +168,7 @@ public class CategoryInfoActivity extends BaseActivity implements View.OnClickLi
         mBackRelative.setVisibility(View.VISIBLE);
         mHeadHint.setTextColor(getResources().getColor(R.color.google_green));
         mHeadHint.setGravity(Gravity.CENTER_HORIZONTAL);
-        Utils.initBackTitle(mHeadHint, "分类");
+        Utils.initBackTitle(mHeadHint, "");
 
         mButProce = (Button) findViewById(R.id.butPrice);
         mButTime = (Button) findViewById(R.id.butTime);

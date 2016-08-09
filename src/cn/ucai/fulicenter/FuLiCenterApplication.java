@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -32,7 +32,6 @@ public class FuLiCenterApplication extends Application {
     private static FuLiCenterApplication instance;
     // login user name
     public final String PREF_USERNAME = "username";
-
     /**
      * 当前用户nickname,为了苹果推送不是userid而是昵称
      */
@@ -162,13 +161,13 @@ public class FuLiCenterApplication extends Application {
     /**
      * 储存收藏商品数量
      */
-    int collocation = 0;
+    String collocation;
 
-    public static void setCollocation(int collocation) {
-        collocation = collocation;
+    public void setCollocation(String collocation) {
+        this.collocation = collocation;
     }
 
-    public int getCollocation() {
+    public String getCollocation() {
         return collocation;
     }
 }

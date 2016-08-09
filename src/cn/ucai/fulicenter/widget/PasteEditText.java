@@ -23,8 +23,8 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.activity.AlertDialog;
-import cn.ucai.fulicenter.activity.ChatActivity;
+import cn.ucai.fulicenter.super_activity.AlertDialog;
+import cn.ucai.fulicenter.super_activity.ChatActivity;
 
 /**
  * 自定义的textview，用来处理复制粘贴的消息

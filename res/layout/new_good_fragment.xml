@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".activity.fragment.NewGoodFragment1">
+
+    <include layout="@layout/back_haed_layout" />
+
+    <LinearLayout
+        android:id="@+id/linearSort"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_below="@+id/btnCatChildFilter"
+        android:background="@color/fontgrey"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/butPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableRight="@drawable/tow"
+            android:text="价格"
+            android:textColor="@color/google_blue" />
+
+        <Button
+            android:id="@+id/butTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableRight="@drawable/one"
+            android:text="上市时间"
+            android:textColor="@color/google_blue" />
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_goods"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linearSort">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/receiver_goods"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/tvGoodHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="加载更多..."
+        android:textColor="@color/good_detail_title_bg"
+        android:textSize="20sp"
+        android:visibility="gone" />
+</RelativeLayout>

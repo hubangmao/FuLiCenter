@@ -64,6 +64,7 @@
             android:weightSum="3">
 
             <RelativeLayout
+                android:id="@+id/relative1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -95,6 +96,7 @@
                 android:background="@color/good_detail_bg" />
 
             <RelativeLayout
+                android:id="@+id/relative2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -126,6 +128,7 @@
                 android:background="@color/good_detail_bg" />
 
             <RelativeLayout
+                android:id="@+id/relative3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"

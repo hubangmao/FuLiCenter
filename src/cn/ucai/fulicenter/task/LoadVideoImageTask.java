@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.VideoMessageBody;
-import cn.ucai.fulicenter.activity.ShowVideoActivity;
+import cn.ucai.fulicenter.super_activity.ShowVideoActivity;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageCache;
 import com.easemob.util.ImageUtils;

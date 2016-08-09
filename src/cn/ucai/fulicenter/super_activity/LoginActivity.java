@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -40,14 +40,13 @@ import cn.ucai.fulicenter.Constant;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.activity.activity.SettingsActivity;
 import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.db.UserDao;
 import cn.ucai.fulicenter.task.DowAllFirendListTask;
-import cn.ucai.fulicenter.task.DowCollectask;
+import cn.ucai.fulicenter.task.DowCollectTask;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.I;
@@ -189,7 +188,7 @@ public class LoginActivity extends BaseActivity {
                         //保存用户信息到内存
                         userInfoAddRAM(result);
                         //下载商品收藏数量
-                        new DowCollectask().dowAllFirendLsit(LoginActivity.this);
+                        new DowCollectTask().dowCollectInfo(LoginActivity.this);
                         //下载所有好友信存到集合 ->内存
 //                        new DowAllFirendListTask(LoginActivity.this).dowAllFirendLsit();
                         Log.i("main", "值" + logUrl + result.toString());

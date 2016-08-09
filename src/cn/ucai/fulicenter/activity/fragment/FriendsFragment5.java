@@ -21,7 +21,9 @@ import cn.ucai.fulicenter.activity.activity.CollectActivity;
 import cn.ucai.fulicenter.activity.activity.SettingsActivity;
 import cn.ucai.fulicenter.super_activity.LoginActivity;
 import cn.ucai.fulicenter.super_activity.MainActivity;
+import cn.ucai.fulicenter.task.DowCollectTask;
 import cn.ucai.fulicenter.utils.UserUtils;
+import cn.ucai.fulicenter.utils.Utils;
 
 
 //购物车Fragment
@@ -43,6 +45,7 @@ public class FriendsFragment5 extends Fragment implements View.OnClickListener {
     }
 
     private void initData() {
+        new DowCollectTask().dowCollectInfo(mContext);
         UserUtils.setFuLiAvatar(mContext, FuLiCenterApplication.getInstance().getUserName(), mIvIcon);
     }
 
@@ -105,7 +108,7 @@ public class FriendsFragment5 extends Fragment implements View.OnClickListener {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            mTvCollection.setText(FuLiCenterApplication.getInstance().getCollocation() + "");
+            mTvCollection.setText(FuLiCenterApplication.getInstance().getCollocation());
         }
     }
 

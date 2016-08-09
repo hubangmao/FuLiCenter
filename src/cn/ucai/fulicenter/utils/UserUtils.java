@@ -161,12 +161,29 @@ public class UserUtils {
         }
     }
 
+    /**
+     * 设置福利社头像用户头像
+     * ?request=download_avatar&name_or_hxid=&avatarType=
+     */
+    public static void setFuLiAvatar(Context context, String userName, ImageView imageView) {
+        String path = F.SERVIEW_URL + "download_avatar&avatar=" + userName;
+        Log.e("main", "头像下载成功=" + path);
+        Picasso.with(context).load(path).placeholder(R.drawable.default_avatar).into(imageView);
+
+    }
+
+
 
     /**
-     * 设置当前用户头像
+     * 设置商品图片
      */
+    static boolean b = true;
+
     public static void setImage(Context context, ImageView imageView, String url) {
-        Log.i("main", "商品图片下载URl=" + url);
+        if (b) {
+            b = false;
+            Log.i("main", "商品图片下载URl=" + url);
+        }
         if (url != null) {
             Picasso.with(context).load(url).placeholder(R.drawable.nopic).into(imageView);
         } else {

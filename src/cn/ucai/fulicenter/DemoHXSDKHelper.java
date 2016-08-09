@@ -43,10 +43,10 @@ import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.EMMessage.Type;
 
-import cn.ucai.fulicenter.activity.ChatActivity;
-import cn.ucai.fulicenter.activity.MainActivity;
-import cn.ucai.fulicenter.activity.VideoCallActivity;
-import cn.ucai.fulicenter.activity.VoiceCallActivity;
+import cn.ucai.fulicenter.super_activity.ChatActivity;
+import cn.ucai.fulicenter.super_activity.MainActivity;
+import cn.ucai.fulicenter.super_activity.VideoCallActivity;
+import cn.ucai.fulicenter.super_activity.VoiceCallActivity;
 import cn.ucai.fulicenter.domain.RobotUser;
 import cn.ucai.fulicenter.domain.User;
 import cn.ucai.fulicenter.receiver.CallReceiver;

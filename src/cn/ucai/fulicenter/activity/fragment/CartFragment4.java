@@ -9,22 +9,16 @@ import android.view.ViewGroup;
 
 import cn.ucai.fulicenter.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class CartFragment4 extends Fragment {
-
-
-    public CartFragment4() {
-        // Required empty public constructor
-    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.cart_fragment4, container, false);
+        View layout=inflater.inflate(R.layout.cart_fragment4, container, false);
+
+        return layout;
     }
 
 }

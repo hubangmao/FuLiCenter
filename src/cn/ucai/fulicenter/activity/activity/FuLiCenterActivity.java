@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
     Fragment[] mFragments;
     ViewPageAdapter mAdapter;
     static final int LOG_RETURN = 100;
+    static final int LOG_CATE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,44 +72,37 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         mViewPager.setAdapter(mAdapter);
     }
 
-    int item;
-
     @Override
     public void onClick(View view) {
         setAllItem();
         switch (view.getId()) {
             case R.id.tvNew_Goods1:
-                item = 0;
                 mViewPager.setCurrentItem(0);
                 setItemImageAndText(mTvNew_goods1, R.drawable.menu_item_new_good_selected, getResources().getColor(R.color.ebpay_red));
                 break;
             case R.id.tvBoutique2:
-                item = 1;
                 mViewPager.setCurrentItem(1);
                 setItemImageAndText(mTvBoutique2, R.drawable.boutique_selected, getResources().getColor(R.color.ebpay_red));
                 break;
             case R.id.tvCategory3:
-                item = 2;
                 setItemImageAndText(mTvCategory3, R.drawable.menu_item_category_selected, getResources().getColor(R.color.ebpay_red));
                 mViewPager.setCurrentItem(2);
                 break;
             case R.id.tvCater4:
-                item = 3;
                 setItemImageAndText(mTvCart4, R.drawable.menu_item_cart_selected, getResources().getColor(R.color.ebpay_red));
                 if (isLogin()) {
                     mViewPager.setCurrentItem(3);
                 } else {
-                    startActivityForResult(new Intent(this, LoginActivity.class), LOG_RETURN);
+                    startActivityForResult(new Intent(this, LoginActivity.class), LOG_CATE);
                 }
                 break;
             case R.id.tvFriends5:
-                item = 4;
+                setItemImageAndText(mTvFragment5, R.drawable.menu_item_personal_center_selected, getResources().getColor(R.color.ebpay_red));
                 if (isLogin()) {
                     mViewPager.setCurrentItem(4);
                 } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), LOG_RETURN);
                 }
-                setItemImageAndText(mTvFragment5, R.drawable.menu_item_personal_center_selected, getResources().getColor(R.color.ebpay_red));
                 break;
         }
     }
@@ -123,12 +118,23 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == LOG_RETURN) {
-            mViewPager.setCurrentItem(item);
-        } else {
-            mViewPager.setCurrentItem(item);
-            item = -1;
+        Log.i("main", "onActivityResult()=" + requestCode + "resultCode=" + resultCode);
+        setAllItem();
+        if (resultCode == -1) {
+            mViewPager.setCurrentItem(0);
+            setItemImageAndText(mTvNew_goods1, R.drawable.menu_item_new_good_selected, getResources().getColor(R.color.ebpay_red));
+            return;
         }
+        if (requestCode == LOG_RETURN) {
+            mViewPager.setCurrentItem(4);
+            setItemImageAndText(mTvFragment5, R.drawable.menu_item_personal_center_selected, getResources().getColor(R.color.ebpay_red));
+            return;
+        }
+        if (requestCode == LOG_CATE) {
+            setItemImageAndText(mTvCart4, R.drawable.menu_item_cart_selected, getResources().getColor(R.color.ebpay_red));
+            mViewPager.setCurrentItem(3);
+        }
+
 
     }
 

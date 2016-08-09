@@ -13,13 +13,14 @@ import java.util.ArrayList;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.adapter.NewGoodsOrBoutiqueAdapter;
-import cn.ucai.fulicenter.bean.fulibean.BoutiqueBean;
-import cn.ucai.fulicenter.bean.fulibean.NewGoodBean;
+import cn.ucai.fulicenter.activity.bean.BoutiqueBean;
+import cn.ucai.fulicenter.activity.bean.NewGoodBean;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.super_activity.BaseActivity;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.Utils;
 
+//精选
 public class BoutiqueInfoActivity extends BaseActivity {
     BoutiqueInfoActivity mContext;
     SwipeRefreshLayout mSwipe;
@@ -44,6 +45,7 @@ public class BoutiqueInfoActivity extends BaseActivity {
         initView();
         initData(DOWN_PULL);
         setListener();
+
     }
 
     private void setListener() {
@@ -141,7 +143,7 @@ public class BoutiqueInfoActivity extends BaseActivity {
         mTvHint = (TextView) findViewById(R.id.tvGoodHint);
         mBackRelative = (RelativeLayout) findViewById(R.id.backRelative);
         mHeadHint = (TextView) findViewById(R.id.back_headHint);
-        mBackRelative.setVisibility(View.VISIBLE);
-        mHeadHint.setText(mBean.getTitle());
+
+        Utils.initBackTitle(mHeadHint, mBean.getName());
     }
 }

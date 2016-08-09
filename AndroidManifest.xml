@@ -47,7 +47,7 @@
 
         <!-- 开屏页 -->
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".super_activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide">
             <intent-filter>
@@ -57,39 +57,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.FuLiCenterActivity"
+            android:name=".activity.activity.FuLiCenterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".super_activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
         <!-- 登陆 -->
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".super_activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible" />
 
         <!-- 注册 -->
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".super_activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <!-- 聊天页面 -->
         <activity
-            android:name=".activity.ChatActivity"
+            android:name=".super_activity.ChatActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize" />
         <!-- 添加好友 -->
         <activity
-            android:name=".activity.AddContactActivity"
+            android:name=".super_activity.AddContactActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateVisible" />
@@ -99,7 +99,7 @@
         <!-- 群组列表 -->
 
         <activity
-            android:name=".activity.ChatRoomActivity"
+            android:name=".super_activity.ChatRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
@@ -114,56 +114,56 @@
 
         <!-- 地图 -->
         <activity
-            android:name=".activity.BaiduMapActivity"
+            android:name=".super_activity.BaiduMapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
 
         <!-- 新的朋友邀请消息页面 -->
         <activity
-            android:name=".activity.NewFriendsMsgActivity"
+            android:name=".super_activity.NewFriendsMsgActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <!-- 转发消息用户列表页面 -->
         <activity
-            android:name=".activity.ForwardMessageActivity"
+            android:name=".super_activity.ForwardMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
         <!-- 自定义的contextmenu -->
         <activity
-            android:name=".activity.ContextMenu"
+            android:name=".super_activity.ContextMenu"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyle" />
         <!-- 自定义的alertdialog -->
         <activity
-            android:name=".activity.AlertDialog"
+            android:name=".super_activity.AlertDialog"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyle" />
         <!-- 显示下载大图页面 -->
         <activity
-            android:name=".activity.ShowBigImage"
+            android:name=".super_activity.ShowBigImage"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <!-- 下载文件 -->
         <activity
-            android:name=".activity.ShowNormalFileActivity"
+            android:name=".super_activity.ShowNormalFileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <!-- 黑名单 -->
         <activity
-            android:name=".activity.BlacklistActivity"
+            android:name=".super_activity.BlacklistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
 
         <!-- 语音通话 -->
         <activity
-            android:name=".activity.VoiceCallActivity"
+            android:name=".super_activity.VoiceCallActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/nornal_style" />
         <!-- 视频通话 -->
         <activity
-            android:name=".activity.VideoCallActivity"
+            android:name=".super_activity.VideoCallActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -174,48 +174,48 @@
         <!-- 群组黑名单用户列表 -->
 
         <activity
-            android:name=".activity.EditActivity"
+            android:name=".super_activity.EditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".activity.ShowVideoActivity"
+            android:name=".super_activity.ShowVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- choose video -->
         <activity
-            android:name=".activity.ImageGridActivity"
+            android:name=".super_activity.ImageGridActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activity.RecorderVideoActivity"
+            android:name=".super_activity.RecorderVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- upload error log -->
         <activity
-            android:name=".activity.DiagnoseActivity"
+            android:name=".super_activity.DiagnoseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <!-- iOS offline push nick -->
         <activity
-            android:name=".activity.OfflinePushNickActivity"
+            android:name=".super_activity.OfflinePushNickActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- robots list -->
         <activity
-            android:name=".activity.RobotsActivity"
+            android:name=".super_activity.RobotsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- user profile -->
         <activity
-            android:name=".activity.UserProfileActivity"
+            android:name=".super_activity.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
 
@@ -246,7 +246,7 @@
             android:exported="false" />
 
         <receiver
-            android:name=".chatuidemo.receiver.GCMPushBroadCast"
+            android:name=".receiver.GCMPushBroadCast"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.easemob.sdk.push" />
@@ -294,6 +294,21 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity
+            android:name=".activity.activity.GoodsInfoActivity"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name=".activity.activity.BoutiqueInfoActivity"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name=".activity.activity.CategoryInfoActivity"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name=".activity.activity.SettingsActivity"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name=".activity.activity.CollectActivity"
+            android:theme="@style/horizontal_slide" />
 
     </application>
 

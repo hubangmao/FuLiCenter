@@ -33,7 +33,7 @@ public class CollectActivity extends BaseActivity {
     TextView mTvHint, mHeadHint;
     ArrayList<NewGoodBean> mList;
     RelativeLayout mBackRelative;
-    public static int PAGE_ID = 1;
+    public static int PAGE_ID = 0;
     final public static int DOWN_PULL = 1;
     final public static int UP_PULL = 2;
     boolean isNoData = true;
@@ -95,7 +95,7 @@ public class CollectActivity extends BaseActivity {
     private void initData(final int where) {
         final OkHttpUtils2<NewGoodBean[]> util = new OkHttpUtils2<NewGoodBean[]>();
         util.setRequestUrl(F.REQUEST_FIND_COLLECTS)
-                .addParam(F.Cart.USER_NAME, "aa"/*FuLiCenterApplication.getInstance().getUserName()*/)
+                .addParam(F.Cart.USER_NAME, FuLiCenterApplication.getInstance().getUserName())
                 .addParam(F.PAGE_ID, PAGE_ID + "")
                 .addParam(F.PAGE_SIZE, F.PAGE_SIZE_DEFAULT + "")
                 .targetClass(NewGoodBean[].class)

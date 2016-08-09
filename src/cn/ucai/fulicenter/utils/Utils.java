@@ -2,11 +2,14 @@ package cn.ucai.fulicenter.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +28,7 @@ import java.util.List;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Pager;
 import cn.ucai.fulicenter.bean.Result;
+import cn.ucai.fulicenter.super_activity.BaseActivity;
 
 /**
  * Created by clawpo on 16/3/28.
@@ -251,7 +255,7 @@ public class Utils {
             public void run() {
                 toast.cancel();
             }
-        }, 1600);
+        }, 800);
 
     }
 
@@ -262,15 +266,17 @@ public class Utils {
 
     static boolean b = true;
     static long exitTime;
+    static Handler handler;
 
     static public boolean setBackListener(final Context context, final View view) {
+        handler = new Handler();
         new Thread() {
             @Override
             public void run() {
                 SystemClock.sleep(1700);
                 b = true;
                 exitTime = 0;
-                new Handler().post(new Runnable() {
+                handler.post(new Runnable() {
                     @Override
                     public void run() {
                         view.setVisibility(View.GONE);
@@ -284,13 +290,42 @@ public class Utils {
             b = false;
             exitTime = System.currentTimeMillis();
             view.setVisibility(View.VISIBLE);
-            return false;
+            return true;
         }
         if (System.currentTimeMillis() - exitTime > 300) {
             Log.i("main", "关闭啦");
             ((Activity) context).finish();
             return true;
         }
-        return false;
+        return true;
+    }
+
+    public static int px2dp(Context context, int px) {
+        int density = (int) context.getResources().getDisplayMetrics().density;
+        return px / density;
+    }
+
+    public static int dp2px(Context context, int dp) {
+        int density = (int) context.getResources().getDisplayMetrics().density;
+        return dp * density;
+    }
+
+    public static void initBack(final Activity activity) {
+        activity.findViewById(R.id.ivBack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.finish();
+            }
+        });
+    }
+
+    public static void initBackTitle(TextView tvTitle, String strTitle) {
+        tvTitle.setText(strTitle);
+    }
+
+    static public void setIconImage(BaseActivity context) {
+        Window window = context.getWindow();
+        window.requestFeature(Window.FEATURE_LEFT_ICON);
+        window.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
     }
 }

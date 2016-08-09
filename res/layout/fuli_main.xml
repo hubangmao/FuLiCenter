@@ -64,7 +64,7 @@
             android:id="@+id/tvFriends5"
             style="@style/MyStyle"
             android:drawableTop="@drawable/menu_item_personal_center_normal"
-            android:text="好友" />
+            android:text="个人中心" />
     </LinearLayout>
 
     <View

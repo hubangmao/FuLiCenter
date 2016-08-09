@@ -11,7 +11,7 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.StrictMode;
 
-import cn.ucai.fulicenter.activity.ImageGridActivity;
+import cn.ucai.fulicenter.super_activity.ImageGridActivity;
 
 public class Utils {
 

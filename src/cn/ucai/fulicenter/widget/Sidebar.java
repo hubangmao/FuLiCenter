@@ -26,7 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.adapter.ContactAdapter;
+import cn.ucai.fulicenter.super_activity.adapter.ContactAdapter;
 
 import com.easemob.util.DensityUtil;
 

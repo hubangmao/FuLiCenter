@@ -2,12 +2,10 @@ package cn.ucai.fulicenter.activity.fragment;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,11 +17,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.activity.activity.GoodsInfoActivity;
+import cn.ucai.fulicenter.activity.activity.FuLiCenterActivity;
 import cn.ucai.fulicenter.activity.adapter.BoutiqueAdapter;
-import cn.ucai.fulicenter.activity.adapter.NewGoodsAdapter;
-import cn.ucai.fulicenter.bean.fulibean.BoutiqueBean;
-import cn.ucai.fulicenter.bean.fulibean.NewGoodBean;
+import cn.ucai.fulicenter.activity.bean.BoutiqueBean;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.Utils;
@@ -66,15 +62,17 @@ public class BoutiqueFragment2 extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                initData();
+                if (mListTheBottom == mBoutiqueAdapter.getItemCount() - 1 && isNoData) {
+                    initData();
+                    isNoData = false;
+                }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 mListTheBottom = mLinearManager.findLastVisibleItemPosition();
                 Log.i("main", "mListTheBottom=" + mListTheBottom);
-
-                if (dx > 0.03 || dy > 0.3) {
+                if (dy > 0.1 || dy < 0) {
                     mTvHint.setVisibility(View.GONE);
                 }
             }
@@ -107,6 +105,7 @@ public class BoutiqueFragment2 extends Fragment {
 
 
     private void initView() {
+
         mSwipe = (SwipeRefreshLayout) mView.findViewById(R.id.swipe_Boutique);
         mSwipe.setColorSchemeColors(R.color.good_detail_bg, R.color.good_detail_currency_price, R.color.google_green);
         mRecycler = (RecyclerView) mView.findViewById(R.id.receiver_Boutique);
@@ -116,11 +115,6 @@ public class BoutiqueFragment2 extends Fragment {
         mBoutiqueAdapter = new BoutiqueAdapter(mContext, mList);
         mRecycler.setAdapter(mBoutiqueAdapter);
 
-        mBoutiqueAdapter.setOnActionItemClickListener(new BoutiqueAdapter.OnActionItemClickListener() {
-            @Override
-            public void onItemClickListener(View v, int pos, BoutiqueBean ben) {
-            }
-        });
 
         mTvHint = (TextView) mView.findViewById(R.id.tvBoutiqueHint);
     }
@@ -128,8 +122,8 @@ public class BoutiqueFragment2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         return mView = inflater.inflate(R.layout.boutique_fragment2, container, false);
     }
-
 
 }

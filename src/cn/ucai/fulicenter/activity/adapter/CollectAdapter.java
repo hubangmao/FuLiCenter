@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.activity.GoodsInfoActivity;
 import cn.ucai.fulicenter.activity.bean.MessageBean;
@@ -25,6 +26,7 @@ import cn.ucai.fulicenter.utils.Utils;
 
 
 public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.NewGoodsHolder> {
+    private static final String TAG = CollectAdapter.class.getSimpleName();
     private Context mContext;
     public ArrayList<NewGoodBean> mList;
 
@@ -58,7 +60,6 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.NewGoods
         final NewGoodBean bean = mList.get(position);
         String imageUrl = F.SERVIEW_URL + F.REQUEST_DOWNLOAD_NEW_GOOD + F.FILE_NAME + bean.getGoodsImg();
         UserUtils.setImage(mContext, holder.mIvGood, imageUrl);
-        Log.i("main", "bean=name" + bean.getGoodsName());
         holder.mTvGoodName.setText(bean.getGoodsName());
         holder.mRelative.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,12 +67,13 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.NewGoods
                 mContext.startActivity(new Intent(mContext, GoodsInfoActivity.class).putExtra("Good_Id", bean.getGoodsId()));
             }
         });
+        //取消收藏
         holder.mIvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 OkHttpUtils2<MessageBean> utils2 = new OkHttpUtils2<MessageBean>();
-                utils2.setRequestUrl(F.SERVIEW_URL)
-                        .addParam(F.Collect.USER_NAME, "aa"/*FuLiCenterApplication.getInstance().getUserName()*/)
+                utils2.setRequestUrl(F.REQUEST_DELETE_COLLECT)
+                        .addParam(F.Collect.USER_NAME, FuLiCenterApplication.getInstance().getUserName())
                         .addParam(F.Collect.GOODS_ID, String.valueOf(bean.getGoodsId()))
                         .targetClass(MessageBean.class)
                         .execute(new OkHttpUtils2.OnCompleteListener<MessageBean>() {
@@ -79,10 +81,11 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.NewGoods
                             public void onSuccess(MessageBean result) {
                                 if (result.isSuccess()) {
                                     new DowCollectTask().dowCollectInfo(mContext);
-                                    Utils.toast(mContext, result.getMsg());
+                                    Utils.toast(mContext, result.getMsg() + item);
                                     mList.remove(bean);
                                     notifyDataSetChanged();
                                 }
+                                notifyDataSetChanged();
 
                             }
 

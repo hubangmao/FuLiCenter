@@ -23,9 +23,7 @@ import cn.ucai.fulicenter.activity.adapter.ExpandableAdapter;
 import cn.ucai.fulicenter.activity.bean.CategoryChildBean;
 import cn.ucai.fulicenter.activity.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
-import cn.ucai.fulicenter.super_activity.BaseActivity;
 import cn.ucai.fulicenter.utils.F;
-import cn.ucai.fulicenter.utils.Utils;
 
 public class CategoryFragment3 extends Fragment {
     public String TAG = CategoryFragment3.class.getSimpleName();
@@ -59,34 +57,31 @@ public class CategoryFragment3 extends Fragment {
                 .execute(new OkHttpUtils2.OnCompleteListener<CategoryGroupBean[]>() {
                     @Override
                     public void onSuccess(CategoryGroupBean[] group) {
-                        Log.i("main", "胡邦茂=" + group[1]);
                         if (group.length == 0) {
                             return;
                         }
                         mMaxList = utils.array2List(group);
                         mAdapter.updateMax(mMaxList);
                         mTimer = new Timer();
+                        i = 0;
                         mTimer.schedule(new TimerTask() {
                             @Override
                             public void run() {
                                 downChildData(mMaxList.get(i).getId());
                                 i++;
                             }
-                        }, 0, 1500);
-                        Log.i("main", "线程2已开启=");
-
-                        new Handler().postDelayed(new Runnable() {
+                        }, 0, 200);
+                        new Thread() {
                             @Override
                             public void run() {
+                                SystemClock.sleep(1500);
                                 mTimer.cancel();
                             }
-                        }, 12000);
-
+                        }.start();
                     }
 
                     @Override
                     public void onError(String error) {
-
                     }
                 });
 
