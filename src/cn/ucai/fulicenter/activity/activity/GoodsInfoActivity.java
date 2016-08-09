@@ -1,6 +1,9 @@
 package cn.ucai.fulicenter.activity.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -37,7 +40,7 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
     //        购物车   收藏       分享
     ImageView mIvCatr, mSelected, mShare;
     //                                    标价      卖价
-    TextView mGoodsName, mGoodsEnglish, mGoodsPrice1, mGoodsPrice2;
+    TextView mGoodsName, mGoodsEnglish, mGoodsPrice1, mGoodsPrice2, mtvCartHint;
 
     //图片轮播
     SlideAutoLoopView mSlide;
@@ -123,6 +126,7 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
 
     private void initView() {
         Utils.initBack(this);
+        registerCartBroCast();
         mBackRelative = (RelativeLayout) findViewById(R.id.backRelative);
         mIvCatr = (ImageView) findViewById(R.id.iv_goods_info_cart);
         mSelected = (ImageView) findViewById(R.id.iv_goods_info_selected);
@@ -132,6 +136,7 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
         mGoodsEnglish = (TextView) findViewById(R.id.tv_English_Name);
         mGoodsPrice1 = (TextView) findViewById(R.id.tv_good_price1);
         mGoodsPrice2 = (TextView) findViewById(R.id.tv_good_price2);
+        mtvCartHint = (TextView) findViewById(R.id.tv_goods_info_carts);
 
         mVewView = (WebView) findViewById(R.id.goodsInfo_WebView);
         mSlide = (SlideAutoLoopView) findViewById(R.id.salv);
@@ -181,6 +186,7 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
             startActivity(new Intent(this, LoginActivity.class));
         }
     }
+
 
     private void showShare() {
         ShareSDK.initSDK(this);
@@ -332,6 +338,37 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    class updateCartBroCast extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (!isLogin()) {
+                return;
+            }
+            int size = Utils.getCartNumber();
+            if (size > 0) {
+                mtvCartHint.setVisibility(View.VISIBLE);
+                mtvCartHint.setText(String.valueOf(size));
+            }
+        }
+    }
+
+    updateCartBroCast mUpdate;
+
+    private void registerCartBroCast() {
+        mUpdate = new updateCartBroCast();
+        IntentFilter intentFilter = new IntentFilter("update_cart");
+        registerReceiver(mUpdate, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mUpdate != null) {
+            unregisterReceiver(mUpdate);
+        }
+
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -353,7 +390,7 @@ class Listener extends GestureDetector.SimpleOnGestureListener {
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         Log.i("main", "e1=" + e1.getX() + "e2=" + e2.getY() + "velocityX速度=" + velocityX + "velocityX=" + velocityY);
-        if (e1.getX() < (e2.getX() - 200) || velocityX > 600) {
+        if (e1.getX() < (e2.getX() - 200) || velocityX > 1000) {
             mActivity.finish();
         }
         return false;

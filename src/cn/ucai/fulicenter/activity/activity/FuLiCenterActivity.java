@@ -1,6 +1,9 @@
 package cn.ucai.fulicenter.activity.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +17,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import cn.ucai.fulicenter.DemoHXSDKHelper;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.super_activity.BaseActivity;
 import cn.ucai.fulicenter.activity.fragment.BoutiqueFragment2;
@@ -25,7 +29,7 @@ import cn.ucai.fulicenter.super_activity.LoginActivity;
 import cn.ucai.fulicenter.utils.Utils;
 
 public class FuLiCenterActivity extends BaseActivity implements View.OnClickListener {
-    TextView mTvNew_goods1, mTvBoutique2, mTvCategory3, mTvCart4, mTvFragment5, mSetBackListener;
+    TextView mTvNew_goods1, mTvBoutique2, mTvCategory3, mTvCart4, mTvFragment5, mSetBackListener, mtvCartHint;
     ViewPager mViewPager;
     Fragment[] mFragments;
     ViewPageAdapter mAdapter;
@@ -52,11 +56,13 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView() {
+        registerCartBroCast();
         mTvNew_goods1 = (TextView) findViewById(R.id.tvNew_Goods1);
         mTvBoutique2 = (TextView) findViewById(R.id.tvBoutique2);
         mTvCategory3 = (TextView) findViewById(R.id.tvCategory3);
         mTvCart4 = (TextView) findViewById(R.id.tvCater4);
         mTvFragment5 = (TextView) findViewById(R.id.tvFriends5);
+        mtvCartHint = (TextView) findViewById(R.id.tvCartHint);
 
         mViewPager = (ViewPager) findViewById(R.id.main_viewPage);
         mSetBackListener = (TextView) findViewById(R.id.backHint);
@@ -183,5 +189,37 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         if (Utils.setBackListener(this, mSetBackListener)) {
             return;
         }
+    }
+
+    class updateCartBroCast extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int size = Utils.getCartNumber();
+            if (!isLogin()) {
+                return;
+            }
+            if (size > 0) {
+                mtvCartHint.setVisibility(View.VISIBLE);
+                mtvCartHint.setText(String.valueOf(size));
+            }
+        }
+    }
+
+    updateCartBroCast mUpdate;
+
+    private void registerCartBroCast() {
+        mUpdate = new updateCartBroCast();
+        IntentFilter intentFilter = new IntentFilter("update_cart");
+        registerReceiver(mUpdate, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mUpdate != null) {
+            unregisterReceiver(mUpdate);
+        }
+
     }
 }
