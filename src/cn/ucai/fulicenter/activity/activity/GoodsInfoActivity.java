@@ -257,6 +257,7 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
     //查询是否存在该收藏商品
     private void isSelected() {
         if (isLogin()) {
+
             OkHttpUtils2<MessageBean> utils = new OkHttpUtils2<MessageBean>();
             utils.setRequestUrl(F.REQUEST_IS_COLLECT)
                     .addParam(F.Cart.USER_NAME, FuLiCenterApplication.getInstance().getUserName())
