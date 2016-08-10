@@ -30,6 +30,7 @@ import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.super_activity.BaseActivity;
 import cn.ucai.fulicenter.super_activity.LoginActivity;
 import cn.ucai.fulicenter.task.DowCollectTask;
+import cn.ucai.fulicenter.task.UpdateCartTask;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.Utils;
 
@@ -161,7 +162,7 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
         switch (view.getId()) {
             //购物车
             case R.id.iv_goods_info_cart:
-
+                new UpdateCartTask().addCartTask(mContext, bean);
                 break;
             //收藏
             case R.id.iv_goods_info_selected:
@@ -293,7 +294,6 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
     //查询是否存在该收藏商品
     private void isSelected() {
         if (isLogin()) {
-
             OkHttpUtils2<MessageBean> utils = new OkHttpUtils2<MessageBean>();
             utils.setRequestUrl(F.REQUEST_IS_COLLECT)
                     .addParam(F.Cart.USER_NAME, FuLiCenterApplication.getInstance().getUserName())
@@ -315,8 +315,6 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
 
                         }
                     });
-        } else {
-            startActivity(new Intent(this, LoginActivity.class));
         }
 
     }
@@ -346,9 +344,12 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
                 return;
             }
             int size = Utils.getCartNumber();
-            if (size > 0) {
+            if (size > 0 && isLogin()) {
                 mtvCartHint.setVisibility(View.VISIBLE);
                 mtvCartHint.setText(String.valueOf(size));
+            } else {
+                mtvCartHint.setVisibility(View.GONE);
+
             }
         }
     }

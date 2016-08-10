@@ -12,6 +12,7 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.activity.bean.CartBean;
 import cn.ucai.fulicenter.activity.bean.GoodDetailsBean;
 import cn.ucai.fulicenter.activity.bean.MessageBean;
+import cn.ucai.fulicenter.activity.bean.NewGoodBean;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.Utils;
@@ -41,6 +42,45 @@ public class UpdateCartTask {
                     public void onSuccess(MessageBean result) {
                         if (result.isSuccess()) {
                             new DowCartTask().dowCartTask(mContext);
+                            Utils.toast(mContext, result.getMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+    }
+
+    public void addCartTask(final Context mContext, NewGoodBean bean) {
+        this.mContext = mContext;
+        if (bean.getId() < 1) {
+            return;
+        }
+        ArrayList<CartBean> cartBeen = FuLiCenterApplication.getInstance().getCartBeen();
+        for (CartBean b : cartBeen) {
+            if (b.getGoodsId() == bean.getGoodsId()) {
+                b.setCount(b.getCount() + 1);
+                updateCartTask(mContext, b);
+                return;
+            }
+
+        }
+        final OkHttpUtils2<MessageBean> utils = new OkHttpUtils2<MessageBean>();
+        utils.setRequestUrl(F.REQUEST_ADD_CART)
+                .addParam(F.Cart.GOODS_ID, bean.getGoodsId() + "")
+                .addParam(F.Cart.COUNT, 1 + "")
+                .addParam(F.Cart.IS_CHECKED, true + "")
+                .addParam(F.Cart.USER_NAME, FuLiCenterApplication.getInstance().getUserName())
+                .targetClass(MessageBean.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result.isSuccess()) {
+                            FuLiCenterApplication.getInstance().getCartBeen().clear();
+                            new DowCartTask().dowCartTask(mContext);
+                            mContext.sendStickyBroadcast(new Intent("update_cart"));
                             Utils.toast(mContext, result.getMsg());
                         }
                     }

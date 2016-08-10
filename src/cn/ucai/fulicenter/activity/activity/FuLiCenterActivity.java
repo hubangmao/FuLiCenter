@@ -16,6 +16,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
@@ -29,12 +32,14 @@ import cn.ucai.fulicenter.super_activity.LoginActivity;
 import cn.ucai.fulicenter.utils.Utils;
 
 public class FuLiCenterActivity extends BaseActivity implements View.OnClickListener {
-    TextView mTvNew_goods1, mTvBoutique2, mTvCategory3, mTvCart4, mTvFragment5, mSetBackListener, mtvCartHint;
+    TextView mTvNew_goods1, mTvBoutique2, mTvCategory3, mTvCart4, mTvFragment5, mSetBackListener, mtvCartHint, mTvRam;
     ViewPager mViewPager;
     Fragment[] mFragments;
     ViewPageAdapter mAdapter;
     static final int LOG_RETURN = 100;
     static final int LOG_CATE = 101;
+    Runtime runtime = Runtime.getRuntime();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +51,15 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
 
     private void setListener() {
         mViewPager.setCurrentItem(0);
+        setAllItem();
         setItemImageAndText(mTvNew_goods1, R.drawable.menu_item_new_good_selected, getResources().getColor(R.color.ebpay_red));
         mTvNew_goods1.setOnClickListener(this);
         mTvBoutique2.setOnClickListener(this);
         mTvCategory3.setOnClickListener(this);
         mTvCart4.setOnClickListener(this);
         mTvFragment5.setOnClickListener(this);
+        mTvRam.setOnClickListener(this);
+
 
     }
 
@@ -63,6 +71,7 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         mTvCart4 = (TextView) findViewById(R.id.tvCater4);
         mTvFragment5 = (TextView) findViewById(R.id.tvFriends5);
         mtvCartHint = (TextView) findViewById(R.id.tvCartHint);
+        mTvRam = (TextView) findViewById(R.id.tvRAM);
 
         mViewPager = (ViewPager) findViewById(R.id.main_viewPage);
         mSetBackListener = (TextView) findViewById(R.id.backHint);
@@ -76,6 +85,24 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         mFragments[4] = new FriendsFragment5();
         mAdapter = new ViewPageAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(mAdapter);
+
+
+        //获取内存使用情况
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                final long l3 = runtime.freeMemory();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mTvRam.setText(String.valueOf("剩余内存=" + (l3 / 1024)) + "KB");
+                    }
+                });
+            }
+        }, 1000, 1000);
     }
 
     @Override
@@ -109,6 +136,9 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
                 } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), LOG_RETURN);
                 }
+                break;
+            case R.id.tvRAM:
+                runtime.gc();
                 break;
         }
     }
@@ -197,11 +227,14 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         public void onReceive(Context context, Intent intent) {
             int size = Utils.getCartNumber();
             if (!isLogin()) {
+                mtvCartHint.setVisibility(View.GONE);
                 return;
             }
             if (size > 0) {
                 mtvCartHint.setVisibility(View.VISIBLE);
                 mtvCartHint.setText(String.valueOf(size));
+            } else {
+                mtvCartHint.setVisibility(View.GONE);
             }
         }
     }
