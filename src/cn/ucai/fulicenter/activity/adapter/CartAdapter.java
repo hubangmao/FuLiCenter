@@ -84,6 +84,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
         holder.mTvGoodName.setText(bean.getGoods().getGoodsName());
         holder.mTvGoodNumber.setText("(" + String.valueOf(bean.getCount()) + ")");
         holder.mTvPrice.setText(String.valueOf("￥" + getSubStr(bean.getGoods().getCurrencyPrice()) * bean.getCount()));
+        holder.mChIsCheck.setChecked(bean.isChecked());
+
         //选择购买
         mButBuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,17 +98,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
         holder.mChIsCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                bean.setChecked(b);
-                bean.setCount(mNumber);
-                new UpdateCartTask().updateCartTask(mContext, bean);
                 if (b) {
+                    bean.setChecked(b);
+                    bean.setCount(mNumber);
+                    //更新服务端商品数量数据
+                    new UpdateCartTask().updateCartTask(mContext, bean);
                     //总价
                     int sumStr = getSubStr(holder.mTvPrice.getText().toString());
                     mBefore = sumStr;
                     sumPrice += sumStr;
                     //优惠价
                     mSave = getSubStr(bean.getGoods().getRankPrice());
-                    rankPrice += getSubStr(bean.getGoods().getRankPrice());
+                    rankPrice = getSubStr(bean.getGoods().getRankPrice());
                     mTvAll.setText("合计:￥" + sumPrice + ".00");
                     mTvSave.setText("节省:￥" + (sumPrice - rankPrice) + ".00");
                 } else {
@@ -144,7 +147,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
                 if (holder.mChIsCheck.isChecked()) {
                     //设置总价
                     int subStr = getSubStr(holder.mTvPrice.getText().toString()) + curren;
-                    rankPrice += getSubStr(bean.getGoods().getRankPrice());
+                    rankPrice = getSubStr(bean.getGoods().getRankPrice());
                     mTvAll.setText("合计:￥" + subStr + ".00");
                     mTvSave.setText("节省:￥" + (subStr - rankPrice) + ".00");
                 }
@@ -158,7 +161,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
                 int number = Integer.parseInt(numberStr.substring(1, numberStr.lastIndexOf(")")));
                 number--;
                 mNumber = number;
+                //删除商品
                 if (number == 0) {
+                    new UpdateCartTask().deleteCartTask(mContext, bean.getId());
+                    mList.remove(bean);
+                    notifyDataSetChanged();
                     return;
                 }
                 //设置选中的商品价钱
@@ -169,7 +176,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
                 if (holder.mChIsCheck.isChecked()) {
                     //设置总价
                     int subStr = getSubStr(holder.mTvPrice.getText().toString()) + curren;
-                    rankPrice += getSubStr(bean.getGoods().getRankPrice());
+                    rankPrice = getSubStr(bean.getGoods().getRankPrice());
                     mTvAll.setText("合计:￥" + subStr + ".00");
                     mTvSave.setText("节省:￥" + (subStr - rankPrice) + ".00");
                 }
@@ -196,7 +203,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
                 GoodDetailsBean goods = cb.getGoods();
                 if (goods != null) {
                     sumPrice += cb.getCount() * getSubStr(goods.getCurrencyPrice());
-                    rankPrice += getSubStr(goods.getRankPrice());
+                    rankPrice = getSubStr(goods.getRankPrice());
                 }
             }
             mTvAll.setText("合计:￥" + sumPrice + ".00");

@@ -29,7 +29,7 @@ public class UpdateCartTask {
         if (bean == null || bean.getGoods().getAddTime() < 0) {
             return;
         }
-        Utils.toast(mContext, "开始更新购物车数据");
+
         final OkHttpUtils2<MessageBean> utils = new OkHttpUtils2<MessageBean>();
         utils.setRequestUrl(F.REQUEST_UPDATE_CART)
                 .addParam(F.Cart.ID, bean.getId() + "")
@@ -41,6 +41,7 @@ public class UpdateCartTask {
                     public void onSuccess(MessageBean result) {
                         if (result.isSuccess()) {
                             new DowCartTask().dowCartTask(mContext);
+                            Utils.toast(mContext, result.getMsg());
                         }
                     }
 
@@ -49,8 +50,33 @@ public class UpdateCartTask {
 
                     }
                 });
+    }
 
+    public void deleteCartTask(final Context mContext, int cartId) {
+        this.mContext = mContext;
+        if (cartId < 0) {
+            return;
+        }
+        final OkHttpUtils2<MessageBean> utils = new OkHttpUtils2<MessageBean>();
+        utils.setRequestUrl(F.REQUEST_DELETE_CART)
+                .addParam(F.Cart.ID, cartId + "")
+                .targetClass(MessageBean.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result.isSuccess()) {
+                            FuLiCenterApplication.getInstance().getCartBeen().clear();
+                            new DowCartTask().dowCartTask(mContext);
+                            mContext.sendStickyBroadcast(new Intent("update_cart"));
+                            Utils.toast(mContext, result.getMsg());
+                        }
+                    }
 
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
     }
 
 
