@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.bean.CartBean;
 import cn.ucai.fulicenter.activity.bean.GoodDetailsBean;
+import cn.ucai.fulicenter.task.UpdateCartTask;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.UserUtils;
 
@@ -41,6 +42,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
     int mBefore;
     //之前选中的优惠价钱
     int mSave;
+
+    //当前商品件数
+    int mNumber;
 
     public CartAdapter(Context mContext, ArrayList<CartBean> list, Button butBuy, TextView mTvAll, TextView tvSave) {
         this.mContext = mContext;
@@ -76,7 +80,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
         final CartBean bean = mList.get(position);
         String imageUrl = F.SERVIEW_URL + F.REQUEST_DOWNLOAD_NEW_GOOD + F.FILE_NAME + bean.getGoods().getGoodsThumb();
         UserUtils.setImage(mContext, holder.mIvIcon, imageUrl);
-
+        mNumber = bean.getCount();
         holder.mTvGoodName.setText(bean.getGoods().getGoodsName());
         holder.mTvGoodNumber.setText("(" + String.valueOf(bean.getCount()) + ")");
         holder.mTvPrice.setText(String.valueOf("￥" + getSubStr(bean.getGoods().getCurrencyPrice()) * bean.getCount()));
@@ -92,6 +96,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
         holder.mChIsCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                bean.setChecked(b);
+                bean.setCount(mNumber);
+                new UpdateCartTask().updateCartTask(mContext, bean);
                 if (b) {
                     //总价
                     int sumStr = getSubStr(holder.mTvPrice.getText().toString());
@@ -129,6 +136,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
                 int number = Integer.parseInt(numberStr.substring(1, numberStr.lastIndexOf(")")));
                 number++;
                 //设置选中的商品价钱
+                mNumber = number;
                 holder.mTvGoodNumber.setText("(" + number + ")");
                 holder.mTvPrice.setText(String.valueOf("￥" + getSubStr(bean.getGoods().getCurrencyPrice()) * number));
                 //拿到商品的总价
@@ -149,6 +157,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
                 String numberStr = holder.mTvGoodNumber.getText().toString();
                 int number = Integer.parseInt(numberStr.substring(1, numberStr.lastIndexOf(")")));
                 number--;
+                mNumber = number;
                 if (number == 0) {
                     return;
                 }

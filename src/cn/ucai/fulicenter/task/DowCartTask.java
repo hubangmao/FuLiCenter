@@ -23,6 +23,7 @@ import cn.ucai.fulicenter.utils.Utils;
 public class DowCartTask {
     private final String TAG = DowCartTask.class.getSimpleName();
     Context mContext;
+    List<CartBean> cartList = FuLiCenterApplication.getInstance().getCartBeen();
 
     public void dowCartTask(final Context mContext) {
         this.mContext = mContext;
@@ -41,7 +42,7 @@ public class DowCartTask {
                         }
                         Log.i("main", "购物车数据下载=" + s[0]);
                         ArrayList<CartBean> list = utils.array2List(s);
-                        List<CartBean> cartList = FuLiCenterApplication.getInstance().getCartBeen();
+
                         for (final CartBean bean : list) {
                             if (!cartList.contains(bean)) {//不存在就添加
                                 String url = F.SERVIEW_URL + F.REQUEST_FIND_GOOD_DETAILS + "&" + D.GoodDetails.KEY_GOODS_ID + "=" + bean.getGoodsId();
