@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="3dp"
         android:orientation="horizontal"
@@ -35,14 +35,13 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom"
             android:layout_weight="1">
 
             <TextView
                 android:id="@+id/tvCater4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="3dp"
                 android:drawableTop="@drawable/menu_item_cart_normal"
                 android:gravity="center"
                 android:text="购物车"
@@ -50,14 +49,15 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tvCartHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/cart_hint"
                 android:gravity="center"
-                android:text="5"
-                android:textSize="9sp" />
+                android:textSize="9sp"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <TextView
@@ -86,6 +86,13 @@
         android:layout_height="20dp"
         android:gravity="center"
         android:text="在点击一次键退出程序"
-        android:textColor="@color/myTextColor"
+        android:textColor="@color/hintColor"
         android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvRAM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="test" />
 </RelativeLayout>

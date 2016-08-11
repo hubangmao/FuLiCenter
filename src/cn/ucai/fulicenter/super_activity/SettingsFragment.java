@@ -14,6 +14,7 @@
 package cn.ucai.fulicenter.super_activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -50,7 +51,7 @@ import cn.ucai.fulicenter.bean.UserAvatar;
  * @author Administrator
  */
 public class SettingsFragment extends Fragment implements OnClickListener {
-
+    Context mContext ;
     /**
      * 设置新消息通知布局
      */
@@ -140,6 +141,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mContext = getActivity();
         if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
             return;
         rl_switch_notification = (RelativeLayout) getView().findViewById(R.id.rl_switch_notification);
@@ -364,6 +366,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
                     public void run() {
                         Map<String, UserAvatar> map = FuLiCenterApplication.getInstance().getMap();
                         List<UserAvatar> userList = FuLiCenterApplication.getInstance().getUserList();
+                        FuLiCenterApplication.getInstance().getCartBeen().clear();
                         if (map != null) {
                             map.clear();
                         }
@@ -374,7 +377,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
                         // 重新显示登陆页面
                         getActivity().finish();
                         startActivity(new Intent(getActivity(), LoginActivity.class));
-
+                        mContext.sendStickyBroadcast(new Intent("update_cart"));
                     }
                 });
             }

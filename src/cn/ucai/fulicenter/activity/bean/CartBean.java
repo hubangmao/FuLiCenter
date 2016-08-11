@@ -86,4 +86,31 @@ public class CartBean implements Serializable {
         this.isChecked = isChecked;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CartBean bean = (CartBean) o;
+
+        return id == bean.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "CartBean{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", goodsId=" + goodsId +
+                ", goods=" + goods +
+                ", count=" + count +
+                ", isChecked=" + isChecked +
+                '}';
+    }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="myTextColor">#6a6a6a</color>
+    <color name="myTextColor">#8b8a8a</color>
     <color name="setTextColor">#488da8</color>
     <color name="hintColor">#e92a1d</color>
     <color name="common_top_bar_blue">#4ebcd3</color>

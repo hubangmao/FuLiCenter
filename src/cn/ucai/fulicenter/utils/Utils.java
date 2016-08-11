@@ -25,7 +25,9 @@ import java.util.Arrays;
 import java.util.List;
 
 
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.activity.bean.CartBean;
 import cn.ucai.fulicenter.bean.Pager;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.super_activity.BaseActivity;
@@ -34,6 +36,7 @@ import cn.ucai.fulicenter.super_activity.BaseActivity;
  * Created by clawpo on 16/3/28.
  */
 public class Utils {
+
     public static String getPackageName(Context context) {
         return context.getPackageName();
     }
@@ -327,5 +330,14 @@ public class Utils {
         Window window = context.getWindow();
         window.requestFeature(Window.FEATURE_LEFT_ICON);
         window.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
+    }
+
+    public static int getCartNumber() {
+        int cartNumber = 0;
+        List<CartBean> cartBeen = FuLiCenterApplication.getInstance().getCartBeen();
+        for (CartBean s : cartBeen) {
+            cartNumber += s.getCount();
+        }
+        return cartNumber;
     }
 }

@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:layout_toLeftOf="@id/iv_goods_info_share"
             android:paddingRight="12dp"
             android:src="@drawable/menu_item_collect_normal" />
@@ -60,7 +60,8 @@
                 android:maxLines="1"
                 android:text="12"
                 android:textColor="@color/btn_login_normal"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:visibility="gone" />
 
         </RelativeLayout>
 

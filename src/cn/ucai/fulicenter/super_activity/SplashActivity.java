@@ -16,6 +16,7 @@ import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.db.DemoDBManager;
+import cn.ucai.fulicenter.task.DowCartTask;
 import cn.ucai.fulicenter.task.DowCollectTask;
 import cn.ucai.fulicenter.utils.I;
 import cn.ucai.fulicenter.utils.Utils;
@@ -51,7 +52,8 @@ public class SplashActivity extends BaseActivity {
         finish();
         //下载商品收藏数量
         new DowCollectTask().dowCollectInfo(SplashActivity.this);
-
+        //下载购物车信息
+        new DowCartTask().dowCartTask(SplashActivity.this);
        /* new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

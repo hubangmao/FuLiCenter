@@ -19,12 +19,13 @@ import android.util.Log;
 
 import com.easemob.EMCallBack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.ucai.fulicenter.activity.bean.CartBean;
 import cn.ucai.fulicenter.bean.UserAvatar;
-import cn.ucai.fulicenter.utils.Utils;
 
 public class FuLiCenterApplication extends Application {
 
@@ -169,5 +170,18 @@ public class FuLiCenterApplication extends Application {
 
     public String getCollocation() {
         return collocation;
+    }
+
+    /**
+     * 储存购物车集合
+     */
+    public ArrayList<CartBean> cartBeen = new ArrayList<CartBean>();
+
+    public ArrayList<CartBean> getCartBeen() {
+        return cartBeen;
+    }
+
+    public void setCartBeen(ArrayList<CartBean> cartBeen) {
+        this.cartBeen = cartBeen;
     }
 }

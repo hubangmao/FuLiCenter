@@ -162,7 +162,7 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
         switch (view.getId()) {
             //购物车
             case R.id.iv_goods_info_cart:
-                new UpdateCartTask().addCartTask(mContext, bean);
+                new UpdateCartTask().addCartTask(mContext, bean.getGoodsId());
                 break;
             //收藏
             case R.id.iv_goods_info_selected:
@@ -288,7 +288,6 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
         isSelected();
         mGoodId = getIntent().getIntExtra("Good_Id", 0);
         bean = (NewGoodBean) getIntent().getSerializableExtra("bean");
-        Log.i("main", TAG + "GoodId=" + mGoodId + "bean=" + bean.toString());
     }
 
     //查询是否存在该收藏商品

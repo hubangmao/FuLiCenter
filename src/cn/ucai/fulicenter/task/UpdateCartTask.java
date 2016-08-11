@@ -2,15 +2,12 @@ package cn.ucai.fulicenter.task;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.os.Handler;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import cn.ucai.fulicenter.D;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.activity.bean.CartBean;
-import cn.ucai.fulicenter.activity.bean.GoodDetailsBean;
 import cn.ucai.fulicenter.activity.bean.MessageBean;
 import cn.ucai.fulicenter.activity.bean.NewGoodBean;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
@@ -53,14 +50,14 @@ public class UpdateCartTask {
                 });
     }
 
-    public void addCartTask(final Context mContext, NewGoodBean bean) {
+    public void addCartTask(final Context mContext, int  goodsId) {
         this.mContext = mContext;
-        if (bean.getId() < 1) {
+        if (goodsId < 1) {
             return;
         }
         ArrayList<CartBean> cartBeen = FuLiCenterApplication.getInstance().getCartBeen();
         for (CartBean b : cartBeen) {
-            if (b.getGoodsId() == bean.getGoodsId()) {
+            if (b.getGoodsId() == goodsId) {
                 b.setCount(b.getCount() + 1);
                 updateCartTask(mContext, b);
                 return;
@@ -68,8 +65,9 @@ public class UpdateCartTask {
 
         }
         final OkHttpUtils2<MessageBean> utils = new OkHttpUtils2<MessageBean>();
+
         utils.setRequestUrl(F.REQUEST_ADD_CART)
-                .addParam(F.Cart.GOODS_ID, bean.getGoodsId() + "")
+                .addParam(F.Cart.GOODS_ID, goodsId + "")
                 .addParam(F.Cart.COUNT, 1 + "")
                 .addParam(F.Cart.IS_CHECKED, true + "")
                 .addParam(F.Cart.USER_NAME, FuLiCenterApplication.getInstance().getUserName())

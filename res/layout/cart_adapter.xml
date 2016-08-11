@@ -17,13 +17,13 @@
         android:layout_height="match_parent"
         android:layout_below="@id/view">
 
-        <ImageView
+        <CheckBox
             android:id="@+id/ivIsCheck"
+            style="@style/CustomCheckboxTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/checkbox_normal" />
+            android:layout_marginLeft="20dp" />
 
         <ImageView
             android:id="@+id/ivIcon"
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:text="299￥"
+            android:text="￥299"
             android:textColor="@color/btn_logout_pressed"
             android:textSize="16sp" />
     </RelativeLayout>

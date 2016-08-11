@@ -180,9 +180,9 @@ public class UserUtils {
     static boolean b = true;
 
     public static void setImage(Context context, ImageView imageView, String url) {
+        Log.i("main", "商品图片下载URl=" + url);
         if (b) {
             b = false;
-            Log.i("main", "商品图片下载URl=" + url);
         }
         if (url != null) {
             Picasso.with(context).load(url).placeholder(R.drawable.nopic).into(imageView);

@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:inputType="textPersonName"
             android:textColor="@color/menu_item_normal" />
 
     </LinearLayout>
@@ -53,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:inputType="phone"
             android:textColor="@color/menu_item_normal" />
 
     </LinearLayout>
@@ -126,5 +128,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_above="@id/butPay"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textColor="@color/menu_item_normal"
         android:textSize="16sp" />
 </RelativeLayout>

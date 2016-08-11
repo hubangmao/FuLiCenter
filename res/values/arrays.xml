@@ -32,4 +32,10 @@
         <item>吉林</item>
         <item>海南</item>
     </string-array>
+    <string-array name="adds">
+        <item>呵呵</item>
+        <item>哈哈</item>
+        <item>霍霍</item>
+        <item>哦豁</item>
+    </string-array>
 </resources>

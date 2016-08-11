@@ -374,6 +374,9 @@ public class SettingsActivity extends BaseActivity implements OnClickListener {
                     public void run() {
                         Map<String, UserAvatar> map = FuLiCenterApplication.getInstance().getMap();
                         List<UserAvatar> userList = FuLiCenterApplication.getInstance().getUserList();
+                        FuLiCenterApplication.getInstance().getCartBeen().clear();
+                        FuLiCenterApplication.getInstance().setCollocation("0");
+
                         if (map != null) {
                             map.clear();
                         }

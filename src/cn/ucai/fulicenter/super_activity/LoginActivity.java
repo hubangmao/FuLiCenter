@@ -46,6 +46,7 @@ import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.data.OkHttpUtils2;
 import cn.ucai.fulicenter.db.UserDao;
 import cn.ucai.fulicenter.task.DowAllFirendListTask;
+import cn.ucai.fulicenter.task.DowCartTask;
 import cn.ucai.fulicenter.task.DowCollectTask;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.F;
@@ -229,8 +230,10 @@ public class LoginActivity extends BaseActivity {
                             addSuperDBData((UserAvatar) user.getRetData());
                             //保存用户信息到内存
                             userInfoAddRAM((UserAvatar) user.getRetData());
+                            //下载购物车信息
+                            new DowCartTask().dowCartTask(LoginActivity.this);
                             //下载所有好友信存到集合 ->内存
-                            new DowAllFirendListTask(LoginActivity.this).dowAllFirendLsit();
+                            // new DowAllFirendListTask(LoginActivity.this).dowAllFirendLsit();
                         } else {
                             Utils.toast(LoginActivity.this, Utils.getResourceString(LoginActivity.this, user.getRetCode()));
                             pd.dismiss();
