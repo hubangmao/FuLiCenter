@@ -1,6 +1,5 @@
 package cn.ucai.fulicenter.activity.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import com.pingplusplus.libone.PaymentHandler;
 import com.pingplusplus.libone.PingppOne;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

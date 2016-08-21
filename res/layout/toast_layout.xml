@@ -10,7 +10,7 @@
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_gravity="center"
-        android:src="@drawable/hbm" />
+        android:src="@drawable/b8" />
 
     <TextView
         android:id="@+id/toast_tv"

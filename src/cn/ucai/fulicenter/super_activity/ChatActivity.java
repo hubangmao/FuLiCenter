@@ -1395,7 +1395,6 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
                                     (String) field.get(null)));
                         } else { // 删除文字或者表情
                             if (!TextUtils.isEmpty(mEditTextContent.getText())) {
-
                                 int selectionStart = mEditTextContent.getSelectionStart();// 获取光标的位置
                                 if (selectionStart > 0) {
                                     String body = mEditTextContent.getText().toString();

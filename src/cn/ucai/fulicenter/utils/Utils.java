@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,11 @@ import cn.ucai.fulicenter.super_activity.BaseActivity;
  * Created by clawpo on 16/3/28.
  */
 public class Utils {
+    private static TextView mTv;
+
+    public static void setmTv(TextView mTv) {
+        Utils.mTv = mTv;
+    }
 
     public static String getPackageName(Context context) {
         return context.getPackageName();
@@ -258,7 +264,7 @@ public class Utils {
             public void run() {
                 toast.cancel();
             }
-        }, 800);
+        }, 600);
 
     }
 

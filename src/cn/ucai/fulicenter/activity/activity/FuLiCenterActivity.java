@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activity.activity;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,12 +10,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,21 +35,28 @@ import cn.ucai.fulicenter.super_activity.LoginActivity;
 import cn.ucai.fulicenter.utils.Utils;
 
 public class FuLiCenterActivity extends BaseActivity implements View.OnClickListener {
-    TextView mTvNew_goods1, mTvBoutique2, mTvCategory3, mTvCart4, mTvFragment5, mSetBackListener, mtvCartHint, mTvRam;
-    ViewPager mViewPager;
-    Fragment[] mFragments;
-    ViewPageAdapter mAdapter;
-    static final int LOG_RETURN = 100;
-    static final int LOG_CATE = 101;
-    Runtime runtime = Runtime.getRuntime();
+    public Double[] mTestArr;
+    private final String TAG = FuLiCenterApplication.class.getSimpleName();
+    private TextView mTvNew_goods1, mTvBoutique2, mTvCategory3, mTvCart4, mTvFragment5, mSetBackListener, mtvCartHint, mTvRam, mTvGc, mTvAppRam;
+    private ViewPager mViewPager;
+    private Fragment[] mFragments;
+    private ViewPageAdapter mAdapter;
+    private final int LOG_RETURN = 100;
+    private static final int LOG_CATE = 101;
+    private Runtime runtime = Runtime.getRuntime();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fuli_main);
+        //模拟内存泄漏之一
+        mTestArr = new Double[100000];
+        Utils.setmTv(mTvGc);
+
         initView();
         setListener();
+
     }
 
     private void setListener() {
@@ -58,12 +68,55 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         mTvCategory3.setOnClickListener(this);
         mTvCart4.setOnClickListener(this);
         mTvFragment5.setOnClickListener(this);
-        mTvRam.setOnClickListener(this);
+        mTvGc.setOnClickListener(this);
+
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int item, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int item) {
+                setAllItem();
+                switch (item) {
+                    case 0:
+                        setItemImageAndText(mTvNew_goods1, R.drawable.menu_item_new_good_selected, getResources().getColor(R.color.ebpay_red));
+                        break;
+                    case 1:
+                        setItemImageAndText(mTvBoutique2, R.drawable.boutique_selected, getResources().getColor(R.color.ebpay_red));
+                        break;
+                    case 2:
+                        setItemImageAndText(mTvCategory3, R.drawable.menu_item_category_selected, getResources().getColor(R.color.ebpay_red));
+                        break;
+                    case 3:
+                        setItemImageAndText(mTvCart4, R.drawable.menu_item_cart_selected, getResources().getColor(R.color.ebpay_red));
+                        if (!isLogin()) {
+                            startActivityForResult(new Intent(FuLiCenterActivity.this, LoginActivity.class), LOG_CATE);
+                        }
+                        break;
+                    case 4:
+                        setItemImageAndText(mTvFragment5, R.drawable.menu_item_personal_center_selected, getResources().getColor(R.color.ebpay_red));
+                        if (!isLogin()) {
+                            startActivityForResult(new Intent(FuLiCenterActivity.this, LoginActivity.class), LOG_RETURN);
+                        }
+                        break;
+                }
+            }
+
+            @Override
+
+            public void onPageScrollStateChanged(int item) {
+
+            }
+        });
 
 
     }
 
     private void initView() {
+
+
         registerCartBroCast();
         mTvNew_goods1 = (TextView) findViewById(R.id.tvNew_Goods1);
         mTvBoutique2 = (TextView) findViewById(R.id.tvBoutique2);
@@ -71,7 +124,10 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         mTvCart4 = (TextView) findViewById(R.id.tvCater4);
         mTvFragment5 = (TextView) findViewById(R.id.tvFriends5);
         mtvCartHint = (TextView) findViewById(R.id.tvCartHint);
+
         mTvRam = (TextView) findViewById(R.id.tvRAM);
+        mTvAppRam = (TextView) findViewById(R.id.tvAppRAM);
+        mTvGc = (TextView) findViewById(R.id.tvGc);
 
         mViewPager = (ViewPager) findViewById(R.id.main_viewPage);
         mSetBackListener = (TextView) findViewById(R.id.backHint);
@@ -86,19 +142,28 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         mAdapter = new ViewPageAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(mAdapter);
 
+        //获得手机总内存大小
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        final ActivityManager.MemoryInfo info = new ActivityManager.MemoryInfo();
+        activityManager.getMemoryInfo(info);
 
-        //获取内存使用情况
+        //获得系统分配内存大小
+        final long appRam = Runtime.getRuntime().maxMemory() / 1204 / 1024;
+
+
         Timer timer = new Timer();
-
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                //获取空闲内存大小
                 final long l3 = runtime.freeMemory();
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mTvRam.setText(String.valueOf("剩余内存=" + (l3 / 1024)) + "KB");
+                        mTvRam.setText(String.valueOf("总内存=" + (info.availMem / 1024 / 1024)) + "M");
+                        mTvAppRam.setText("分配内存=" + appRam + " M");
+                        mTvGc.setText("空闲内存=" + l3 + "字节");
                     }
                 });
             }
@@ -137,7 +202,7 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
                     startActivityForResult(new Intent(this, LoginActivity.class), LOG_RETURN);
                 }
                 break;
-            case R.id.tvRAM:
+            case R.id.tvGc:
                 runtime.gc();
                 break;
         }
@@ -153,8 +218,17 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (FuLiCenterApplication.isLogin) {
+            mViewPager.setCurrentItem(0);
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i("main", "onActivityResult()=" + requestCode + "resultCode=" + resultCode);
+
+        Log.i("main", TAG + requestCode + "resultCode=" + resultCode);
         setAllItem();
         if (resultCode == -1) {
             mViewPager.setCurrentItem(0);
@@ -195,7 +269,7 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         textView.setCompoundDrawables(null, drawable, null, null);
     }
 
-    class ViewPageAdapter extends FragmentPagerAdapter {
+    class ViewPageAdapter extends FragmentStatePagerAdapter {
         Fragment[] mFragments;
 
         public ViewPageAdapter(FragmentManager fm, Fragment[] fragments) {

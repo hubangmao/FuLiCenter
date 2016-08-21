@@ -386,6 +386,7 @@ public class SettingsActivity extends BaseActivity implements OnClickListener {
                         pd.dismiss();
                         // 重新显示登陆页面
                         SettingsActivity.this.finish();
+                        FuLiCenterApplication.isLogin = true;
                         startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
 
                     }

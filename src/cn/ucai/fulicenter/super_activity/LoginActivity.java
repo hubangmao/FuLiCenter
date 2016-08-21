@@ -180,6 +180,7 @@ public class LoginActivity extends BaseActivity {
                             return;
                         }
                         Log.i("main", "result=" + result);
+                        FuLiCenterApplication.isLogin = false;
                         Utils.toast(LoginActivity.this, "FuLiCenter登陆验证成功");
                         Utils.toast(LoginActivity.this, "正在验证环信服务器");
                         //环信服务器验证

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.adapter.CartAdapter;
@@ -91,7 +92,7 @@ public class CartFragment4 extends Fragment {
         switch (where) {
             case DOWN_PULL:
                 mList = FuLiCenterApplication.getInstance().getCartBeen();
-                if (mList.size() == 0) {
+                if (mList.size() == 0 && DemoHXSDKHelper.getInstance().isLogined()) {
                     new DowCartTask().dowCartTask(mContext);
                 }
                 mList = FuLiCenterApplication.getInstance().getCartBeen();

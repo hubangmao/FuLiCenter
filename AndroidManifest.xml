@@ -26,6 +26,7 @@
     <!-- 蓝牙分享所需的权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -120,14 +121,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
-        <!-- 聊天室详情 -->
-
-
-        <!-- 退出群组提示框 -->
-
-
-        <!-- 群组选人 -->
-
 
         <!-- 地图 -->
         <activity
@@ -259,6 +252,7 @@
         </receiver>
 
         <service
+
             android:name="com.easemob.chat.EMGCMListenerService"
             android:exported="false" />
 
@@ -354,14 +348,13 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".activity.activity.UserAddressActivity"/>
+        <activity android:name=".activity.activity.UserAddressActivity" />
 
         <activity
             android:name="com.pingplusplus.android.PaymentActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
 
 
         <activity

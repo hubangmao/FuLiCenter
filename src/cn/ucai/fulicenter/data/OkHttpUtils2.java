@@ -26,6 +26,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.utils.F;
@@ -38,7 +39,7 @@ import cn.ucai.fulicenter.utils.I;
  * 2、上传文件
  * 3、下载文件，当下载文件直接由服务端读写，则可以实现更新下载进度的效果。
  * 没有图片下载、二级缓存的功能。
- * <p>
+ * <p/>
  * Created by yao on 2016/5/16.
  * 1.增加两个重载的downloadFile方法，一个用于更新下载进度，一个不更新下载进度。
  * 2.在initHandler方法中增加对下载状态的响应。
@@ -222,7 +223,13 @@ public class OkHttpUtils2<T> {
                     mHandler.sendMessage(msg);
                 } else {
                     Gson gson = new Gson();
-                    T obj = gson.fromJson(text, mClazz);
+                    T obj = null;
+                    try {
+                        obj = gson.fromJson(text, mClazz);
+                    } catch (Exception e) {
+                        Log.i("main", "OkHttpUtils>Json解析异常");
+                        return;
+                    }
                     Message msg = Message.obtain();
                     msg.what = RESULT_SUCCESS;
                     msg.obj = obj;
