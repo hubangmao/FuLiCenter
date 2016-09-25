@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.ucai.superwechat.task;
+package cn.hbm.superwechat.task;
 
 import java.io.File;
 
@@ -26,9 +26,9 @@ import android.widget.ImageView;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
-import cn.ucai.superwechat.activity.ShowBigImage;
-import cn.ucai.superwechat.utils.CommonUtils;
-import cn.ucai.superwechat.utils.ImageCache;
+import cn.hbm.superwechat.activity.ShowBigImage;
+import cn.hbm.superwechat.utils.CommonUtils;
+import cn.hbm.superwechat.utils.ImageCache;
 import com.easemob.util.ImageUtils;
 
 public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {

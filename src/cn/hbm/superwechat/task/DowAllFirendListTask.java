@@ -1,4 +1,4 @@
-package cn.ucai.superwechat.task;
+package cn.hbm.superwechat.task;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,12 +7,12 @@ import android.util.Log;
 import java.util.List;
 import java.util.Map;
 
-import cn.ucai.superwechat.SuperWeChatApplication;
-import cn.ucai.superwechat.bean.Result;
-import cn.ucai.superwechat.bean.UserAvatar;
-import cn.ucai.superwechat.data.OkHttpUtils2;
-import cn.ucai.superwechat.utils.I;
-import cn.ucai.superwechat.utils.Utils;
+import cn.hbm.superwechat.SuperWeChatApplication;
+import cn.hbm.superwechat.bean.Result;
+import cn.hbm.superwechat.bean.UserAvatar;
+import cn.hbm.superwechat.data.OkHttpUtils2;
+import cn.hbm.superwechat.utils.I;
+import cn.hbm.superwechat.utils.Utils;
 
 
 /**

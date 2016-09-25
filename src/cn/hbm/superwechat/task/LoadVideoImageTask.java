@@ -1,4 +1,4 @@
-package cn.ucai.superwechat.task;
+package cn.hbm.superwechat.task;
 
 import java.io.File;
 
@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.VideoMessageBody;
-import cn.ucai.superwechat.activity.ShowVideoActivity;
-import cn.ucai.superwechat.utils.CommonUtils;
-import cn.ucai.superwechat.utils.ImageCache;
+import cn.hbm.superwechat.activity.ShowVideoActivity;
+import cn.hbm.superwechat.utils.CommonUtils;
+import cn.hbm.superwechat.utils.ImageCache;
 import com.easemob.util.ImageUtils;
 
 public class LoadVideoImageTask extends AsyncTask<Object, Void, Bitmap> {

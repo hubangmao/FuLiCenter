@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.ucai.superwechat.task;
+package cn.hbm.superwechat.task;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
