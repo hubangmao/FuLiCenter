@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/boutique_relative"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_boutique"
+        android:layout_width="220dp"
+        android:layout_height="210dp"
+        android:src="@drawable/nopic" />
+
+    <TextView
+        android:id="@+id/tv_boutique_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_boutique"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="标题"
+        android:textColor="@color/btn_logout_pressed"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_boutique_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_boutique_title"
+        android:layout_toRightOf="@+id/iv_boutique"
+        android:text="名称"
+        android:textSize="16sp" />
+
+    <TextView
+        android:textColor="@color/google_green"
+        android:id="@+id/tv_boutique_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_boutique_name"
+        android:layout_toRightOf="@id/iv_boutique"
+        android:text="简介"
+
+        android:textSize="16sp" />
+</RelativeLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.ucai.superwechat"
+    package="cn.ucai.fulicenter"
     android:versionCode="25"
     android:versionName="2.2.5">
 
@@ -8,8 +8,26 @@
         android:minSdkVersion="9"
         android:targetSdkVersion="19" />
 
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 通用权限 -->
+    <uses-permission android:name="android.permission.NFC" />
+
+    <!-- 百度支付需要的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- 蓝牙分享所需的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -33,28 +51,21 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission
-        android:name="cn.ucai.superwechat.permission.C2D_MESSAGE"
+        android:name="cn.ucai.fulicenter.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="cn.ucai.superwechat.permission.C2D_MESSAGE" />
-
-    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="cn.ucai.fulicenter.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".SuperWeChatApplication"
+        android:name=".FuLiCenterApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo_uidemo"
         android:label="@string/app_name">
-        <activity
-            android:name=".activity.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
 
         <!-- 开屏页 -->
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".super_activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide">
             <intent-filter>
@@ -63,197 +74,158 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".activity.activity.FuLiCenterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".super_activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
         <!-- 登陆 -->
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".super_activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible" />
 
         <!-- 注册 -->
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".super_activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <!-- 聊天页面 -->
         <activity
-            android:name=".activity.ChatActivity"
+            android:name=".super_activity.ChatActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize" />
         <!-- 添加好友 -->
         <activity
-            android:name=".activity.AddContactActivity"
+            android:name=".super_activity.AddContactActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateVisible" />
         <!-- 群组详情 -->
-        <activity
-            android:name=".activity.GroupDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!-- 群组列表 -->
-        <activity
-            android:name=".activity.GroupsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.ChatRoomActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
-        <!-- 聊天室详情 -->
-        <activity
-            android:name=".activity.ChatRoomDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
 
-        <!-- 新建群组 -->
+
+        <!-- 群组列表 -->
+
         <activity
-            android:name=".activity.NewGroupActivity"
+            android:name=".super_activity.ChatRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
-        <!-- 退出群组提示框 -->
-        <activity
-            android:name=".activity.ExitGroupDialog"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyleBottom" />
-        <!-- 群组选人 -->
-        <activity
-            android:name=".activity.GroupPickContactsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
+
         <!-- 地图 -->
         <activity
-            android:name=".activity.BaiduMapActivity"
+            android:name=".super_activity.BaiduMapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
 
         <!-- 新的朋友邀请消息页面 -->
         <activity
-            android:name=".activity.NewFriendsMsgActivity"
+            android:name=".super_activity.NewFriendsMsgActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <!-- 转发消息用户列表页面 -->
         <activity
-            android:name=".activity.ForwardMessageActivity"
+            android:name=".super_activity.ForwardMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
         <!-- 自定义的contextmenu -->
         <activity
-            android:name=".activity.ContextMenu"
+            android:name=".super_activity.ContextMenu"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyle" />
         <!-- 自定义的alertdialog -->
         <activity
-            android:name=".activity.AlertDialog"
+            android:name=".super_activity.AlertDialog"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyle" />
         <!-- 显示下载大图页面 -->
         <activity
-            android:name=".activity.ShowBigImage"
+            android:name=".super_activity.ShowBigImage"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <!-- 下载文件 -->
         <activity
-            android:name=".activity.ShowNormalFileActivity"
+            android:name=".super_activity.ShowNormalFileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <!-- 黑名单 -->
         <activity
-            android:name=".activity.BlacklistActivity"
+            android:name=".super_activity.BlacklistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
 
-        <!-- 公开的群聊列表 -->
-        <activity
-            android:name=".activity.PublicGroupsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.PublicChatRoomsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
-
         <!-- 语音通话 -->
         <activity
-            android:name=".activity.VoiceCallActivity"
+            android:name=".super_activity.VoiceCallActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/nornal_style" />
         <!-- 视频通话 -->
         <activity
-            android:name=".activity.VideoCallActivity"
+            android:name=".super_activity.VideoCallActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <!-- 群聊简单信息 -->
-        <activity
-            android:name=".activity.GroupSimpleDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+
+
         <!-- 群组黑名单用户列表 -->
+
         <activity
-            android:name=".activity.GroupBlacklistActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <activity
-            android:name=".activity.PublicGroupsSeachActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <activity
-            android:name=".activity.EditActivity"
+            android:name=".super_activity.EditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".activity.ShowVideoActivity"
+            android:name=".super_activity.ShowVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- choose video -->
         <activity
-            android:name=".activity.ImageGridActivity"
+            android:name=".super_activity.ImageGridActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activity.RecorderVideoActivity"
+            android:name=".super_activity.RecorderVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- upload error log -->
         <activity
-            android:name=".activity.DiagnoseActivity"
+            android:name=".super_activity.DiagnoseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <!-- iOS offline push nick -->
         <activity
-            android:name=".activity.OfflinePushNickActivity"
+            android:name=".super_activity.OfflinePushNickActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- robots list -->
         <activity
-            android:name=".activity.RobotsActivity"
+            android:name=".super_activity.RobotsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- user profile -->
         <activity
-            android:name=".activity.UserProfileActivity"
+            android:name=".super_activity.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
 
@@ -275,21 +247,22 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="cn.ucai.superwechat" />
+                <category android:name="cn.ucai.fulicenter" />
             </intent-filter>
         </receiver>
 
         <service
+
             android:name="com.easemob.chat.EMGCMListenerService"
             android:exported="false" />
 
         <receiver
-            android:name="cn.ucai.SUPERWECHAT.chatuidemo.receiver.GCMPushBroadCast"
+            android:name=".receiver.GCMPushBroadCast"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.easemob.sdk.push" />
 
-                <category android:name="cn.ucai.superwechat" />
+                <category android:name="cn.ucai.fulicenter" />
             </intent-filter>
         </receiver>
         <!-- gcm end -->
@@ -298,7 +271,7 @@
         <!-- 设置环信应用的appkey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="hubangmao#superwechat" />
+            android:value="hubangmao#fulicenter" />
         <!-- 声明sdk所需的service -->
         <service android:name="com.easemob.chat.EMChatService" />
         <!-- 声明sdk所需的receiver -->
@@ -330,7 +303,232 @@
         <service
             android:name=".widget.MyService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity
+            android:name=".activity.activity.GoodsInfoActivity"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name=".activity.activity.BoutiqueInfoActivity"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name=".activity.activity.CategoryInfoActivity"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name=".activity.activity.SettingsActivity"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name=".activity.activity.CollectActivity"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- 调用新浪原生SDK，需要注册的回调activity -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".activity.activity.UserAddressActivity" />
+
+        <activity
+            android:name="com.pingplusplus.android.PaymentActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <activity
+            android:name="com.pingplusplus.libone.PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="com.pingplusplus.libone.PaySuccessActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+
+        <!-- 微信支付 -->
+        <activity-alias
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity="com.pingplusplus.android.PaymentActivity" />
+
+        <!-- 支付宝 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind" />
+
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind" />
+
+        <!-- 银联支付 sdk -->
+        <activity
+            android:name="com.unionpay.uppay.PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+
+        <!-- 百度钱包 -->
+        <activity
+            android:name="com.baidu.paysdk.login.LoginActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@style/EbpayThemeActivityWelcome"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.baidu.paysdk.ui.WelcomeActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivityWelcome"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.baidu.paysdk.ui.OrderHomeActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.baidu.paysdk.ui.PayResultActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.baidu.paysdk.ui.PcPwdCheckActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name="com.baidu.paysdk.ui.PwdCheckActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name="com.baidu.paysdk.ui.PwdSetAndConfirmActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name="com.baidu.paysdk.ui.PwdPayActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivitTranslucent"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name="com.baidu.paysdk.ui.PwdPaySmsActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivitTranslucent"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.baidu.paysdk.ui.WebViewActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.baidu.paysdk.ui.BindCardNoActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.baidu.paysdk.ui.BindCardDetailActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name="com.baidu.paysdk.ui.BindCardDetailCredit2Activity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name="com.baidu.paysdk.ui.BindCardDetailCreditActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name="com.baidu.paysdk.ui.BindSmsActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.baidu.paysdk.ui.SelectBindCardActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:screenOrientation="portrait"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.baidu.paysdk.ui.SignChannelListActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="@bool/bd_wallet_switch_global_debug"
+            android:hardwareAccelerated="false"
+            android:theme="@style/EbpayThemeActivit"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
