@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import cn.hbm.superwechat.R;
 
+
+
 public class ExitGroupDialog extends BaseActivity{
     private TextView text;
     private Button exitBtn;

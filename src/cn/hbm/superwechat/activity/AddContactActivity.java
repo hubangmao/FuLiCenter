@@ -30,7 +30,6 @@ import android.widget.Toast;
 import com.easemob.chat.EMContactManager;
 
 import cn.hbm.superwechat.DemoHXSDKHelper;
-import cn.hbm.superwechat.R;
 import cn.hbm.superwechat.SuperWeChatApplication;
 import cn.hbm.superwechat.applib.controller.HXSDKHelper;
 import cn.hbm.superwechat.bean.Result;
@@ -39,6 +38,8 @@ import cn.hbm.superwechat.data.OkHttpUtils2;
 import cn.hbm.superwechat.utils.I;
 import cn.hbm.superwechat.utils.UserUtils;
 import cn.hbm.superwechat.utils.Utils;
+
+import cn.hbm.superwechat.R;
 
 
 public class AddContactActivity extends cn.hbm.superwechat.activity.BaseActivity {

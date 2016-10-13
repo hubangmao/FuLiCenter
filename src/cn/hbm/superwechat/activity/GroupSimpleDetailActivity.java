@@ -27,13 +27,10 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupInfo;
 import com.easemob.chat.EMGroupManager;
-
-import cn.hbm.superwechat.R;
-import cn.hbm.superwechat.utils.UserUtils;
-
 import com.easemob.exceptions.EaseMobException;
 
-import static cn.hbm.superwechat.R.id.avatar;
+import cn.hbm.superwechat.utils.UserUtils;
+import cn.hbm.superwechat.R;
 
 public class GroupSimpleDetailActivity extends BaseActivity {
     private Button btn_add_group;

@@ -13,12 +13,6 @@
  */
 package cn.hbm.superwechat.activity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,19 +40,27 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cn.hbm.superwechat.applib.controller.HXSDKHelper;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
-import cn.hbm.superwechat.SuperWeChatApplication;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
 import cn.hbm.superwechat.DemoHXSDKHelper;
-import cn.hbm.superwechat.R;
+import cn.hbm.superwechat.SuperWeChatApplication;
 import cn.hbm.superwechat.adapter.ChatHistoryAdapter;
+import cn.hbm.superwechat.applib.controller.HXSDKHelper;
 import cn.hbm.superwechat.db.InviteMessgeDao;
 import cn.hbm.superwechat.domain.User;
+import cn.hbm.superwechat.R;
+
 
 /**
  * 聊天记录Fragment

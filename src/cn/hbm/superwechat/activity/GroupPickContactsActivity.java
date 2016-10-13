@@ -13,11 +13,6 @@
  */
 package cn.hbm.superwechat.activity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,15 +25,22 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 
-import cn.hbm.superwechat.applib.controller.HXSDKHelper;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import cn.hbm.superwechat.Constant;
 import cn.hbm.superwechat.DemoHXSDKHelper;
-import cn.hbm.superwechat.R;
 import cn.hbm.superwechat.adapter.ContactAdapter;
+import cn.hbm.superwechat.applib.controller.HXSDKHelper;
 import cn.hbm.superwechat.domain.User;
 import cn.hbm.superwechat.widget.Sidebar;
+import cn.hbm.superwechat.R;
+
 
 public class GroupPickContactsActivity extends BaseActivity {
 	private ListView listView;

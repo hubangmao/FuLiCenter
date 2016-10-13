@@ -58,7 +58,6 @@ import java.util.Map.Entry;
 
 import cn.hbm.superwechat.Constant;
 import cn.hbm.superwechat.DemoHXSDKHelper;
-import cn.hbm.superwechat.R;
 import cn.hbm.superwechat.SuperWeChatApplication;
 import cn.hbm.superwechat.adapter.ContactAdapter;
 import cn.hbm.superwechat.applib.controller.HXSDKHelper;
@@ -71,6 +70,7 @@ import cn.hbm.superwechat.db.UserDao;
 import cn.hbm.superwechat.domain.User;
 import cn.hbm.superwechat.utils.I;
 import cn.hbm.superwechat.widget.Sidebar;
+import cn.hbm.superwechat.R;
 
 /**
  * 联系人列表页

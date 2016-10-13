@@ -27,9 +27,10 @@ import com.easemob.util.ImageUtils;
 
 import java.io.File;
 
-import cn.hbm.superwechat.R;
 import cn.hbm.superwechat.task.DownloadImageTask;
 import cn.hbm.superwechat.utils.ImageCache;
+import cn.hbm.superwechat.R;
+
 
 
 public class AlertDialog extends cn.hbm.superwechat.activity.BaseActivity {

@@ -34,10 +34,10 @@ import com.easemob.util.EMLog;
 
 import java.util.List;
 
-import cn.hbm.superwechat.R;
-import cn.hbm.superwechat.SuperWeChatApplication;
 import cn.hbm.superwechat.adapter.GroupAdapter;
 import cn.hbm.superwechat.applib.controller.HXSDKHelper;
+import cn.hbm.superwechat.R;
+
 
 public class GroupsActivity extends BaseActivity {
     public static final String TAG = "GroupsActivity";

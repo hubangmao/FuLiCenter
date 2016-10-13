@@ -13,8 +13,10 @@ import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChat;
-import cn.hbm.superwechat.R;
 import com.easemob.util.EMLog;
+
+import cn.hbm.superwechat.R;
+
 
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.

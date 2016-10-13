@@ -13,9 +13,6 @@
  */
 package cn.hbm.superwechat.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -38,11 +35,17 @@ import android.widget.Toast;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatRoom;
-import cn.hbm.superwechat.R;
-import cn.hbm.superwechat.utils.UserUtils;
-import cn.hbm.superwechat.widget.ExpandGridView;
 import com.easemob.util.EMLog;
 import com.easemob.util.NetUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.hbm.superwechat.utils.UserUtils;
+import cn.hbm.superwechat.widget.ExpandGridView;
+import cn.hbm.superwechat.R;
+
+
 
 public class ChatRoomDetailsActivity extends BaseActivity implements OnClickListener {
 	private static final String TAG = "ChatRoomDetailsActivity";

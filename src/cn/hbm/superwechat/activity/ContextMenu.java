@@ -21,6 +21,7 @@ import android.view.View;
 import com.easemob.chat.EMMessage;
 import cn.hbm.superwechat.R;
 
+
 public class ContextMenu extends BaseActivity {
 
 	private int position;

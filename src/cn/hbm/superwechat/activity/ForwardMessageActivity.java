@@ -16,8 +16,9 @@ package cn.hbm.superwechat.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import cn.hbm.superwechat.R;
 import cn.hbm.superwechat.domain.User;
+import cn.hbm.superwechat.R;
+
 
 public class ForwardMessageActivity extends PickContactNoCheckboxActivity {
 	private User selectUser;

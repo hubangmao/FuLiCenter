@@ -1,8 +1,5 @@
 package cn.hbm.superwechat.activity;
 
-import java.util.Collections;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,8 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easemob.chat.EMContactManager;
-import cn.hbm.superwechat.R;
 import com.easemob.exceptions.EaseMobException;
+
+import java.util.Collections;
+import java.util.List;
+
+import cn.hbm.superwechat.R;
+
+
 
 /**
  * 黑名单列表页面

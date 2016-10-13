@@ -50,7 +50,6 @@ import com.easemob.util.NetUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.hbm.superwechat.R;
 import cn.hbm.superwechat.SuperWeChatApplication;
 import cn.hbm.superwechat.bean.GroupAvatar;
 import cn.hbm.superwechat.bean.Result;
@@ -60,6 +59,7 @@ import cn.hbm.superwechat.utils.I;
 import cn.hbm.superwechat.utils.UserUtils;
 import cn.hbm.superwechat.utils.Utils;
 import cn.hbm.superwechat.widget.ExpandGridView;
+import cn.hbm.superwechat.R;
 
 public class GroupDetailsActivity extends BaseActivity implements OnClickListener {
     private static final String TAG = "GroupDetailsActivity";
