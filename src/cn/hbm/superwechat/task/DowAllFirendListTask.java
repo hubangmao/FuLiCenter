@@ -21,11 +21,15 @@ import cn.hbm.superwechat.utils.Utils;
 public class DowAllFirendListTask {
     private final String TAG = DowAllFirendListTask.class.getSimpleName();
     Context mContext;
-    String userName =SuperWeChatApplication.getInstance().getUser().getMUserName();
+    String userName = SuperWeChatApplication.getInstance().getUser().getMUserName();
+
 
 
 
     public DowAllFirendListTask(Context mContext) {
+        if (userName==null) {
+            userName = "hbm3";
+        }
         this.mContext = mContext;
     }
 
