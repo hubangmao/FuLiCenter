@@ -22,7 +22,7 @@ import android.widget.ProgressBar;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.utils.ImageCache;
-import cn.ucai.fulicenter.widget.photoview.PhotoView;
+import cn.ucai.fulicenter.hxim.widget.photoview.PhotoView;
 import com.easemob.util.ImageUtils;
 
 public class LoadLocalBigImgTask extends AsyncTask<Void, Void, Bitmap> {

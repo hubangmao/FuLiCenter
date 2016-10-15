@@ -18,11 +18,11 @@ import java.util.Map;
 
 import android.content.Context;
 
-import cn.ucai.fulicenter.applib.model.DefaultHXSDKModel;
-import cn.ucai.fulicenter.db.DemoDBManager;
-import cn.ucai.fulicenter.db.UserDao;
-import cn.ucai.fulicenter.domain.RobotUser;
-import cn.ucai.fulicenter.domain.User;
+import cn.ucai.fulicenter.hxim.applib.model.DefaultHXSDKModel;
+import cn.ucai.fulicenter.hxim.db.DemoDBManager;
+import cn.ucai.fulicenter.hxim.db.UserDao;
+import cn.ucai.fulicenter.hxim.domain.RobotUser;
+import cn.ucai.fulicenter.hxim.domain.User;
 
 public class DemoHXSDKModel extends DefaultHXSDKModel{
 

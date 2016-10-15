@@ -20,7 +20,7 @@ import java.util.Date;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.bean.UserAddress;
-import cn.ucai.fulicenter.super_activity.BaseActivity;
+import cn.ucai.fulicenter.hxim.super_activity.BaseActivity;
 import cn.ucai.fulicenter.utils.Utils;
 
 public class UserAddressActivity extends BaseActivity implements PaymentHandler {

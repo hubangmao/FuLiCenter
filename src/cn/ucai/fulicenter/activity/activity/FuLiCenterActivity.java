@@ -9,15 +9,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,13 +22,13 @@ import java.util.TimerTask;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.super_activity.BaseActivity;
+import cn.ucai.fulicenter.hxim.super_activity.BaseActivity;
 import cn.ucai.fulicenter.activity.fragment.BoutiqueFragment2;
 import cn.ucai.fulicenter.activity.fragment.CartFragment4;
 import cn.ucai.fulicenter.activity.fragment.CategoryFragment3;
 import cn.ucai.fulicenter.activity.fragment.FriendsFragment5;
 import cn.ucai.fulicenter.activity.fragment.NewGoodFragment1;
-import cn.ucai.fulicenter.super_activity.LoginActivity;
+import cn.ucai.fulicenter.hxim.super_activity.LoginActivity;
 import cn.ucai.fulicenter.utils.Utils;
 
 public class FuLiCenterActivity extends BaseActivity implements View.OnClickListener {

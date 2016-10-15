@@ -17,10 +17,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.activity.activity.FuLiCenterActivity;
 import cn.ucai.fulicenter.activity.adapter.BoutiqueAdapter;
 import cn.ucai.fulicenter.activity.bean.BoutiqueBean;
-import cn.ucai.fulicenter.data.OkHttpUtils2;
+import cn.ucai.fulicenter.hxim.data.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.Utils;
 

@@ -7,12 +7,12 @@ import android.content.Context;
 
 import com.easemob.EMValueCallBack;
 
-import cn.ucai.fulicenter.applib.utils.HXPreferenceUtils;
+import cn.ucai.fulicenter.hxim.applib.utils.HXPreferenceUtils;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
-import cn.ucai.fulicenter.domain.User;
-import cn.ucai.fulicenter.parse.ParseManager;
-import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
+import cn.ucai.fulicenter.hxim.domain.User;
+import cn.ucai.fulicenter.hxim.parse.ParseManager;
+import cn.ucai.fulicenter.hxim.applib.controller.HXSDKHelper;
 
 public class UserProfileManager {
 

@@ -11,8 +11,7 @@ import cn.ucai.fulicenter.D;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.activity.bean.CartBean;
 import cn.ucai.fulicenter.activity.bean.GoodDetailsBean;
-import cn.ucai.fulicenter.activity.bean.MessageBean;
-import cn.ucai.fulicenter.data.OkHttpUtils2;
+import cn.ucai.fulicenter.hxim.data.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.Utils;
 

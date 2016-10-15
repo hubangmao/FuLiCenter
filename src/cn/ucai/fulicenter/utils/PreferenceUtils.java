@@ -13,7 +13,7 @@
  */
 package cn.ucai.fulicenter.utils;
 
-import cn.ucai.fulicenter.applib.utils.HXPreferenceUtils;
+import cn.ucai.fulicenter.hxim.applib.utils.HXPreferenceUtils;
 
 import android.content.Context;
 

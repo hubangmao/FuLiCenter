@@ -3,12 +3,10 @@ package cn.ucai.fulicenter.activity.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.adapter.ExpandableAdapter;
 import cn.ucai.fulicenter.activity.bean.CategoryChildBean;
 import cn.ucai.fulicenter.activity.bean.CategoryGroupBean;
-import cn.ucai.fulicenter.data.OkHttpUtils2;
+import cn.ucai.fulicenter.hxim.data.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.F;
 
 public class CategoryFragment3 extends Fragment {

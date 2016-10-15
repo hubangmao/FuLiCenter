@@ -1,9 +1,10 @@
 package cn.ucai.fulicenter.utils;
+
 public interface F {
-    //真机访问
-    public static String SERVIEW_URL = "http://192.168.0.70:8080/FuLiCenterServer/Server?request=";
-    //安卓虚拟机访问
-//   public static String SERVIEW_URL = "http://10.0.2.2:8080/FuLiCenterServer/Server?request=";
+    //真机URL
+    //public static String SERVIEW_URL = "http://192.168.0.70:8080/FuLiCenterServer/Server?request=";
+    //安卓虚拟机URl
+    public static String SERVIEW_URL = "http://10.0.2.2:8080/FuLiCenterServer/Server?request=";
     public static final String FILE_NAME = "file_name=";
 
     public static final int REQUEST_CODE_LOGIN = 1;

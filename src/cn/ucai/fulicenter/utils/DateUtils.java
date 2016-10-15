@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
+import cn.ucai.fulicenter.hxim.applib.controller.HXSDKHelper;
 import com.easemob.util.TimeInfo;
 
 public class DateUtils {

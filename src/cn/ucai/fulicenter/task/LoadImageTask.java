@@ -26,7 +26,7 @@ import android.widget.ImageView;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
-import cn.ucai.fulicenter.super_activity.ShowBigImage;
+import cn.ucai.fulicenter.hxim.super_activity.ShowBigImage;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageCache;
 import com.easemob.util.ImageUtils;

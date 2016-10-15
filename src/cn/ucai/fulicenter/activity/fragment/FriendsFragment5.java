@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.ucai.fulicenter.DemoHXSDKHelper;
@@ -19,11 +18,9 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.activity.CollectActivity;
 import cn.ucai.fulicenter.activity.activity.SettingsActivity;
-import cn.ucai.fulicenter.super_activity.LoginActivity;
-import cn.ucai.fulicenter.super_activity.MainActivity;
+import cn.ucai.fulicenter.hxim.super_activity.MainActivity;
 import cn.ucai.fulicenter.task.DowCollectTask;
 import cn.ucai.fulicenter.utils.UserUtils;
-import cn.ucai.fulicenter.utils.Utils;
 
 
 //购物车Fragment

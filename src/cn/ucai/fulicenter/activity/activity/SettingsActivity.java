@@ -16,12 +16,9 @@ package cn.ucai.fulicenter.activity.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,20 +33,18 @@ import com.easemob.chat.EMChatOptions;
 import java.util.List;
 import java.util.Map;
 
-import cn.ucai.fulicenter.Constant;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.DemoHXSDKModel;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
-import cn.ucai.fulicenter.bean.UserAvatar;
-import cn.ucai.fulicenter.super_activity.BaseActivity;
-import cn.ucai.fulicenter.super_activity.BlacklistActivity;
-import cn.ucai.fulicenter.super_activity.DiagnoseActivity;
-import cn.ucai.fulicenter.super_activity.LoginActivity;
-import cn.ucai.fulicenter.super_activity.MainActivity;
-import cn.ucai.fulicenter.super_activity.OfflinePushNickActivity;
-import cn.ucai.fulicenter.super_activity.UserProfileActivity;
+import cn.ucai.fulicenter.hxim.applib.controller.HXSDKHelper;
+import cn.ucai.fulicenter.hxim.bean.UserAvatar;
+import cn.ucai.fulicenter.hxim.super_activity.BaseActivity;
+import cn.ucai.fulicenter.hxim.super_activity.BlacklistActivity;
+import cn.ucai.fulicenter.hxim.super_activity.DiagnoseActivity;
+import cn.ucai.fulicenter.hxim.super_activity.LoginActivity;
+import cn.ucai.fulicenter.hxim.super_activity.OfflinePushNickActivity;
+import cn.ucai.fulicenter.hxim.super_activity.UserProfileActivity;
 
 /**
  * 设置界面

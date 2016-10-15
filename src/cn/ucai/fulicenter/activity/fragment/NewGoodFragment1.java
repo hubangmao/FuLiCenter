@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.adapter.NewGoodsOrBoutiqueAdapter;
 import cn.ucai.fulicenter.activity.bean.NewGoodBean;
-import cn.ucai.fulicenter.data.OkHttpUtils2;
+import cn.ucai.fulicenter.hxim.data.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.F;
 import cn.ucai.fulicenter.utils.Utils;
 

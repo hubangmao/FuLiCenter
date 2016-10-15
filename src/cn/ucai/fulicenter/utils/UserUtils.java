@@ -16,10 +16,10 @@ import java.util.Map;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
-import cn.ucai.fulicenter.bean.UserAvatar;
-import cn.ucai.fulicenter.domain.User;
-import cn.ucai.fulicenter.listener.OnSetAvatarListener;
+import cn.ucai.fulicenter.hxim.applib.controller.HXSDKHelper;
+import cn.ucai.fulicenter.hxim.bean.UserAvatar;
+import cn.ucai.fulicenter.hxim.domain.User;
+import cn.ucai.fulicenter.hxim.listener.OnSetAvatarListener;
 
 public class UserUtils {
     /**

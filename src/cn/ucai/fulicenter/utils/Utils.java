@@ -2,15 +2,12 @@ package cn.ucai.fulicenter.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +26,9 @@ import java.util.List;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.bean.CartBean;
-import cn.ucai.fulicenter.bean.Pager;
-import cn.ucai.fulicenter.bean.Result;
-import cn.ucai.fulicenter.super_activity.BaseActivity;
+import cn.ucai.fulicenter.hxim.bean.Pager;
+import cn.ucai.fulicenter.hxim.bean.Result;
+import cn.ucai.fulicenter.hxim.super_activity.BaseActivity;
 
 /**
  * Created by clawpo on 16/3/28.

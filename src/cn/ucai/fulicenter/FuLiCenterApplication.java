@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.ucai.fulicenter.activity.bean.CartBean;
-import cn.ucai.fulicenter.bean.UserAvatar;
+import cn.ucai.fulicenter.hxim.bean.UserAvatar;
 
 public class FuLiCenterApplication extends Application {
     public static boolean isLogin = false;
