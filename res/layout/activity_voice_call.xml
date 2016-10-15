@@ -28,7 +28,7 @@
             android:paddingRight="12dp"
             android:visibility="visible" />
 
-        <cn.ucai.fulicenter.hxim.widget.MyChronometer
+        <cn.hbm.fulicenter.hxim.widget.MyChronometer
             android:visibility="invisible"
             android:id="@+id/chronometer"
             android:layout_width="wrap_content"

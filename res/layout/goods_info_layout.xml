@@ -128,13 +128,13 @@
         android:layout_height="190dp"
         android:layout_below="@+id/relative1">
 
-        <cn.ucai.fulicenter.activity.activity.day3.SlideAutoLoopView
+        <cn.hbm.fulicenter.activity.activity.day3.SlideAutoLoopView
             android:id="@+id/salv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/good_detail_bg_white" />
 
-        <cn.ucai.fulicenter.activity.activity.day3.FlowIndicator
+        <cn.hbm.fulicenter.activity.activity.day3.FlowIndicator
             android:id="@+id/indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

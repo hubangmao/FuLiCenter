@@ -52,13 +52,4 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <TextView
-        android:id="@+id/tvGoodHint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="加载更多..."
-        android:textColor="@color/good_detail_title_bg"
-        android:textSize="20sp"
-        android:visibility="gone" />
 </RelativeLayout>

@@ -9,7 +9,7 @@
         android:layout_height="fill_parent"
         android:background="#fff"
         >
-         <cn.ucai.fulicenter.hxim.widget.RecyclingImageView
+         <cn.hbm.fulicenter.hxim.widget.RecyclingImageView
         android:id="@+id/imageView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

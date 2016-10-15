@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.ucai.fulicenter"
+    package="cn.hbm.fulicenter"
     android:versionCode="25"
     android:versionName="2.2.5">
 
@@ -51,7 +51,7 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission
-        android:name="cn.ucai.fulicenter.permission.C2D_MESSAGE"
+        android:name="cn.hbm.fulicenter.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="cn.ucai.fulicenter.permission.C2D_MESSAGE" />

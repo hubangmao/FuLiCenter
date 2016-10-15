@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#fff">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff">
 
 
     <LinearLayout
@@ -18,19 +18,19 @@
             android:id="@+id/tvNew_Goods1"
             style="@style/MyStyle"
             android:drawableTop="@drawable/menu_item_new_good_selected"
-            android:text="新品" />
+            android:text="新品"/>
 
         <TextView
             android:id="@+id/tvBoutique2"
             style="@style/MyStyle"
             android:drawableTop="@drawable/selector_menu_item_boutique"
-            android:text="精选" />
+            android:text="精选"/>
 
         <TextView
             android:id="@+id/tvCategory3"
             style="@style/MyStyle"
             android:drawableTop="@drawable/menu_item_category_normal"
-            android:text="分类" />
+            android:text="分类"/>
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -46,7 +46,7 @@
                 android:gravity="center"
                 android:text="购物车"
                 android:textColor="@drawable/selector_menu_item"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/tvCartHint"
@@ -57,14 +57,14 @@
                 android:background="@drawable/cart_hint"
                 android:gravity="center"
                 android:textSize="9sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <TextView
             android:id="@+id/tvFriends5"
             style="@style/MyStyle"
             android:drawableTop="@drawable/menu_item_personal_center_normal"
-            android:text="个人中心" />
+            android:text="个人中心"/>
     </LinearLayout>
 
     <View
@@ -72,48 +72,13 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_above="@id/linear"
-        android:background="@color/bd_wallet_black" />
+        android:background="@color/bd_wallet_black"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/main_viewPage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/view" />
-
-    <TextView
-        android:id="@+id/backHint"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_above="@+id/linear"
-        android:gravity="center"
-        android:text="在点击一次键退出程序"
-        android:textColor="@color/hintColor"
-        android:visibility="gone" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvRAM"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test" />
-
-        <TextView
-            android:id="@+id/tvAppRAM"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test" />
-
-        <TextView
-            android:id="@+id/tvGc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test" />
-    </LinearLayout>
+        android:layout_above="@id/view"/>
 
 
 </RelativeLayout>

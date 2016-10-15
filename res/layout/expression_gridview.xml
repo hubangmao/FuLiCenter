@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <cn.ucai.fulicenter.hxim.widget.ExpandGridView
+    <cn.hbm.fulicenter.hxim.widget.ExpandGridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
