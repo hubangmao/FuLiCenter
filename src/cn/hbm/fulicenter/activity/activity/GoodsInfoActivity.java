@@ -90,7 +90,7 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
 
                     @Override
                     public void onError(String error) {
-                        Utils.toast(mContext, "网络错误");
+                        Utils.toast(mContext, getResources().getString(R.string.Network_error) + error);
                     }
                 });
     }
@@ -275,6 +275,7 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
 
                     @Override
                     public void onError(String error) {
+                        Utils.toast(mContext, getResources().getString(R.string.Network_error)+error);
 
                     }
                 });
@@ -310,6 +311,7 @@ public class GoodsInfoActivity extends BaseActivity implements View.OnClickListe
 
                         @Override
                         public void onError(String error) {
+                            Utils.toast(mContext, getResources().getString(R.string.Network_error)+error);
 
                         }
                     });

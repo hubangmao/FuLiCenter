@@ -30,6 +30,8 @@ import java.util.List;
 import cn.hbm.fulicenter.FuLiCenterApplication;
 import cn.hbm.fulicenter.utils.F;
 
+import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
+
 /**
  * * OkHttp框架的二次封装
  * 具有以下功能：
@@ -146,7 +148,6 @@ public class OkHttpUtils2<T> {
                         break;
                     case RESULT_ERROR://
                         if (mListener != null) {
-                            Log.e("main", "obj=" + msg);
                             mListener.onError(msg.obj.toString());//回调解析失败的代码
                         }
                         break;
@@ -175,7 +176,6 @@ public class OkHttpUtils2<T> {
             Message msg = Message.obtain();
             msg.what = RESULT_ERROR;
             msg.obj = "忘记调用targetClass()啦";
-            Log.e("main", msg.obj.toString());
             mHandler.sendMessage(msg);
             return;
         }
@@ -244,6 +244,7 @@ public class OkHttpUtils2<T> {
      * @return
      */
     public OkHttpUtils2<T> targetClass(Class<T> clazz) {
+        Log.i("main", TAG +" = "+ mUrl);
         mClazz = clazz;
         return this;
     }

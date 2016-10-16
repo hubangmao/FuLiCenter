@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -28,24 +27,24 @@ import cn.hbm.fulicenter.utils.Utils;
 
 //分类二级页面
 public class CategoryInfoActivity extends BaseActivity implements View.OnClickListener {
-    CategoryInfoActivity mContext;
-    SwipeRefreshLayout mSwipe;
-    RecyclerView mRecycler;
-    GridLayoutManager mGrid;
-    NewGoodsOrBoutiqueAdapter mGoodsAdapter;
-    TextView  mHeadHint;
-    ArrayList<NewGoodBean> mList;
-    RelativeLayout mBackRelative;
-    LinearLayout mLinearSort;
-    Button mButProce, mButTime;
-    public static int PAGE_ID = 1;
-    final public static int DOWN_PULL = 1;
-    final public static int UP_PULL = 2;
-    boolean isNoData = true;
-    int Id;
-    ArrayList<CategoryChildBean> mChildList;
-    CatChildFilterButton mPopouWidows;
-    String GroupName;
+    private CategoryInfoActivity mContext;
+    private SwipeRefreshLayout mSwipe;
+    private RecyclerView mRecycler;
+    private GridLayoutManager mGrid;
+    private NewGoodsOrBoutiqueAdapter mGoodsAdapter;
+    private TextView mHeadHint;
+    private ArrayList<NewGoodBean> mList;
+    private RelativeLayout mBackRelative;
+    private LinearLayout mLinearSort;
+    private Button mButProce, mButTime;
+    private static int PAGE_ID = 1;
+    private final static int DOWN_PULL = 1;
+    private final static int UP_PULL = 2;
+    private boolean isNoData = true;
+    private int Id;
+    private ArrayList<CategoryChildBean> mChildList;
+    private CatChildFilterButton mPopouWidows;
+    private String GroupName;
 
     @Override
 
@@ -56,7 +55,6 @@ public class CategoryInfoActivity extends BaseActivity implements View.OnClickLi
         GroupName = getIntent().getStringExtra("GroupName");
         Id = getIntent().getIntExtra("id", 0);
         mChildList = (ArrayList<CategoryChildBean>) getIntent().getSerializableExtra("childList");
-        Log.i("main", "GroupName=" + GroupName + "mChildList=" + mChildList.get(1));
         initView();
         setListener();
         if (Id == 0) {
@@ -87,7 +85,6 @@ public class CategoryInfoActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && itemMax == mGoodsAdapter.getItemCount() - 1 && isNoData) {
-                    Log.i("main", "上拉加载=" + RecyclerView.SCROLL_STATE_IDLE + "\\ =" + RecyclerView.SCROLL_STATE_IDLE + "//" + itemMax + "=" + (mGoodsAdapter.getItemCount() - 1));
                     PAGE_ID++;
                     initData(UP_PULL);
                 }
@@ -120,7 +117,6 @@ public class CategoryInfoActivity extends BaseActivity implements View.OnClickLi
                             mSwipe.setRefreshing(false);
                             return;
                         }
-                        Log.i("main", "result=" + result[0]);
                         ArrayList<NewGoodBean> bean = util.array2List(result);
                         switch (where) {
                             //下拉刷新
@@ -137,6 +133,7 @@ public class CategoryInfoActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onError(String error) {
                         mSwipe.setRefreshing(false);
+                        Utils.toast(mContext, getResources().getString(R.string.Network_error));
                     }
                 });
     }
@@ -179,7 +176,6 @@ public class CategoryInfoActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.butPrice:
-                Log.i("main", "价格排序=");
                 if (isWhat1) {
                     isWhat1 = false;
                     mGoodsAdapter.setGoodsSort(1);
@@ -191,7 +187,6 @@ public class CategoryInfoActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.butTime:
-                Log.i("main", "时间排序排序=");
                 if (isWhat2) {
                     isWhat2 = false;
                     setSortImage(mButTime, R.drawable.one);

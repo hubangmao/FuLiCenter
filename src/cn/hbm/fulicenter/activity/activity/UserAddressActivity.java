@@ -23,6 +23,7 @@ import cn.hbm.fulicenter.activity.bean.UserAddress;
 import cn.hbm.fulicenter.hxim.super_activity.BaseActivity;
 import cn.hbm.fulicenter.utils.Utils;
 
+
 public class UserAddressActivity extends BaseActivity implements PaymentHandler {
     private   String mSumPrice;
     private  UserAddress mUser;
@@ -56,26 +57,26 @@ public class UserAddressActivity extends BaseActivity implements PaymentHandler 
     public void onPay(View v) {
         String userName = mEtName.getText().toString();
         if (TextUtils.isEmpty(userName)) {
-            Toast.makeText(UserAddressActivity.this, "用户名呢", Toast.LENGTH_SHORT).show();
+            Utils.toast(this,"用户名呢");
             mEtName.requestFocus();
             return;
         }
         String number = phoneNumber.getText().toString();
         if (TextUtils.isEmpty(number) || number.length() < 11) {
-            Toast.makeText(UserAddressActivity.this, "电话号码呢", Toast.LENGTH_SHORT).show();
+            Utils.toast(this,"电话号码呢");
             phoneNumber.requestFocus();
             return;
         }
         String add1 = mAdd1.getSelectedItem().toString();
 
         if (TextUtils.isEmpty(add1)) {
-            Toast.makeText(UserAddressActivity.this, "地址呢", Toast.LENGTH_SHORT).show();
+            Utils.toast(this,"地址呢");
             return;
         }
         String add2 = mAdd2.getSelectedItem().toString();
 
         if (TextUtils.isEmpty(add2)) {
-            Toast.makeText(UserAddressActivity.this, "详细地址呢", Toast.LENGTH_SHORT).show();
+            Utils.toast(this,"详细地址呢");
             return;
         }
         mUser.setUserName(userName);

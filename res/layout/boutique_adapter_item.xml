@@ -1,43 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/boutique_relative"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:id="@+id/boutique_relative"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@color/ebpay_white">
 
-    <ImageView
-        android:id="@+id/iv_boutique"
-        android:layout_width="220dp"
-        android:layout_height="210dp"
-        android:src="@drawable/nopic" />
-
-    <TextView
-        android:id="@+id/tv_boutique_title"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/iv_boutique"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="标题"
-        android:textColor="@color/btn_logout_pressed"
-        android:textSize="14sp" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/item_backgroung">
 
-    <TextView
-        android:id="@+id/tv_boutique_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_boutique_title"
-        android:layout_toRightOf="@+id/iv_boutique"
-        android:text="名称"
-        android:textSize="16sp" />
+        <ImageView
+            android:id="@+id/iv_boutique"
+            android:layout_width="190dp"
+            android:layout_height="180dp"
+            android:src="@drawable/nopic"/>
 
-    <TextView
-        android:textColor="@color/google_green"
-        android:id="@+id/tv_boutique_about"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_boutique_name"
-        android:layout_toRightOf="@id/iv_boutique"
-        android:text="简介"
+        <TextView
+            android:id="@+id/tv_boutique_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_boutique"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="标题"
+            android:textColor="@color/btn_logout_pressed"
+            android:textSize="14sp"/>
 
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tv_boutique_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_boutique_title"
+            android:layout_toRightOf="@+id/iv_boutique"
+            android:text="名称"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_boutique_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_boutique_name"
+            android:layout_toRightOf="@id/iv_boutique"
+            android:text="简介"
+            android:textColor="@color/google_green"
+            android:textSize="16sp"/>
+    </RelativeLayout>
 </RelativeLayout>

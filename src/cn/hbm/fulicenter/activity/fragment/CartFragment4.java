@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,19 +27,19 @@ import cn.hbm.fulicenter.utils.Utils;
 
 
 public class CartFragment4 extends Fragment {
-    View mView;
-    Context mContext;
-    SwipeRefreshLayout mSwipe;
-    RecyclerView mRecycler;
-    LinearLayoutManager mGrid;
-    CartAdapter mCartAdapter;
-    ArrayList<CartBean> mList;
+    private View mView;
+    private Context mContext;
+    private SwipeRefreshLayout mSwipe;
+    private RecyclerView mRecycler;
+    private LinearLayoutManager mGrid;
+    private CartAdapter mCartAdapter;
+    private ArrayList<CartBean> mList;
     public static int PAGE_ID = 1;
     final public static int DOWN_PULL = 1;
     final public static int UP_PULL = 2;
-    boolean isNoData = true;
-    Button mButBuy;
-    TextView mTvAll, mTvSave;
+    private boolean isNoData = true;
+    private Button mButBuy;
+    private TextView mTvAll, mTvSave;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

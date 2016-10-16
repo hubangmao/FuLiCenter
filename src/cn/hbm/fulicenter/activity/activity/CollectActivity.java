@@ -5,7 +5,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,14 +27,14 @@ public class CollectActivity extends BaseActivity {
     private RecyclerView mRecycler;
     private GridLayoutManager mGrid;
     private CollectAdapter mCollectAdapter;
-    private TextView mTvHint, mHeadHint;
+    private TextView mHeadHint;
     private ArrayList<NewGoodBean> mList;
     private RelativeLayout mBackRelative;
-    public static int PAGE_ID = 0;
-    final public static int DOWN_PULL = 1;
-    final public static int UP_PULL = 2;
-    boolean isNoData = true;
-    BoutiqueBean mBean;
+    private static int PAGE_ID = 0;
+    private final static int DOWN_PULL = 1;
+    private final static int UP_PULL = 2;
+    private boolean isNoData = true;
+    private BoutiqueBean mBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +57,6 @@ public class CollectActivity extends BaseActivity {
                 PAGE_ID = 1;
                 initData(DOWN_PULL);
                 Utils.toast(mContext, "刷新成功");
-                mTvHint.setVisibility(View.GONE);
             }
         });
         //上拉加载
@@ -68,10 +66,7 @@ public class CollectActivity extends BaseActivity {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && itemMax == mCollectAdapter.getItemCount() - 1 && isNoData) {
-                    Log.i("main", "上拉加载=" + RecyclerView.SCROLL_STATE_IDLE + "\\ =" + RecyclerView.SCROLL_STATE_IDLE + "//" + itemMax + "=" + (mCollectAdapter.getItemCount() - 1));
                     PAGE_ID++;
-                    mTvHint.setVisibility(View.VISIBLE);
-                    mTvHint.setText("加载更多...");
                     initData(UP_PULL);
                 }
 
@@ -81,7 +76,6 @@ public class CollectActivity extends BaseActivity {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0.1 || dy < 0) {
-                    mTvHint.setVisibility(View.GONE);
                 }
                 super.onScrolled(recyclerView, dx, dy);
                 itemMax = mGrid.findLastVisibleItemPosition();//获取当前屏幕显示的最后一项下标
@@ -89,7 +83,6 @@ public class CollectActivity extends BaseActivity {
         });
     }
 
-    //http://localhost:8080/FuLiCenterServer/Server?request=find_collects&userName=aa&page_id=1&page_size=3
     private void initData(final int where) {
         final OkHttpUtils2<NewGoodBean[]> util = new OkHttpUtils2<NewGoodBean[]>();
         util.setRequestUrl(F.REQUEST_FIND_COLLECTS)
@@ -102,8 +95,6 @@ public class CollectActivity extends BaseActivity {
                     public void onSuccess(NewGoodBean[] result) {
                         if (result == null || result.length == 0) {
                             isNoData = false;
-                            mTvHint.setVisibility(View.VISIBLE);
-                            mTvHint.setText("已经没有更多加载...");
                             mSwipe.setRefreshing(false);
                             return;
                         }
@@ -123,9 +114,8 @@ public class CollectActivity extends BaseActivity {
 
                     @Override
                     public void onError(String error) {
-                        mTvHint.setVisibility(View.VISIBLE);
-                        mTvHint.setText("网络错误");
                         mSwipe.setRefreshing(false);
+                        Utils.toast(mContext, getResources().getString(R.string.Network_error));
                     }
                 });
     }
@@ -143,7 +133,6 @@ public class CollectActivity extends BaseActivity {
         mCollectAdapter = new CollectAdapter(this, mList);
         mCollectAdapter.mList.clear();
         mRecycler.setAdapter(mCollectAdapter);
-        mTvHint = (TextView) findViewById(R.id.tvBoutiqueHint);
         mBackRelative = (RelativeLayout) findViewById(R.id.backRelative);
 
     }

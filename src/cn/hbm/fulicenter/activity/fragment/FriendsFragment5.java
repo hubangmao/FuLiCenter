@@ -25,10 +25,10 @@ import cn.hbm.fulicenter.utils.UserUtils;
 
 //购物车Fragment
 public class FriendsFragment5 extends Fragment implements View.OnClickListener {
-    Context mContext;
-    View mLayout;
-    ImageView mIvIcon, mIv2;
-    TextView mTvName, mTvCollection;
+    private  Context mContext;
+    private  View mLayout;
+    private  ImageView mIvIcon, mIv2;
+    private  TextView mTvName, mTvCollection;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

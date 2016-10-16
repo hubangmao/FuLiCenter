@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearRegister"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#eff2f6"
-    android:orientation="vertical">
+              android:id="@+id/linearRegister"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#eff2f6"
+              android:orientation="vertical">
 
-    <include layout="@layout/user_back_haed_layout" />
+    <include layout="@layout/user_back_haed_layout"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_marginTop="20dp"
         android:layout_weight="5"
         android:orientation="vertical">
 
         <RelativeLayout
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-
-            android:background="#fff">
+            android:background="@drawable/item_backgroung">
 
             <ImageView
                 android:id="@+id/iv_username"
@@ -28,27 +28,29 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dip"
-                android:src="@drawable/icon_account" />
+                android:src="@drawable/icon_account"/>
 
             <EditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/iv_username"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:background="@null"
                 android:hint="@string/user_name"
                 android:paddingLeft="10dip"
                 android:singleLine="true"
                 android:text="aaa"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </RelativeLayout>
 
         <RelativeLayout
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-
-            android:background="#fff">
+            android:background="@drawable/item_backgroung"
+            >
 
             <ImageView
                 android:id="@+id/iv_nick"
@@ -57,7 +59,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dip"
-                android:src="@drawable/icon_account" />
+                android:src="@drawable/icon_account"/>
 
             <EditText
                 android:id="@+id/nick"
@@ -67,17 +69,17 @@
                 android:layout_toLeftOf="@id/iv_nick"
                 android:background="@null"
                 android:hint="@string/nickname"
+                android:maxLength="10"
                 android:paddingLeft="10dip"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="54dp"
-
             android:layout_marginTop="10dp"
-            android:background="#fff">
+            android:background="@drawable/item_backgroung">
 
             <ImageView
                 android:id="@+id/iv_password"
@@ -86,7 +88,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dip"
-                android:src="@drawable/icon_pwd" />
+                android:src="@drawable/icon_pwd"/>
 
             <EditText
                 android:id="@+id/password"
@@ -97,17 +99,17 @@
                 android:background="@null"
                 android:hint="@string/password"
                 android:inputType="textPassword"
+                android:maxLength="10"
                 android:paddingLeft="10dip"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="54dp"
-
             android:layout_marginTop="10dp"
-            android:background="#fff">
+            android:background="@drawable/item_backgroung">
 
             <ImageView
                 android:id="@+id/iv_password2"
@@ -116,7 +118,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dip"
-                android:src="@drawable/icon_pwd" />
+                android:src="@drawable/icon_pwd"/>
 
             <EditText
                 android:id="@+id/confirm_password"
@@ -127,16 +129,18 @@
                 android:background="@null"
                 android:hint="@string/confirmpassword"
                 android:inputType="textPassword"
+                android:maxLength="10"
                 android:paddingLeft="10dip"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/relativeAvatar"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:background="#fff">
+            android:layout_marginTop="10dp"
+            android:background="@drawable/item_backgroung">
 
             <ImageView
                 android:id="@+id/iv_head"
@@ -145,19 +149,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dip"
-                android:src="@drawable/default_avatar" />
+                android:src="@drawable/default_avatar"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/head"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/iv_head"
-                android:background="@null"
                 android:hint="@string/dl_title_upload_photo"
-                android:paddingLeft="10dip"
-                android:singleLine="true"
-                android:textSize="18sp" />
+                android:paddingLeft="10dp"
+                android:textSize="18sp"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -179,7 +180,7 @@
                 android:paddingTop="7dp"
                 android:text="@string/register"
                 android:textColor="@android:color/white"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
 
         </LinearLayout>
     </LinearLayout>

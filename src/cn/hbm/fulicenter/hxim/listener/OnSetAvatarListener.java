@@ -96,7 +96,7 @@ public class OnSetAvatarListener implements View.OnClickListener {
      */
     private void showPopupWindow(View parentLayout) {
 //        mPopuWindow = new PopupWindow(mLayout, getScreenDisplay().widthPixels, (int)(90*getScreenDisplay().density));
-        mPopuWindow = new PopupWindow(mLayout, 350, 230);
+        mPopuWindow = new PopupWindow(mLayout, 350, 250);
         //设置触摸PopupWindow之外的区域能关闭PopupWindow
         mPopuWindow.setOutsideTouchable(true);
         //设置PopupWindow可触摸

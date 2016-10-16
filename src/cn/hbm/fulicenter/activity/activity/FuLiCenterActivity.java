@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -95,13 +96,9 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
 
             }
         });
-
-
     }
 
     private void initView() {
-
-
         registerCartBroCast();
         mTvNew_goods1 = (TextView) findViewById(R.id.tvNew_Goods1);
         mTvBoutique2 = (TextView) findViewById(R.id.tvBoutique2);
@@ -110,7 +107,6 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         mTvFragment5 = (TextView) findViewById(R.id.tvFriends5);
         mtvCartHint = (TextView) findViewById(R.id.tvCartHint);
         mViewPager = (ViewPager) findViewById(R.id.main_viewPage);
-
         //初始化Fragment
         mFragments = new Fragment[5];
         mFragments[0] = new NewGoodFragment1();
@@ -159,6 +155,7 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         }
     }
 
+
     //验证是否登录
     public boolean isLogin() {
         if (DemoHXSDKHelper.getInstance().isLogined()) {
@@ -172,7 +169,7 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
     protected void onResume() {
         Log.i("main", TAG + "购物车返回键监听");
         super.onResume();
-        if (!FuLiCenterApplication.isLogin) {
+        if (FuLiCenterApplication.isLogin) {
             mViewPager.setCurrentItem(0);
         }
     }
@@ -182,7 +179,6 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
         setAllItem();
         if (resultCode == -1) {
             mViewPager.setCurrentItem(0);
-            setItemImageAndText(mTvNew_goods1, R.drawable.menu_item_new_good_selected, getResources().getColor(R.color.ebpay_red));
             return;
         }
         if (requestCode == LOG_RETURN) {
@@ -271,5 +267,22 @@ public class FuLiCenterActivity extends BaseActivity implements View.OnClickList
             unregisterReceiver(mUpdate);
         }
 
+    }
+
+    private long firstTime = 0;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (System.currentTimeMillis() - firstTime > 2000) {
+                Utils.toast(this, "再点击一次退出");
+                firstTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

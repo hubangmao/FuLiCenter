@@ -5,7 +5,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,14 +21,14 @@ import cn.hbm.fulicenter.utils.Utils;
 
 //精选
 public class BoutiqueInfoActivity extends BaseActivity {
-  private  BoutiqueInfoActivity mContext;
-    private   SwipeRefreshLayout mSwipe;
-    private    RecyclerView mRecycler;
-    private    GridLayoutManager mGrid;
-    private    NewGoodsOrBoutiqueAdapter mGoodsAdapter;
-    private   TextView mTvHint, mHeadHint;
-    private   ArrayList<NewGoodBean> mList;
-    private    RelativeLayout mBackRelative;
+    private BoutiqueInfoActivity mContext;
+    private SwipeRefreshLayout mSwipe;
+    private RecyclerView mRecycler;
+    private GridLayoutManager mGrid;
+    private NewGoodsOrBoutiqueAdapter mGoodsAdapter;
+    private TextView mHeadHint;
+    private ArrayList<NewGoodBean> mList;
+    private RelativeLayout mBackRelative;
     public static int PAGE_ID = 1;
     final public static int DOWN_PULL = 1;
     final public static int UP_PULL = 2;
@@ -57,7 +56,6 @@ public class BoutiqueInfoActivity extends BaseActivity {
                 PAGE_ID = 1;
                 initData(DOWN_PULL);
                 Utils.toast(mContext, "刷新成功");
-                mTvHint.setVisibility(View.GONE);
             }
         });
         //上拉加载
@@ -70,8 +68,6 @@ public class BoutiqueInfoActivity extends BaseActivity {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && itemMax == mGoodsAdapter.getItemCount() - 1 && isNoData) {
                     Log.i("main", "上拉加载=" + RecyclerView.SCROLL_STATE_IDLE + "\\ =" + RecyclerView.SCROLL_STATE_IDLE + "//" + itemMax + "=" + (mGoodsAdapter.getItemCount() - 1));
                     PAGE_ID++;
-                    mTvHint.setVisibility(View.VISIBLE);
-                    mTvHint.setText("加载更多...");
                     initData(UP_PULL);
                 }
 
@@ -81,7 +77,6 @@ public class BoutiqueInfoActivity extends BaseActivity {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0.1 || dy < 0) {
-                    mTvHint.setVisibility(View.GONE);
                 }
                 super.onScrolled(recyclerView, dx, dy);
                 itemMax = mGrid.findLastVisibleItemPosition();//获取当前屏幕显示的最后一项下标
@@ -101,8 +96,6 @@ public class BoutiqueInfoActivity extends BaseActivity {
                     public void onSuccess(NewGoodBean[] result) {
                         if (result == null || result.length == 0) {
                             isNoData = false;
-                            mTvHint.setVisibility(View.VISIBLE);
-                            mTvHint.setText("已经没有更多加载...");
                             mSwipe.setRefreshing(false);
                             return;
                         }
@@ -122,9 +115,8 @@ public class BoutiqueInfoActivity extends BaseActivity {
 
                     @Override
                     public void onError(String error) {
-                        mTvHint.setVisibility(View.VISIBLE);
-                        mTvHint.setText("网络错误");
                         mSwipe.setRefreshing(false);
+                        Utils.toast(mContext, getResources().getString(R.string.Network_error)+error);
                     }
                 });
     }
@@ -140,7 +132,6 @@ public class BoutiqueInfoActivity extends BaseActivity {
         mGoodsAdapter = new NewGoodsOrBoutiqueAdapter(this, mList);
         mGoodsAdapter.mList.clear();
         mRecycler.setAdapter(mGoodsAdapter);
-        mTvHint = (TextView) findViewById(R.id.tvGoodHint);
         mBackRelative = (RelativeLayout) findViewById(R.id.backRelative);
         mHeadHint = (TextView) findViewById(R.id.back_headHint);
 

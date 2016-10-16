@@ -1,431 +1,470 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/good_detail_bg">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/good_detail_bg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:hardwareAccelerated="true"
+            tools:targetApi="honeycomb">
 
     <RelativeLayout
-        android:id="@+id/relativeHead"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:background="@color/good_detail_title_bg">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ivMessage"
-            android:layout_width="28dp"
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/relativeHead"
+            android:background="@color/bottom_bar_normal_bg_top1"/>
+
+        <RelativeLayout
+            android:id="@+id/linearOrder"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="6dp"
-            android:src="@drawable/iconfont_xinxi" />
+            android:layout_below="@id/view1"
+            android:background="@drawable/item_backgroung">
 
-        <TextView
-            android:id="@+id/tvSet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="11dp"
-            android:layout_toLeftOf="@id/ivMessage"
-            android:text="设置"
-            android:textColor="@color/good_detail_bg"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tvOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="6dp"
+                android:text="我的订单"
+                android:textColor="@color/menu_item_normal"
+                android:textSize="19sp"/>
 
-        <ImageView
-            android:id="@+id/ivIcon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/default_face" />
+            <TextView
+                android:id="@+id/tvOrders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="80dp"
+                android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
+                android:text="查看宝贝"
+                android:textColor="@color/myTextColor"
+                android:textSize="14sp"/>
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tvUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="6dp"
-            android:layout_toRightOf="@id/ivIcon"
-            android:text="胡邦茂"
-            android:textColor="@color/good_detail_bg"
-            android:textSize="20sp" />
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/linearOrder"
+            android:background="@color/bottom_bar_normal_bg_top1"/>
 
-        <ImageView
-            android:id="@+id/iv2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/tvUserName"
-            android:src="@drawable/scan" />
 
         <LinearLayout
+            android:id="@+id/linearOrderList"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/good_detail_title_bg1"
-            android:weightSum="3">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view2"
+            android:layout_marginLeft="@dimen/ebpay_line_margin_10"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/item_backgroung"
+            android:orientation="horizontal"
+            android:weightSum="5">
 
-            <RelativeLayout
-                android:id="@+id/relative1"
+            <ImageView
+                android:id="@+id/order_list1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/item_backgroung"
+                android:src="@drawable/order_list1"/>
 
-                <TextView
-                    android:id="@+id/tvCollection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="10"
-                    android:textColor="@color/myTextColor"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvCollection"
-                    android:layout_centerHorizontal="true"
-                    android:text="收藏的宝贝"
-                    android:textColor="@color/good_detail_bg"
-                    android:textSize="16sp" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="1.5dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:background="@color/good_detail_bg" />
-
-            <RelativeLayout
-                android:id="@+id/relative2"
+            <ImageView
+                android:id="@+id/order_list2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1">
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/item_backgroung"
+                android:src="@drawable/order_list2"/>
 
-                <TextView
-                    android:id="@+id/tvShop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="18"
-                    android:textColor="@color/myTextColor"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvShop"
-                    android:layout_centerHorizontal="true"
-                    android:text="收藏的店铺"
-                    android:textColor="@color/good_detail_bg"
-                    android:textSize="16sp" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="1.5dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:background="@color/good_detail_bg" />
-
-            <RelativeLayout
-                android:id="@+id/relative3"
+            <ImageView
+                android:id="@+id/order_list3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1">
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/item_backgroung"
+                android:src="@drawable/order_list3"/>
 
-                <TextView
-                    android:id="@+id/tvAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="90"
-                    android:textColor="@color/myTextColor"
-                    android:textSize="15sp" />
+            <ImageView
+                android:id="@+id/order_list4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/item_backgroung"
+                android:src="@drawable/order_list4"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvAddress"
-                    android:layout_centerHorizontal="true"
-                    android:text="我的足迹"
-                    android:textColor="@color/good_detail_bg"
-                    android:textSize="16sp" />
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/order_list5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/item_backgroung"
+                android:src="@drawable/order_list5"/>
         </LinearLayout>
 
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@+id/linearOrderList"/>
+
+        <RelativeLayout
+            android:id="@+id/relativeVolume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view3"
+            android:layout_marginLeft="@dimen/ebpay_line_margin_10"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/item_backgroung">
+
+            <TextView
+                android:id="@+id/tvVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="6dp"
+                android:text="我的卡卷包"
+                android:textColor="@color/menu_item_normal"
+                android:textSize="19sp"/>
+
+            <TextView
+                android:id="@+id/tvVolume1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="80dp"
+                android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
+                android:textColor="@color/myTextColor"
+                android:textSize="25sp"/>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_below="@+id/relativeVolume"/>
+
+        <RelativeLayout
+            android:id="@+id/relativeLeft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view4"
+            android:layout_marginLeft="@dimen/ebpay_line_margin_10"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/item_backgroung">
+
+            <TextView
+                android:id="@+id/tvLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="6dp"
+                android:drawableLeft="@drawable/center_card_coupon1"
+                android:gravity="center"
+                android:text="生活卷"
+                android:textColor="@color/menu_item_normal"
+                android:textSize="18sp"/>
+
+
+            <TextView
+                android:id="@+id/tvAllBaye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="80dp"
+                android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
+                android:textColor="@color/myTextColor"
+                android:textSize="25sp"/>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view5"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_below="@id/relativeLeft"/>
+
+        <RelativeLayout
+            android:id="@+id/relativeNetLeft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view5"
+            android:layout_marginLeft="@dimen/ebpay_line_margin_10"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/item_backgroung">
+
+            <TextView
+                android:id="@+id/tvNitLeft1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="80dp"
+                android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
+                android:text="暂无优惠卷"
+                android:textColor="@color/myTextColor"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tvNitLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:drawableLeft="@drawable/center_card_coupon2"
+                android:gravity="center"
+                android:text="网店卷"
+                android:textColor="@color/menu_item_normal"
+                android:textSize="18sp"/>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view6"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_below="@id/relativeNetLeft"/>
+
+        <RelativeLayout
+            android:id="@+id/relativeVipLeft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view6"
+            android:layout_marginLeft="@dimen/ebpay_line_margin_10"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/item_backgroung">
+
+            <TextView
+                android:id="@+id/tvVipLeft1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="80dp"
+                android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
+                android:text="一卡在手逛店无忧"
+                android:textColor="@color/myTextColor"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tvVipLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="19dp"
+                android:layout_marginStart="19dp"
+                android:drawableLeft="@drawable/center_card_coupon3"
+                android:gravity="center"
+                android:text="会员卡"
+                android:textColor="@color/menu_item_normal"
+                android:textSize="18sp"/>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view7"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_below="@id/relativeVipLeft"/>
+
+        <RelativeLayout
+            android:id="@+id/relativeExclLeft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view7"
+            android:layout_marginLeft="@dimen/ebpay_line_margin_10"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/item_backgroung">
+
+            <TextView
+                android:id="@+id/tvExclLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="6dp"
+                android:gravity="center"
+                android:text="专享特权"
+                android:textColor="@color/menu_item_normal"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvExclLeft1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="80dp"
+                android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
+                android:text="暂无"
+                android:textColor="@color/myTextColor"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeHead"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/good_detail_title_bg">
+
+            <ImageView
+                android:id="@+id/ivMessage"
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:src="@drawable/iconfont_xinxi"/>
+
+            <TextView
+                android:id="@+id/tvSet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="11dp"
+                android:layout_toLeftOf="@id/ivMessage"
+                android:text="设置"
+                android:textColor="@color/good_detail_bg"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/default_face"/>
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="6dp"
+                android:layout_toRightOf="@id/ivIcon"
+                android:text="胡邦茂"
+                android:textColor="@color/good_detail_bg"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:id="@+id/iv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tvUserName"
+                android:src="@drawable/scan"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/good_detail_title_bg1"
+                android:weightSum="3">
+
+                <RelativeLayout
+                    android:id="@+id/relative1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tvCollection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="10"
+                        android:textColor="@color/myTextColor"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvCollection"
+                        android:layout_centerHorizontal="true"
+                        android:text="收藏的宝贝"
+                        android:textColor="@color/good_detail_bg"
+                        android:textSize="16sp"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="1.5dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:background="@color/good_detail_bg"/>
+
+                <RelativeLayout
+                    android:id="@+id/relative2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tvShop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="18"
+                        android:textColor="@color/myTextColor"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvShop"
+                        android:layout_centerHorizontal="true"
+                        android:text="收藏的店铺"
+                        android:textColor="@color/good_detail_bg"
+                        android:textSize="16sp"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="1.5dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:background="@color/good_detail_bg"/>
+
+                <RelativeLayout
+                    android:id="@+id/relative3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tvAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="90"
+                        android:textColor="@color/myTextColor"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvAddress"
+                        android:layout_centerHorizontal="true"
+                        android:text="我的足迹"
+                        android:textColor="@color/good_detail_bg"
+                        android:textSize="16sp"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="13dp"
-        android:layout_below="@id/relativeHead"
-        android:background="@color/bottom_bar_normal_bg_top1" />
-
-    <RelativeLayout
-        android:id="@+id/linearOrder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view1"
-        android:layout_marginRight="15dp">
-
-        <TextView
-            android:id="@+id/tvOrder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="6dp"
-            android:text="我的订单"
-            android:textColor="@color/menu_item_normal"
-            android:textSize="19sp" />
-
-        <TextView
-            android:id="@+id/tvOrders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="80dp"
-            android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
-            android:text="查看宝贝"
-            android:textColor="@color/myTextColor"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_below="@id/linearOrder"
-        android:background="@color/bottom_bar_normal_bg_top1" />
-
-
-    <LinearLayout
-        android:id="@+id/linearOrderList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view2"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:weightSum="5">
-
-        <ImageView
-            android:id="@+id/order_list1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/order_list1" />
-
-        <ImageView
-            android:id="@+id/order_list2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/order_list2" />
-
-        <ImageView
-            android:id="@+id/order_list3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/order_list3" />
-
-        <ImageView
-            android:id="@+id/order_list4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/order_list4" />
-
-        <ImageView
-            android:id="@+id/order_list5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/order_list5" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@+id/linearOrderList" />
-
-    <RelativeLayout
-        android:id="@+id/relativeVolume"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view3"
-        android:layout_marginRight="15dp">
-
-        <TextView
-            android:id="@+id/tvVolume"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="6dp"
-            android:text="我的卡卷包"
-            android:textColor="@color/menu_item_normal"
-            android:textSize="19sp" />
-
-        <TextView
-            android:id="@+id/tvVolume1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="80dp"
-            android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
-            android:textColor="@color/myTextColor"
-            android:textSize="25sp" />
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/view4"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@+id/relativeVolume" />
-
-    <RelativeLayout
-        android:id="@+id/relativeLeft"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view4"
-        android:layout_marginRight="15dp">
-
-        <TextView
-            android:id="@+id/tvLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="6dp"
-            android:drawableLeft="@drawable/center_card_coupon1"
-            android:gravity="center"
-            android:text="生活卷"
-            android:textColor="@color/menu_item_normal"
-            android:textSize="18sp" />
-
-
-        <TextView
-            android:id="@+id/tvAllBaye"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="80dp"
-            android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
-            android:textColor="@color/myTextColor"
-            android:textSize="25sp" />
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/view5"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_below="@id/relativeLeft" />
-
-    <RelativeLayout
-        android:id="@+id/relativeNetLeft"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view5"
-        android:layout_marginRight="15dp">
-
-        <TextView
-            android:id="@+id/tvNitLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="6dp"
-            android:drawableLeft="@drawable/center_card_coupon2"
-            android:gravity="center"
-            android:text="网店卷"
-            android:textColor="@color/menu_item_normal"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tvNitLeft1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="80dp"
-            android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
-            android:text="暂无优惠卷"
-            android:textColor="@color/myTextColor"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/view6"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_below="@id/relativeNetLeft" />
-
-    <RelativeLayout
-        android:id="@+id/relativeVipLeft"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view6"
-        android:layout_marginRight="15dp">
-
-        <TextView
-            android:id="@+id/tvVipLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="6dp"
-            android:drawableLeft="@drawable/center_card_coupon3"
-            android:gravity="center"
-            android:text="会员卡"
-            android:textColor="@color/menu_item_normal"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tvVipLeft1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="80dp"
-            android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
-            android:text="一卡在手逛店无忧"
-            android:textColor="@color/myTextColor"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/view7"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_below="@id/relativeVipLeft" />
-
-    <RelativeLayout
-        android:id="@+id/relativeExclLeft"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view7"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="15dp">
-
-        <TextView
-            android:id="@+id/tvExclLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="6dp"
-            android:gravity="center"
-            android:text="专享特权"
-            android:textColor="@color/menu_item_normal"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tvExclLeft1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="80dp"
-            android:drawableRight="@drawable/ebpay_pwdpay_next_gray"
-            android:text="暂无"
-            android:textColor="@color/myTextColor"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
-</RelativeLayout>
+</ScrollView>
+    

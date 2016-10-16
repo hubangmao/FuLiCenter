@@ -227,7 +227,6 @@ public class Utils {
                     return result;
                 }
             } else {
-                Log.i("main", "这是getPageResultFromJson");
             }
             return result;
         } catch (Exception e) {

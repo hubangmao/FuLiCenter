@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/backRelative"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                android:id="@+id/backRelative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+               >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:background="@color/good_detail_bg"
+        android:clickable="true"
+        android:hardwareAccelerated="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/ivBack"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="#9bc675"
-            android:src="@drawable/back" />
+            android:onClick="back"
+            android:src="@drawable/back"/>
 
         <TextView
             android:id="@+id/user_back_headHint"
@@ -26,6 +31,6 @@
             android:layout_centerInParent="true"
             android:text="登陆"
             android:textColor="@color/myTextColor"
-            android:textSize="22sp" />
+            android:textSize="22sp"/>
     </RelativeLayout>
 </RelativeLayout>

@@ -1,52 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/RelativeGoodsInfo"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:background="@color/good_detail_bg">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/RelativeGoodsInfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/good_detail_bg">
 
-    <include layout="@layout/back_haed_layout" />
+    <include layout="@layout/back_haed_layout"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/relative"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-
-            android:id="@+id/iv_goods_info_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="0.7dp"
-            android:paddingRight="12dp"
-            android:src="@drawable/bg_share_sel" />
-
-        <ImageView
-            android:id="@+id/iv_goods_info_selected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:layout_toLeftOf="@id/iv_goods_info_share"
-            android:paddingRight="12dp"
-            android:src="@drawable/menu_item_collect_normal" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <RelativeLayout
             android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/iv_goods_info_selected"
-            android:paddingRight="12dp">
+            android:layout_height="30dp"
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/iv_goods_info_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/menu_item_cart_normal" />
+                android:src="@drawable/menu_item_cart_normal"/>
 
             <TextView
                 android:id="@+id/tv_goods_info_carts"
@@ -61,12 +42,25 @@
                 android:text="12"
                 android:textColor="@color/btn_login_normal"
                 android:textSize="10sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
         </RelativeLayout>
 
+        <ImageView
+            android:id="@+id/iv_goods_info_selected"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:src="@drawable/menu_item_collect_normal"/>
 
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_goods_info_share"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:src="@drawable/bg_share_sel"/>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/relative1"
@@ -85,7 +79,7 @@
             android:paddingLeft="10dp"
             android:text="英文名称"
             android:textColor="@color/menu_item_normal"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/tv_Good_Name"
@@ -97,7 +91,7 @@
             android:paddingLeft="10dp"
             android:text="商品名称"
             android:textColor="@color/menu_item_normal"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/tv_good_price1"
@@ -108,7 +102,7 @@
             android:paddingRight="10dp"
             android:text="2399￥"
             android:textColor="@color/btn_logout_pressed"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tv_good_price2"
@@ -119,7 +113,7 @@
             android:paddingRight="10dp"
             android:text="299￥"
             android:textColor="@color/btn_logout_pressed"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -132,7 +126,7 @@
             android:id="@+id/salv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/good_detail_bg_white" />
+            android:background="@color/good_detail_bg_white"/>
 
         <cn.hbm.fulicenter.activity.activity.day3.FlowIndicator
             android:id="@+id/indicator"
@@ -144,7 +138,7 @@
             app:focus_color="@color/good_detaul_flow_indicator_focus"
             app:normal_color="#a1d1d1d1"
             app:r="5dp"
-            app:space="3dp" />
+            app:space="3dp"/>
     </RelativeLayout>
 
     <WebView
@@ -152,5 +146,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relative2"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"/>
 </RelativeLayout>

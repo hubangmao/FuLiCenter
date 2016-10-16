@@ -22,16 +22,17 @@ import cn.hbm.fulicenter.activity.bean.CategoryChildBean;
 import cn.hbm.fulicenter.activity.bean.CategoryGroupBean;
 import cn.hbm.fulicenter.hxim.data.OkHttpUtils2;
 import cn.hbm.fulicenter.utils.F;
+import cn.hbm.fulicenter.utils.Utils;
 
 public class CategoryFragment3 extends Fragment {
     public String TAG = CategoryFragment3.class.getSimpleName();
-    View mView;
-    Context mContext;
-    ExpandableListView mExpandable;
-    SwipeRefreshLayout mSwipe;
-    ArrayList<CategoryGroupBean> mMaxList;//大类型
-    ArrayList<ArrayList<CategoryChildBean>> mMinList;//小类型
-    ExpandableAdapter mAdapter;
+    private View mView;
+    private Context mContext;
+    private ExpandableListView mExpandable;
+    private SwipeRefreshLayout mSwipe;
+    private ArrayList<CategoryGroupBean> mMaxList;//大类型
+    private ArrayList<ArrayList<CategoryChildBean>> mMinList;//小类型
+    private ExpandableAdapter mAdapter;
 
 
     @Override
@@ -80,6 +81,9 @@ public class CategoryFragment3 extends Fragment {
 
                     @Override
                     public void onError(String error) {
+                        mSwipe.setRefreshing(false);
+                        Utils.toast(mContext, getResources().getString(R.string.Network_error) + error);
+
                     }
                 });
 
@@ -104,7 +108,8 @@ public class CategoryFragment3 extends Fragment {
 
                     @Override
                     public void onError(String error) {
-
+                        mSwipe.setRefreshing(false);
+                        Utils.toast(mContext, getResources().getString(R.string.Network_error) + error);
                     }
                 });
     }

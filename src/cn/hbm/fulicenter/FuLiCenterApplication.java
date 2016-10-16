@@ -42,7 +42,6 @@ public class FuLiCenterApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("main", "FuLiCenterApplication.onCreate()");
         applicationContext = this;
         instance = this;
 

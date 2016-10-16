@@ -22,21 +22,22 @@ import cn.hbm.fulicenter.hxim.data.OkHttpUtils2;
 import cn.hbm.fulicenter.utils.F;
 import cn.hbm.fulicenter.utils.Utils;
 
+
 /**
  * 新品Fragment
  */
 public class NewGoodFragment1 extends Fragment {
-    View mView;
-    Context mContext;
-    SwipeRefreshLayout mSwipe;
-    RecyclerView mRecycler;
-    GridLayoutManager mGrid;
-    NewGoodsOrBoutiqueAdapter mGoodsAdapter;
-    ArrayList<NewGoodBean> mList;
-    public static int PAGE_ID = 1;
-    final public static int DOWN_PULL = 1;
-    final public static int UP_PULL = 2;
-    boolean isNoData = true;
+    private View mView;
+    private Context mContext;
+    private SwipeRefreshLayout mSwipe;
+    private RecyclerView mRecycler;
+    private GridLayoutManager mGrid;
+    private NewGoodsOrBoutiqueAdapter mGoodsAdapter;
+    private ArrayList<NewGoodBean> mList;
+    private static int PAGE_ID = 1;
+    final private static int DOWN_PULL = 1;
+    final private static int UP_PULL = 2;
+    private boolean isNoData = true;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -55,7 +56,6 @@ public class NewGoodFragment1 extends Fragment {
                 isNoData = true;
                 PAGE_ID = 1;
                 initData(DOWN_PULL);
-                Utils.toast(mContext, "刷新成功");
 
             }
         });
@@ -104,6 +104,7 @@ public class NewGoodFragment1 extends Fragment {
                             //下拉刷新
                             case DOWN_PULL:
                                 mGoodsAdapter.updateAdapterData(bean, mSwipe);
+                                Utils.toast(mContext, "刷新成功");
                                 break;
                             //上拉加载
                             case UP_PULL:
@@ -115,6 +116,9 @@ public class NewGoodFragment1 extends Fragment {
                     @Override
                     public void onError(String error) {
                         mSwipe.setRefreshing(false);
+                        mSwipe.setRefreshing(false);
+                        Utils.toast(mContext, getResources().getString(R.string.Network_error) + error);
+
                     }
                 });
     }

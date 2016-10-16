@@ -1,11 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#fff"
-    tools:context=".activity.fragment.NewGoodFragment1">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff"
+                tools:context=".activity.fragment.NewGoodFragment1">
 
-    <include layout="@layout/user_back_haed_layout" />
+    <include layout="@layout/user_back_haed_layout"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_Boutique"
@@ -16,18 +16,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/receiver_Boutique"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <TextView
-        android:id="@+id/tvBoutiqueHint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="加载更多..."
-        android:textColor="@color/good_detail_title_bg"
-        android:textSize="20sp"
-        android:visibility="gone" />
 </RelativeLayout>
 

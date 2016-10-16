@@ -10,11 +10,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
@@ -27,18 +25,20 @@ import cn.hbm.fulicenter.R;
 import cn.hbm.fulicenter.hxim.bean.Result;
 import cn.hbm.fulicenter.hxim.data.OkHttpUtils2;
 import cn.hbm.fulicenter.hxim.listener.OnSetAvatarListener;
+import cn.hbm.fulicenter.utils.F;
 import cn.hbm.fulicenter.utils.I;
 import cn.hbm.fulicenter.utils.Utils;
+
+import static cn.hbm.fulicenter.R.id.relativeAvatar;
 
 /**
  * 注册页
  */
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private EditText userNameEditText;
     private EditText userNickEditText;
     private EditText passwordEditText;
     private EditText confirmPwdEditText;
-    public EditText mHead;
     public ImageView mIv_Head;
     public OnSetAvatarListener mSetAvatar;
 
@@ -63,22 +63,15 @@ public class RegisterActivity extends BaseActivity {
                 register();
             }
         });
-        //添加头像
-        findViewById(R.id.relativeAvatar).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("main", "点击测试");
-                mSetAvatar = new OnSetAvatarListener(RegisterActivity.this,
-                        R.id.linearRegister, userNameEditText.getText().toString().trim(), I.AVATAR_TYPE_USER_PATH);
-                mHead.setCursorVisible(false);
-            }
-        });
+
+        findViewById(R.id.iv_head).setOnClickListener(this);
+        findViewById(R.id.head).setOnClickListener(this);
+        findViewById(R.id.relativeAvatar).setOnClickListener(this);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);//得到新Activity 关闭后返回前一个Activity数据
-        Log.i("main", "requestCode=" + requestCode + "]resultCode=" + resultCode);
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK) {
             return;
         }
@@ -90,7 +83,6 @@ public class RegisterActivity extends BaseActivity {
         userNickEditText = (EditText) findViewById(R.id.nick);
         passwordEditText = (EditText) findViewById(R.id.password);
         confirmPwdEditText = (EditText) findViewById(R.id.confirm_password);
-        mHead = (EditText) findViewById(R.id.head);
         mIv_Head = (ImageView) findViewById(R.id.iv_head);
     }
 
@@ -104,24 +96,23 @@ public class RegisterActivity extends BaseActivity {
         confirm_pwd = confirmPwdEditText.getText().toString().trim();
 
         if (!username.matches("[\\w][\\w\\d_]+")) {
-            Toast.makeText(this, getResources().getString(R.string.User_name_cannot_be_empty), Toast.LENGTH_SHORT).show();
+            Utils.toast(this, getResources().getString(R.string.User_name_cannot_be_empty));
             userNameEditText.requestFocus();
             return;
         } else if (TextUtils.isEmpty(userNick)) {
-            Toast.makeText(this, getResources().getString(R.string.toast_nick_not_isnull), Toast.LENGTH_SHORT).show();
+            Utils.toast(this, getResources().getString(R.string.toast_nick_not_isnull));
             userNickEditText.requestFocus();
             return;
         } else if (TextUtils.isEmpty(pwd)) {
-            Toast.makeText(this, getResources().getString(R.string.Password_cannot_be_empty), Toast.LENGTH_SHORT).show();
+            Utils.toast(this, getResources().getString(R.string.Password_cannot_be_empty));
             passwordEditText.requestFocus();
             return;
         } else if (TextUtils.isEmpty(confirm_pwd)) {
-            Toast.makeText(this, getResources().getString(R.string.Confirm_password_cannot_be_empty), Toast.LENGTH_SHORT).show();
+            Utils.toast(this, getResources().getString(R.string.Confirm_password_cannot_be_empty));
             confirmPwdEditText.requestFocus();
             return;
         } else if (!pwd.equals(confirm_pwd)) {
-
-            Toast.makeText(this, getResources().getString(R.string.Two_input_password), Toast.LENGTH_SHORT).show();
+            Utils.toast(this, getResources().getString(R.string.Two_input_password));
             return;
         }
         if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(pwd)) {
@@ -133,31 +124,31 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void registerMyService(final ProgressDialog pd) {
-        File file = new File(OnSetAvatarListener.getAvatarPath(RegisterActivity.this, I.AVATAR_TYPE_USER_PATH)
-                , username + I.AVATAR_SUFFIX_JPG);
+        File file = new File(OnSetAvatarListener.getAvatarPath
+                (RegisterActivity.this, I.AVATAR_TYPE_USER_PATH), username + I.AVATAR_SUFFIX_JPG);
         OkHttpUtils2<Result> utils = new OkHttpUtils2<Result>();
-        String strUrl = "http://10.0.2.2:8080/SuperWeChatServer/Server?request=register&m_user_name=" + username + "&m_user_nick=" + userNick + "&m_user_password=" + pwd;
-        Log.i("main", "RegisterActivity" + strUrl);
-        Log.i("main", "本地图片路径" + file.getAbsolutePath());
-        utils.url(strUrl)
+        utils.setRequestUrl(F.REQUEST_REGISTER)
+                .addParam(F.USER_NAME, username)
+                .addParam(F.USER_PASS, pwd)
+                .addParam(F.USER_NICK, userNick)
                 .targetClass(Result.class)
                 .addFile(file)
                 .execute(new OkHttpUtils2.OnCompleteListener<Result>() {
                     @Override
                     public void onSuccess(Result result) {
                         if (result.isRetMsg()) {
-                            pd.dismiss();
                             registerEMService(pd);
+                            pd.dismiss();
                         } else {
                             pd.dismiss();
-                            Toast.makeText(RegisterActivity.this, getResources().getString(R.string.mes_102), Toast.LENGTH_SHORT).show();
+                            Utils.toast(RegisterActivity.this, getResources().getString(R.string.mes_102));
                         }
                     }
 
                     @Override
                     public void onError(String error) {
                         pd.dismiss();
-                        Toast.makeText(RegisterActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
+                        Utils.toast(RegisterActivity.this, "请检查网络");
                     }
                 });
     }
@@ -174,52 +165,30 @@ public class RegisterActivity extends BaseActivity {
                                 pd.dismiss();
                             // 保存用户名
                             FuLiCenterApplication.getInstance().setUserName(username);
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
+                            Utils.toast(RegisterActivity.this, getResources().getString(R.string.Registered_successfully));
                             finish();
                         }
                     });
                 } catch (final EaseMobException e) {
-                    //用户环信服务器注册失败 删除 本地服务器注册信息
-                    deleteSuperServiceData();
                     runOnUiThread(new Runnable() {
                         public void run() {
                             if (!RegisterActivity.this.isFinishing())
                                 pd.dismiss();
                             int errorCode = e.getErrorCode();
                             if (errorCode == EMError.NONETWORK_ERROR) {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
+                                Utils.toast(RegisterActivity.this, getResources().getString(R.string.network_anomalies));
                             } else if (errorCode == EMError.USER_ALREADY_EXISTS) {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
+                                Utils.toast(RegisterActivity.this, getResources().getString(R.string.User_already_exists));
                             } else if (errorCode == EMError.UNAUTHORIZED) {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
+                                Utils.toast(RegisterActivity.this, getResources().getString(R.string.registration_failed_without_permission));
                             } else if (errorCode == EMError.ILLEGAL_USER_NAME) {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
+                                Utils.toast(RegisterActivity.this, getResources().getString(R.string.illegal_user_name));
                             } else {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed) + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Utils.toast(RegisterActivity.this, getResources().getString(R.string.Registration_failed));
                             }
                         }
                     });
                 }
-            }
-
-            private void deleteSuperServiceData() {
-                String strDelUrl = I.SERVER_URL + "?request=unregister&m_user_name=" + username;
-                OkHttpUtils2<Result> utils2 = new OkHttpUtils2<Result>();
-                utils2.url(strDelUrl)
-                        .targetClass(Result.class)
-                        .execute(new OkHttpUtils2.OnCompleteListener<Result>() {
-                            @Override
-                            public void onSuccess(Result result) {
-                                if (result.isRetMsg() && result != null) {
-                                    Toast.makeText(RegisterActivity.this, Utils.getResourceString(RegisterActivity.this,result.getRetCode()), Toast.LENGTH_SHORT).show();
-                                    Log.i("main", "取消注册成功");
-                                }
-                            }
-                            @Override
-                            public void onError(String error) {
-
-                            }
-                        });
             }
         }).start();
     }
@@ -231,5 +200,19 @@ public class RegisterActivity extends BaseActivity {
     //注册界面切换至登陆界面
     public void login(View view) {
         finish();
+    }
+
+    //添加头像
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_head:
+            case R.id.head:
+            case relativeAvatar:
+                mSetAvatar = new OnSetAvatarListener(RegisterActivity.this,
+                        R.id.linearRegister, userNameEditText.getText().toString().trim(), I.AVATAR_TYPE_USER_PATH);
+                break;
+
+        }
     }
 }

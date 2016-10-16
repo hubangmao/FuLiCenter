@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/backRelative"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                android:id="@+id/backRelative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,10 +12,11 @@
 
         <ImageView
             android:id="@+id/ivBack"
-            android:layout_width="wrap_content"
+            android:layout_width="28dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:src="@drawable/back" />
+            android:background="#9bc675"
+            android:src="@drawable/back"/>
 
         <cn.hbm.fulicenter.activity.activity.day3.CatChildFilterButton
             android:id="@+id/btnCatChildFilter"
@@ -28,7 +29,7 @@
             android:background="@null"
             android:drawableRight="@drawable/arrow2_up"
             android:text="分类"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
 
         <TextView
             android:id="@+id/back_headHint"
@@ -40,6 +41,6 @@
             android:gravity="center"
             android:text="商品信息"
             android:textColor="@color/btn_answer_normal"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
     </RelativeLayout>
 </RelativeLayout>

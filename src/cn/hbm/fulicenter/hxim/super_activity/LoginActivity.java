@@ -13,6 +13,7 @@
  */
 package cn.hbm.fulicenter.hxim.super_activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -22,10 +23,12 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
@@ -53,14 +56,14 @@ import cn.hbm.fulicenter.utils.Utils;
  * 登陆页面
  */
 public class LoginActivity extends BaseActivity {
-    private static final String TAG = "LoginActivity";
-    public static final int REQUEST_CODE_SETNICK = 1;
+    public static final String TAG = LoginActivity.class.getSimpleName();
     private EditText usernameEditText;
     private EditText passwordEditText;
     private ImageView mBack;
     private boolean progressShow;
-    private boolean autoLogin = false;
-
+    private GestureDetector mDetector;
+    //取消登陆返回值码
+    private int exit = -1;
     private String currentUsername;
     private String currentPassword;
 
@@ -69,17 +72,15 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-       /* // 如果用户名密码都有，直接进入主页面
-        if (DemoHXSDKHelper.getInstance().isLogined()) {
-            autoLogin = true;
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            return;
-        }*/
         setContentView(R.layout.fuli_login);
         initView();
+        if (FuLiCenterApplication.getInstance().getUserName() != null) {
+            usernameEditText.setText(FuLiCenterApplication.getInstance().getUserName());
+        }
+    }
 
-        // 如果用户名改变，清空密码
+    // 如果用户名改变，清空密码
+    private void userEditListener() {
         usernameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -96,17 +97,15 @@ public class LoginActivity extends BaseActivity {
 
             }
         });
-        if (FuLiCenterApplication.getInstance().getUserName() != null) {
-            usernameEditText.setText(FuLiCenterApplication.getInstance().getUserName());
-        }
     }
 
-    int exit = -1;
 
     private void initView() {
         usernameEditText = (EditText) findViewById(R.id.username);
         passwordEditText = (EditText) findViewById(R.id.password);
+        userEditListener();
         mBack = (ImageView) findViewById(R.id.ivBack);
+        mDetector = new GestureDetector(this, new Listener(this, findViewById(R.id.login_linear)));
 
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,26 +116,32 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            setResult(exit);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     /**
      * 登录
-     *
-     * @param view
      */
     public void login(View view) {
         if (!CommonUtils.isNetWorkConnected(this)) {
-            Toast.makeText(this, R.string.network_isnot_available, Toast.LENGTH_SHORT).show();
+            Utils.toast(this, getResources().getString(R.string.network_isnot_available));
             return;
         }
         currentUsername = usernameEditText.getText().toString().trim();
         currentPassword = passwordEditText.getText().toString().trim();
 
         if (TextUtils.isEmpty(currentUsername)) {
-            Toast.makeText(this, R.string.User_name_cannot_be_empty, Toast.LENGTH_SHORT).show();
+            Utils.toast(this, getResources().getString(R.string.User_name_cannot_be_empty));
             return;
         }
         if (TextUtils.isEmpty(currentPassword)) {
-            Toast.makeText(this, R.string.Password_cannot_be_empty, Toast.LENGTH_SHORT).show();
+            Utils.toast(this, getResources().getString(R.string.Password_cannot_be_empty));
             return;
         }
 
@@ -152,21 +157,16 @@ public class LoginActivity extends BaseActivity {
         });
         pd.setMessage(getString(R.string.Is_landing));
         pd.show();
-
-        final long start = System.currentTimeMillis();
-
-//        //验证我们的 服务器
-//        MySuperVerify();
         //福利社服务器
         FuLiCenterLogin();
 
     }
 
-    //request=login&userName=&password=
     private void FuLiCenterLogin() {
-        final String logUrl = F.SERVIEW_URL + "login&userName=" + currentUsername + "&password=" + currentPassword;
         OkHttpUtils2<UserAvatar> utils = new OkHttpUtils2<UserAvatar>();
-        utils.url(logUrl)
+        utils.setRequestUrl(F.REQUEST_LOGIN)
+                .addParam(F.USER_NAME, currentUsername)
+                .addParam(F.USER_PASS, currentPassword)
                 .targetClass(UserAvatar.class)
                 .execute(new OkHttpUtils2.OnCompleteListener<UserAvatar>() {
                     @Override
@@ -189,7 +189,6 @@ public class LoginActivity extends BaseActivity {
                         new DowCollectTask().dowCollectInfo(LoginActivity.this);
                         //下载所有好友信存到集合 ->内存
 //                        new DowAllFirendListTask(LoginActivity.this).dowAllFirendLsit();
-                        Log.i("main", "值" + logUrl + result.toString());
 
                     }
 
@@ -323,9 +322,35 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (autoLogin) {
-            return;
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return mDetector.onTouchEvent(event);
+    }
+}
+
+class Listener extends GestureDetector.SimpleOnGestureListener {
+    //取消登陆返回值码
+    private int exit = -1;
+    private View mView;
+    private Activity mActivity;
+
+    public Listener(Activity mActivity, View mView) {
+        this.mView = mView;
+        this.mActivity = mActivity;
+    }
+
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        Log.i("main", "e1=" + e1.getX() + "e2=" + e2.getY() + "velocityX速度=" + velocityX + "velocityX=" + velocityY);
+        if (e1.getX() < (e2.getX() - 200) || velocityX > 1000) {
+            mActivity.setResult(exit);
+            mActivity.finish();
         }
+        return false;
     }
 
 
