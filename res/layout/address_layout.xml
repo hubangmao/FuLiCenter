@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/item_backgroung"
             android:inputType="textPersonName"
             android:textColor="@color/menu_item_normal"/>
 
@@ -54,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/item_backgroung"
             android:inputType="phone"
             android:textColor="@color/menu_item_normal"/>
 

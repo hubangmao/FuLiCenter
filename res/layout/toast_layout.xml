@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/toasts_item_backgroung">
+
+    <TextView
+        android:id="@+id/text_toast"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="测试"
+        android:textColor="@color/ebpay_white"
+        android:textSize="16sp"/>
+</RelativeLayout>

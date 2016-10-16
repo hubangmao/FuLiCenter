@@ -77,26 +77,30 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.NewGoodsHolder
     @Override
     public void onBindViewHolder(final NewGoodsHolder holder, final int position) {
         final CartBean bean = mList.get(position);
-        String imageUrl = F.SERVIEW_URL + F.REQUEST_DOWNLOAD_NEW_GOOD + F.FILE_NAME + bean.getGoods().getGoodsThumb();
-        UserUtils.setImage(mContext, holder.mIvIcon, imageUrl);
-        mNumber = bean.getCount();
-        holder.mTvGoodName.setText(bean.getGoods().getGoodsName());
-        holder.mTvGoodNumber.setText("(" + String.valueOf(bean.getCount()) + ")");
-        holder.mTvPrice.setText(String.valueOf("￥" + getSubStr(bean.getGoods().getCurrencyPrice()) * bean.getCount()));
-        holder.mChIsCheck.setChecked(bean.isChecked());
-        setPrice();
-        //选择购买
-        isCheck = bean.isChecked();
-        mButBuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isCheck) {
-                    mContext.startActivity(new Intent(mContext, UserAddressActivity.class).putExtra("sumPrice", String.valueOf(sumPrice)));//传递总价
-                } else {
-                    Utils.toast(mContext, "亲你还没有选中商品呢");
+        try {
+            String imageUrl = F.SERVIEW_URL + F.REQUEST_DOWNLOAD_NEW_GOOD + F.FILE_NAME + bean.getGoods().getGoodsThumb();
+            UserUtils.setImage(mContext, holder.mIvIcon, imageUrl);
+            mNumber = bean.getCount();
+            holder.mTvGoodName.setText(bean.getGoods().getGoodsName());
+            holder.mTvGoodNumber.setText("(" + String.valueOf(bean.getCount()) + ")");
+            holder.mTvPrice.setText(String.valueOf("￥" + getSubStr(bean.getGoods().getCurrencyPrice()) * bean.getCount()));
+            holder.mChIsCheck.setChecked(bean.isChecked());
+            setPrice();
+            //选择购买
+            isCheck = bean.isChecked();
+            mButBuy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isCheck) {
+                        mContext.startActivity(new Intent(mContext, UserAddressActivity.class).putExtra("sumPrice", String.valueOf(sumPrice)));//传递总价
+                    } else {
+                        Utils.toast(mContext, "亲你还没有选中商品呢");
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+
+        }
 
         //选择单个商品
         holder.mChIsCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

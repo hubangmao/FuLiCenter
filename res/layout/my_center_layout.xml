@@ -344,6 +344,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
+                android:background="@drawable/item_backgroung"
                 android:src="@drawable/default_face"/>
 
             <TextView

@@ -59,15 +59,21 @@ public class CategoryFragment3 extends Fragment {
                         if (group.length == 0) {
                             return;
                         }
+                        Utils.toast(mContext, getResources().getString(R.string.okok));
                         mMaxList = utils.array2List(group);
                         mAdapter.updateMax(mMaxList);
                         mTimer = new Timer();
+
                         i = 0;
                         mTimer.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                downChildData(mMaxList.get(i).getId());
-                                i++;
+                                try {
+                                    downChildData(mMaxList.get(i).getId());
+                                    i++;
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }, 0, 200);
                         new Thread() {
@@ -77,6 +83,7 @@ public class CategoryFragment3 extends Fragment {
                                 mTimer.cancel();
                             }
                         }.start();
+
                     }
 
                     @Override

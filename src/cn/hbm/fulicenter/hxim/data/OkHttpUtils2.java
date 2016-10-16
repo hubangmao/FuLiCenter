@@ -142,12 +142,12 @@ public class OkHttpUtils2<T> {
                 switch (msg.what) {
                     case RESULT_SUCCESS:
                         T obj = (T) msg.obj;//获得解析的结果
-                        if (mListener != null) {
+                        if (mListener != null & obj != null) {
                             mListener.onSuccess(obj);//回调解析成功的代码
                         }
                         break;
                     case RESULT_ERROR://
-                        if (mListener != null) {
+                        if (mListener != null & msg.obj != null) {
                             mListener.onError(msg.obj.toString());//回调解析失败的代码
                         }
                         break;
@@ -244,7 +244,7 @@ public class OkHttpUtils2<T> {
      * @return
      */
     public OkHttpUtils2<T> targetClass(Class<T> clazz) {
-        Log.i("main", TAG +" = "+ mUrl);
+        Log.i("main", TAG + " = " + mUrl);
         mClazz = clazz;
         return this;
     }

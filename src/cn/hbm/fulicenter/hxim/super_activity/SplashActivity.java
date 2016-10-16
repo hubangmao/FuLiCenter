@@ -39,7 +39,6 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(arg0);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
-        Log.i("main", "ook");
         rootLayout = (RelativeLayout) findViewById(R.id.splash_root);
         versionText = (TextView) findViewById(R.id.tv_version);
 

@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +50,8 @@ public class BoutiqueFragment2 extends Fragment {
             @Override
             public void onRefresh() {
                 initData();
+                Utils.toast(mContext, getResources().getString(R.string.okok));
+
             }
         });
         //上拉加载
@@ -67,7 +68,6 @@ public class BoutiqueFragment2 extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 mListTheBottom = mLinearManager.findLastVisibleItemPosition();
-                Log.i("main", "mListTheBottom=" + mListTheBottom);
                 if (dy > 0.1 || dy < 0) {
                 }
             }

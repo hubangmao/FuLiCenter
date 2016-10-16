@@ -238,13 +238,18 @@ public class Utils {
     private static Toast toast;
 
     public static void toast(final Context context, String string) {
-        if (toast == null) {
-            toast = Toast.makeText(context, string, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 0);
-        } else {
-            toast.setDuration(Toast.LENGTH_SHORT);
-            toast.setText(string);
+        if (context == null || string == null) {
+            return;
         }
+        View view = View.inflate(context, R.layout.toast_layout, null);
+        TextView toastTv = (TextView) view.findViewById(R.id.text_toast);
+        if (toast == null) {
+            toast = new Toast(context);
+        }
+        toast.setView(view);
+        toastTv.setText(string);
+        toast.setGravity(Gravity.TOP, 0, 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.show();
     }
 

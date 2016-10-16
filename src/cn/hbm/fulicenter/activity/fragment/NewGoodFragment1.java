@@ -48,6 +48,13 @@ public class NewGoodFragment1 extends Fragment {
         initData(DOWN_PULL);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData(DOWN_PULL);
+
+    }
+
     private void setListener() {
         //下拉刷新
         mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -66,6 +73,7 @@ public class NewGoodFragment1 extends Fragment {
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && itemMax == mGoodsAdapter.getItemCount() - 1 && isNoData) {
                     Log.i("main", "上拉加载=" + RecyclerView.SCROLL_STATE_IDLE + "\\ =" + RecyclerView.SCROLL_STATE_IDLE + "//" + itemMax + "=" + (mGoodsAdapter.getItemCount() - 1));
                     PAGE_ID++;
