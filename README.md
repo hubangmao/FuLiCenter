@@ -3,14 +3,22 @@
 [网站](https://hubangmao.github.io/)
 [视频查看](http://v.youku.com/v_show/id_XMTY5NTYxMzE0NA==.html?from=y1.7-2)
 
-该Git仓库是 《顺间美发应用》暂存仓库,
-#福利社 app界面简介
-##1.登陆界面
-![image](https://github.com/hubangmao/FuLiCenter/tree/fulicenter/image/fuli_login.jpg)
-##2.发现界面
-![image](https://github.com/hubangmao/FuLiCenter/tree/fulicenter/image/goos_info.jpg)
-##3.订单界面
-![image](https://github.com/hubangmao/FuLiCenter/tree/fulicenter/image/new_goos.jpg)
-
+#福利社 app界面简介 Card风格主题界面查看
+##1.新品界面
+![image](https://github.com/hubangmao/FuLiCenter/tree/fulicenter/image/card1.jpg)
+##2.精选界面
+![image](https://github.com/hubangmao/FuLiCenter/tree/fulicenter/image/card2.jpg)
+##3.分类一级界面
+![image](https://github.com/hubangmao/FuLiCenter/tree/fulicenter/image/card3.jpg)
+##4.购物车界面
+![image](https://github.com/hubangmao/FuLiCenter/tree/fulicenter/image/card4.jpg)
+##5.分类二级界面
+![image](https://github.com/hubangmao/FuLiCenter/tree/fulicenter/image/card5.jpg)
+##6.商品详细界面
+![image](https://github.com/hubangmao/FuLiCenter/tree/fulicenter/image/card6.jpg)
+##7.分享界面
+![image](https://github.com/hubangmao/FuLiCenter/tree/fulicenter/image/card7.jpg)
+##8.个人中心界面
+![image](https://github.com/hubangmao/FuLiCenter/tree/fulicenter/image/card8.jpg)
 
 
